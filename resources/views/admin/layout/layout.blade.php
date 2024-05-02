@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ $title }}</title>
+    <title>{{ $title }} | Playware - Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="MyraStudio" name="author" />
@@ -230,10 +230,11 @@
                                 href="javascript:void(0)">
                                 <span>Lock Account</span>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="{{ route('auth.logout') }}">
-                                <span>Log Out</span>
-                            </a>
+                            <form action="{{ route('auth.logout') }}">
+                                @csrf
+                                <button type="submit">Log Out</button>
+                            </form>
+
                         </div>
                     </div>
 
@@ -260,19 +261,30 @@
 
                         <li>
                             {{-- <span class="badge badge-pill badge-primary float-right">7</span> --}}
-                            <a href="{{ route('seller.dashboard') }}" class="waves-effect"><i
+                            <a href="{{ route('admin.dashboard') }}" class="waves-effect"><i
                                     class='bx bx-home-smile'></i><span>Dashboard</span></a>
                         </li>
-
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
+                                    class="bx bx-user"></i><span>Sellers</span></a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.allSellers') }}">All Sellers</a></li>
+                                <li><a href="{{ route('admin.UnVerfiedSellers') }}">Un-Verified Sellers</a></li>
+                                <li><a href="{{ route('admin.verifiedSellers') }}">Verified Sellers</a></li>
+                                <li><a href="{{ route('admin.shopSellers') }}">Shop Sellers</a></li>
+                                <li><a href="{{ route('admin.corporateSellers') }}">Corporate Sellers</a></li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-file"></i><span>Products</span></a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('seller.allProducts') }}">All Products</a></li>
-                                <li><a href="{{ route('seller.addNewProduct') }}">Add New Products</a></li>
-                                {{-- <li><a href="{{ route('seller.draftProducts') }}">Draft Porducts</a></li> --}}
+                                <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval Required</a></li>
+                                <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
+                                <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
                             </ul>
                         </li>
+
 
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i
                                     class="bx bx-calendar"></i><span>Calendar</span></a></li>
@@ -418,7 +430,7 @@
 
     <!-- App js -->
     <script src="{{ asset('assets/js/theme.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     @yield('additionScript')
 
 </body>

@@ -27,8 +27,9 @@ return new class extends Migration {
             $table->string('firstImage');
             $table->string('secondImage');
             $table->string('thirdImage');
-            $table->string('fourthImage');
-            $table->string('fifthImage');
+            $table->string('fourthImage')->nullable();
+            $table->string('fifthImage')->nullable();
+            $table->integer('approved');
             $table->timestamps();
         });
     }

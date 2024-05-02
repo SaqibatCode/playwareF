@@ -25,7 +25,6 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ route('auth.uploadProduct') }}" method="POST" enctype="multipart/form-data">
-
                         @csrf
                         <div class="form-group">
                             <label for="productTitle">Product Title</label>
@@ -34,7 +33,9 @@
                             @error('productTitle')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+
                         </div>
+
 
                         <div class="row">
                             <div class="col-6">
@@ -66,6 +67,8 @@
                                     @error('productCategory')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+
+
                                 </div>
                             </div>
                         </div>
@@ -83,7 +86,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label for="productSku">Seller SKU</label>
+                                    <label for="productSku">Product SKU</label>
                                     <input type="text" id="productSku" name="productSku" class="form-control"
                                         placeholder="Eg. 50">
                                     @error('productSku')
@@ -102,6 +105,13 @@
                                     @error('Manufacturer')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
+                                        <input type="checkbox" name="thisProductHaveVariations" class="custom-control-input"
+                                            id="VariationCheckBox">
+                                        <label class="custom-control-label" for="VariationCheckBox">This Product Have
+                                            Variations? (Eg.
+                                            Color, Size, Material)</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -116,6 +126,10 @@
                             </div>
                         </div>
 
+                        <div class="row" id="getVariations"></div>
+
+                        <div class='contianer-fluid' id="getVariationDetails"></div>
+
                         <div class="form-group" id="aboutThisItemContainer">
                             <label for="AboutThisItem">About this item</label>
                             <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
@@ -127,6 +141,8 @@
                             @enderror
                         </div>
 
+
+
                         <div class="form-group">
                             <label for="productDescription">Product Description</label>
                             @error('productDescription')
@@ -135,8 +151,6 @@
                             <textarea name="productDescription" id="productDescription" class="form-control" style="height: 400px;"
                                 placeholder="Enter Your Product Description, For A+ Content Just Paste HTML Content Here."></textarea>
                             <p>You Can Use This Editor For Your <a href="#">A+ Content.</a></p>
-
-
                         </div>
 
 
@@ -254,7 +268,10 @@
             input.onchange = function() {
                 let container = input.parentElement.parentElement;
                 let img = container.querySelector('img');
-                container.querySelector('input').style.display = 'none';
+                let label = container.querySelector('label');
+                if (label) {
+                    // label.style.display = 'none';
+                }
                 img.src = window.URL.createObjectURL(input.files[0]);
             };
         });
@@ -319,5 +336,70 @@
                 brandNameInput.readOnly = false;
             }
         });
+
+        $(document).ready(function() {
+            $('#VariationCheckBox').on('change', function() {
+                if ($(this).prop('checked') == true) {
+                    var getVariations = ` <div class="col-4">
+                                <div class="form-group">
+                                    <label for="OptionType">Option Type</label>
+                                    <select name="OptionType" class="form-control" id="OptionType">
+                                        <option value="Size">Size</option>
+                                        <option value="Color">Color</option>
+                                        <option value="Material">Material</option>
+                                        <option value="Style">Style</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="optionValue">Option Value</label>
+                                    <input type="text" id="optionValue" name="optionValue" class="form-control"
+                                        placeholder="Eg. Red, Blue, Green">
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex flex-column justify-content-end">
+                                <div class="form-group ">
+                                    <span class="btn btn-primary w-100 addVariation">Add Variation</span>
+                                </div>
+                            </div>`
+                    $('#getVariations').html(getVariations);
+                } else {
+                    $('#getVariations').html('');
+                }
+            });
+
+            $(document).on('click', '.addVariation', function() {
+                var element = $(this).closest('.row');
+                var optionType = element.find('#OptionType').val();
+                var optionValue = element.find('#optionValue').val();
+
+                var variant = `
+                    <div class='row'>
+                        <div class='col-4'>
+                            <div class='form-group'>
+                                <input type='text' class='form-control' readonly value='${optionValue}'>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <div class='form-group'>
+                                <input type='text' class='form-control' Placeholder='qty'>
+                            </div>
+                        </div>
+                        <div class='col-4'>
+                            <div class='form-group'>
+                                <input type='text' class='form-control' placeholder='price'>
+                            </div>
+                        </div>
+                    </div>
+                    
+             
+                `
+
+                $('#getVariationDetails').append(variant);
+
+                element.find('#optionValue').val('')
+            });
+        })
     </script>
 @endsection

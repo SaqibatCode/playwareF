@@ -1,4 +1,4 @@
-@extends('seller.Layout.layout')
+@extends('admin.Layout.layout')
 @section('main-content')
     <div class="page-content">
         <div class="container-fluid">
@@ -30,11 +30,12 @@
                                 <thead>
                                     <tr>
                                         <th>Image</th>
-                                        <th>Brand Name</th>
                                         <th>Product Name</th>
-                                        <th>Date Created</th>
-                                        <th>Available</th>
+                                        <th>Uploader</th>
+                                        <th>Quantity</th>
                                         <th>Status</th>
+                                        <th>Date Created</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -49,11 +50,11 @@
                                             <td style="vertical-align: middle">{{ $product->brandName }}</td>
                                             <td style="vertical-align: middle">{{ $product->created_at }}</td>
                                             <td style="vertical-align: middle">{{ $product->productQuantity }}</td>
-                                            <td style="vertical-align: middle">{{ $product->approved == 1 ? 'Approved' : 'Un-Approved' }}</td>
-                                            <td style="vertical-align: middle"><button class="btn btn-primary">Edit</button></td>
+                                            <td style="vertical-align: middle"><button class="btn btn-primary">Edit</button>
+                                            <td style="vertical-align: middle"><button class="btn btn-primary">View</button>
+                                            </td>
                                         </tr>
                                     @endforeach
-
 
                                 </tbody>
                             </table>

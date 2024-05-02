@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Sellers\Products;
 
+use App\Http\Controllers\Controller;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,14 +76,16 @@ class ProductsController extends Controller
         $thirdImageName = time() . '_' . 'third_image' . '.' . $mainImage->getClientOriginalExtension();
         $thirdImage->move(public_path($folderPath), $thirdImageName);
 
-        $fourthImage = $request->file('fourthImage');
-        $fourthImageName = time() . '_' . 'fourth_image' . '.' . $mainImage->getClientOriginalExtension();
-        $fourthImage->move(public_path($folderPath), $fourthImageName);
-
-        $fifthImage = $request->file('fifthImage');
-        $fifthImageName = time() . '_' . 'fifth_image' . '.' . $mainImage->getClientOriginalExtension();
-        $fifthImage->move(public_path($folderPath), $fifthImageName);
-
+        if ($request->file('fourthImage')) {
+            $fourthImage = $request->file('fourthImage');
+            $fourthImageName = time() . '_' . 'fourth_image' . '.' . $mainImage->getClientOriginalExtension();
+            $fourthImage->move(public_path($folderPath), $fourthImageName);
+        }
+        if ($request->file('fifthImage')) {
+            $fifthImage = $request->file('fifthImage');
+            $fifthImageName = time() . '_' . 'fifth_image' . '.' . $mainImage->getClientOriginalExtension();
+            $fifthImage->move(public_path($folderPath), $fifthImageName);
+        }
         $product = new Products;
         $product->user_id = Auth::user()->id;
         $product->productTitle = $validate['productTitle'];
@@ -100,10 +103,19 @@ class ProductsController extends Controller
         $product->firstImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $firstImageName;
         $product->secondImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $secondImageName;
         $product->thirdImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $thirdImageName;
-        $product->fourthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fourthImageName;
-        $product->fifthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fifthImageName;
+        if ($request->file('fourthImage')) {
+            $product->fourthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fourthImageName;
+        }
+        if ($request->file('fifthImage')) {
+            $product->fifthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fifthImageName;
+        }
+        if(Auth::user()->approved !=0){
+            $product->approved = 1;
+        }else{
+            $product->approved = 0;
+        }
         $product->save();
 
-        return redirect(route('admin.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+        return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
     }
 }

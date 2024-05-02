@@ -79,11 +79,27 @@ class AuthController extends Controller
         $CNICBackPictureName = time() . '_' . 'Back_Picture.png';
         $CNICBackPicture->move(public_path($folderPath), $CNICBackPictureName);
 
+       
+
         $user = User::findOrfail(Auth::user()->id);
         $user->accountType = $validate['AccountType'];
         $user->CNIC = $validate['cnicNumber'];
         $user->CNICFrontPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $cnicFrontPictureName;
         $user->CNICBackPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $CNICBackPictureName;
+
+        if($request->input('AccountType') == 'Shopkeepr'){
+            $user->ShopAddress = $validate['shopAddress'];
+            $user->ShopName =  $validate['shopName'];
+
+            $CardPicture = $request->file('businessCardPicture');
+            $BusinessCardPicture = time() . '_' . 'business_card.png';
+            $CardPicture->move(public_path($folderPath), $BusinessCardPicture);
+            
+            $ShopPicture = $request->file('shopPicture');
+            $ShopPictureName = time() . '_' . 'shop_picture.png';
+            $ShopPicture->move(public_path($folderPath), $ShopPictureName);
+        }
+
         $user->save();
 
         return redirect(route('admin.dashboard'));
