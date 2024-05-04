@@ -11,7 +11,7 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-
+  
     <!-- App css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -230,9 +230,9 @@
                                 href="javascript:void(0)">
                                 <span>Lock Account</span>
                             </a>
-                            <form action="{{ route('auth.logout') }}">
+                            <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
-                                <button type="submit">Log Out</button>
+                                <button class="dropdown-item d-flex align-items-center justify-content-between" type="submit">Log Out</button>
                             </form>
 
                         </div>
@@ -277,11 +277,18 @@
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-file"></i><span>Products</span></a>
+                                    class="bx bxs-box"></i><span>Products</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval Required</a></li>
                                 <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
                                 <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
+                                    class="bx bx-file"></i><span>Pages</span></a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.HomePageEdit') }}">Home Page</a></li>
                             </ul>
                         </li>
 

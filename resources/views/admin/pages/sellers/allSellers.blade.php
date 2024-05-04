@@ -156,6 +156,7 @@
                                                                     </div>
                                                                 </div>
                                                             @endIf
+
                                                             @if ($user->CNICFrontPicture)
                                                                 <div class="col-6">
                                                                     <div class="form-group">
@@ -180,12 +181,14 @@
                                                                 <div class="col-6">
                                                                     <div class="d-flex align-items-center"
                                                                         style="gap: 8px">
-                                                                        <form action="" method="POST">
+                                                                        <form
+                                                                            action="{{ route('auth.approveSeller', ['sellerId' => $user->id]) }}"
+                                                                            method="POST">
                                                                             @csrf
                                                                             <button
                                                                                 class="btn btn-success">Approve</button>
                                                                         </form>
-                                                                        <form action="" method="POST">
+                                                                        <form action="{{ route('auth.rejectSeller', ['sellerId' => $user->id]) }}" method="POST">
                                                                             @csrf
                                                                             <button class="btn btn-warning">Reject</button>
                                                                         </form>

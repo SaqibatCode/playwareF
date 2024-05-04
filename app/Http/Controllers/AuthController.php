@@ -54,6 +54,9 @@ class AuthController extends Controller
 
     public function verifySeller(Request $request)
     {
+
+        // dd($request->all());
+
         $validate = $request->validate([
             'AccountType' => 'required',
             'cnicNumber' => 'required|string|max:16',
@@ -79,7 +82,7 @@ class AuthController extends Controller
         $CNICBackPictureName = time() . '_' . 'Back_Picture.png';
         $CNICBackPicture->move(public_path($folderPath), $CNICBackPictureName);
 
-       
+
 
         $user = User::findOrfail(Auth::user()->id);
         $user->accountType = $validate['AccountType'];
@@ -87,27 +90,46 @@ class AuthController extends Controller
         $user->CNICFrontPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $cnicFrontPictureName;
         $user->CNICBackPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $CNICBackPictureName;
 
-        if($request->input('AccountType') == 'Shopkeepr'){
+        if ($request->input('AccountType') == 'Shopkeepr') {
             $user->ShopAddress = $validate['shopAddress'];
-            $user->ShopName =  $validate['shopName'];
+            $user->ShopName = $validate['shopName'];
 
             $CardPicture = $request->file('businessCardPicture');
             $BusinessCardPicture = time() . '_' . 'business_card.png';
             $CardPicture->move(public_path($folderPath), $BusinessCardPicture);
-            
+
             $ShopPicture = $request->file('shopPicture');
             $ShopPictureName = time() . '_' . 'shop_picture.png';
             $ShopPicture->move(public_path($folderPath), $ShopPictureName);
+
+            $user->ShopPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $BusinessCardPicture;
+            $user->ShopBusinessCardPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $ShopPictureName;
         }
 
         $user->save();
 
-        return redirect(route('admin.dashboard'));
+        return redirect(route('seller.dashboard'));
     }
 
     public function logoutSeller()
     {
         Auth::logout();
-        return redirect(route('register'));
+        return redirect(route('indexPage'));
+    }
+
+    // ADMIN FUNCTIONS
+    public function loginAdmin(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = User::where('email', $email)->where('accountType', 'Admin')->first();
+
+        if ($user && password_verify($password, $user->password)) {
+            Auth::login($user);
+            return redirect()->intended('/admin/dashboard');
+        } else {
+            return back()->with('error', 'Invalid email or password');
+        }
     }
 }

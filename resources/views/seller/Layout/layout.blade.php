@@ -230,10 +230,11 @@
                                 href="javascript:void(0)">
                                 <span>Lock Account</span>
                             </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="{{ route('auth.logout') }}">
-                                <span>Log Out</span>
-                            </a>
+                            
+                            <form action="{{ route('auth.logout') }}" method="POST">
+                                @csrf
+                                <button class="dropdown-item d-flex align-items-center justify-content-between" type="submit">Log Out</button>
+                            </form>
                         </div>
                     </div>
 

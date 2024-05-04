@@ -13,9 +13,9 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- App css -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('assets/css/theme.min.css')}}" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -33,7 +33,7 @@
                                         <div class="card-body">
                                             <div class="text-center mb-4 mt-3">
                                                 <a href="index.html">
-                                                    <span><img src="assets/images/logo.svg" alt=""
+                                                    <span><img src="{{asset('assets/images/logo.svg')}}" alt=""
                                                             height="26"></span>
                                                 </a>
                                             </div>
@@ -150,14 +150,14 @@
     <!-- end page -->
 
     <!-- jQuery  -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/metismenu.min.js"></script>
-    <script src="assets/js/waves.js"></script>
-    <script src="assets/js/simplebar.min.js"></script>
+    <script src="{{asset('assets/js/jquery.min.js')}}"></script>
+    <script src="{{asset('assets/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{asset('assets/js/metismenu.min.js')}}"></script>
+    <script src="{{asset('assets/js/waves.js')}}"></script>
+    <script src="{{asset('assets/js/simplebar.min.js')}}"></script>
 
     <!-- App js -->
-    <script src="assets/js/theme.js"></script>
+    <script src="{{asset('assets/js/theme.js')}}"></script>
 
 </body>
 

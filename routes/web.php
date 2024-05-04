@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\Pages\HomePageController;
 use App\Http\Controllers\Admin\Products\ApprovedProductsController;
 use App\Http\Controllers\Admin\Products\ProductApprovalRequiredController;
 use App\Http\Controllers\Admin\Products\RejectProductsController;
@@ -23,10 +24,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', [IndexPageController::class, 'getIndexPage'])->name('indexPage');
+
+
+
 // secure reoutes to for registration and verification (All Post Requests);
 Route::prefix('api/v1')->group(function () {
     Route::post('/register', [AuthController::class, 'registerSeller'])->name('auth.register');
     Route::post('/logout', [AuthController::class, 'logoutSeller'])->name('auth.logout');
+
+    Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('login.admin');
+
     Route::post('verfiication', [AuthController::class, 'verifySeller'])->name('auth.verifySeller');
 
     Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
@@ -38,11 +46,15 @@ Route::prefix('api/v1')->group(function () {
 
         Route::post('/approve-product/{productId}', [ApprovedProductsController::class, 'ApproveProduct'])->name('admin.approveProducts');
         Route::post('/reject-product/{productId}', [ApprovedProductsController::class, 'RejectProduct'])->name('admin.rejectProduct');
+
+        Route::post('/update-content', [HomePageController::class, 'UpdateContent'])->name('admin.updateContent');
     });
 });
 
+
 // All sellers route
-Route::prefix('seller')->group(function () {
+Route::get('seller/register', [AuthController::class, 'getRegisterPage'])->name('register');
+Route::middleware('seller')->prefix('seller')->group(function () {
     Route::get('/verification-form', [AuthController::class, 'verificationForm'])->name('auth.verificationForm');
     Route::get('/dashboard', [SellerDashboardController::class, 'getDashboardPage'])->name('seller.dashboard');
 
@@ -54,7 +66,9 @@ Route::prefix('seller')->group(function () {
 
 });
 
+
 // All Admin Dashboard Routes
+Route::get('admin/login', [AdminDashboardController::class, 'getLoginPage'])->name('admin.Login');
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'getAdminDashboard'])->name('admin.dashboard');
 
@@ -73,9 +87,13 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
         Route::get('/details/{sellerId}', [SellersController::class, 'getSellersDetails'])->name('admin.sellers.details');
     });
+
+    Route::prefix('pages')->group(function () {
+        Route::get('/home', [HomePageController::class, 'getHomePageEditor'])->name('admin.HomePageEdit');
+    });
+
 });
 
-Route::get('/register', [AuthController::class, 'getRegisterPage'])->name('register');
 
 
-Route::get('/', [IndexPageController::class, 'getIndexPage'])->name('indexPage');
+

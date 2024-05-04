@@ -11,4 +11,9 @@ class DashboardController extends Controller
     {
         return view('admin.pages.dashboard', ['title' => 'Admin Dashboard']);
     }
+
+    public function getLoginPage()
+    {
+        return view('admin.pages.Login');
+    }
 }

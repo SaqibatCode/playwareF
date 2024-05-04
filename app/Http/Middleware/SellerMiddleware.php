@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class SellerMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth()->check() && Auth()->user()->accountType !== 'Admin' || !Auth()->check()) {
+        if (!Auth()->check() || Auth()->user()->accountType == 'User') {
             return redirect(route('indexPage'));
         }
-        return $next($request);
 
+        return $next($request);
     }
 }

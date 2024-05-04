@@ -137,7 +137,25 @@
                                                                             readonly value="{{ $user->ShopAddress }}">
                                                                     </div>
                                                                 </div>
+
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="ShopPicture">Shop Picture</label>
+                                                                        <img src="{{ asset('user_folders/verification/') . '/' . $user->ShopPicture }}"
+                                                                            class="img-fluid border" alt="">
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="ShopPicture">Shop Picture</label>
+                                                                        <img src="{{ asset('user_folders/verification/') . '/' . $user->ShopBusinessCardPicture }}"
+                                                                            class="img-fluid border" alt="">
+                                                                    </div>
+                                                                </div>
                                                             @endIf
+
                                                             @if ($user->CNICFrontPicture)
                                                                 <div class="col-6">
                                                                     <div class="form-group">
