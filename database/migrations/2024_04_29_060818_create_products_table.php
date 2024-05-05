@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->string('Manufacturer');
             $table->string('CountryOfOrigin');
             $table->text('productDescription');
+            $table->float('regularPrice', 10,2)->nullable();
+            $table->float('SellPrice', 10,2)->nullable();
             $table->string('mainImage');
             $table->string('firstImage');
             $table->string('secondImage');

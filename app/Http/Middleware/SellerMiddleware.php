@@ -15,10 +15,13 @@ class SellerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth()->check() || Auth()->user()->accountType == 'User') {
+        if (!auth()->check() || auth()->user()->accountType == 'User') {
             return redirect(route('indexPage'));
+        } elseif (auth()->check() || auth()->user()->accountType == null) {
+            return $next($request);
         }
 
         return $next($request);
+
     }
 }

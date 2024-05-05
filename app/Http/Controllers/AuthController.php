@@ -117,6 +117,27 @@ class AuthController extends Controller
         return redirect(route('indexPage'));
     }
 
+
+    public function getLoginPage(){
+        return view('seller.Auth.Login');
+    }
+
+    public function sellerLogin(Request $request)
+    {
+        // dd($request->all());
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $user = User::where('email', $email)->first();
+
+        if ($user && password_verify($password, $user->password)) {
+            Auth::login($user);
+            return redirect(route('seller.dashboard'));
+        } else {
+            return back()->with('error', 'Invalid email or password');
+        }
+    }
+
     // ADMIN FUNCTIONS
     public function loginAdmin(Request $request)
     {

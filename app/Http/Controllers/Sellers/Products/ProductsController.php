@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sellers\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\Products;
+use App\Models\ProductVariations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,11 @@ class ProductsController extends Controller
     public function uploadProduct(Request $request)
     {
         // dd($request->all());
+
+       
+
+      
+
 
         $validate = $request->validate([
             'productTitle' => 'required|string',
@@ -92,6 +98,7 @@ class ProductsController extends Controller
         if ($validate['brandName']) {
             $product->brandName = $validate['productTitle'];
         }
+        
         $product->productCategory = $validate['productCategory'];
         $product->productQuantity = $validate['productQuantity'];
         $product->productSku = $validate['productSku'];
@@ -115,6 +122,36 @@ class ProductsController extends Controller
             $product->approved = 0;
         }
         $product->save();
+
+
+
+        $variations = [];
+        $i = 0;
+
+        // Loop through $requestData to extract variation data
+        while (isset($request["Price{$i}"])) {
+            
+            $variationImage = $request["variationImage{$i}"];;
+            $variationImageName = time() . '_' . 'Varitaion' . $i . '.' . $variationImage->getClientOriginalExtension();
+            $variationImage->move(public_path($folderPath), $variationImageName);
+            $variation = [
+                'productId' => $product->id,
+                'color' => $request["ColorVariation{$i}"],
+                'size' => $request["SizeVariation{$i}"],
+                'material' => $request["MaterialVariation{$i}"],
+                'style' => $request["Style{$i}"],
+                'quantity' => $request["Quanatity{$i}"], // Corrected the typo in your keys
+                'price' => $request["Price{$i}"],
+                'image' => $variationImageName
+            ];
+
+            $variations[] = $variation;
+            $i++;
+        }
+
+        foreach ($variations as $variation) {
+            ProductVariations::create($variation);
+        }
 
         return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
     }

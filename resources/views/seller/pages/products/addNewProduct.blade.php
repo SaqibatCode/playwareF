@@ -126,7 +126,9 @@
                             </div>
                         </div>
 
-                        <div class="row" id="getVariations"></div>
+                        <div class="row" id="getVariations">
+                        
+                        </div>
 
                         <div class='contianer-fluid' id="getVariationDetails"></div>
 
@@ -340,66 +342,173 @@
         $(document).ready(function() {
             $('#VariationCheckBox').on('change', function() {
                 if ($(this).prop('checked') == true) {
-                    var getVariations = ` <div class="col-4">
+                    var getVariations = ` 
+                    <div class='container-fluid row'>
+                    <div class="col-2">
                                 <div class="form-group">
-                                    <label for="OptionType">Option Type</label>
-                                    <select name="OptionType" class="form-control" id="OptionType">
-                                        <option value="Size">Size</option>
-                                        <option value="Color">Color</option>
-                                        <option value="Material">Material</option>
-                                        <option value="Style">Style</option>
-                                    </select>
+                                    <label for="ColorVariation">Enter Color</label>
+                                    <input type="text" id="ColorVariation" name="ColorVariation0" class="form-control"
+                                        placeholder="Eg. Red, Blue, Green">
+                                </div>
+
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="SizeVariation">Enter Size</label>
+                                    <input type="text" id="SizeVariation" name="SizeVariation0" class="form-control"
+                                        placeholder="Eg. Small, Medium, Large">
                                 </div>
                             </div>
-                            <div class="col-4 d-flex flex-column justify-content-end">
+                            <div class="col-2 d-flex flex-column justify-content-end">
                                 <div class="form-group">
-                                    <label for="optionValue">Option Value</label>
-                                    <input type="text" id="optionValue" name="optionValue" class="form-control"
+                                    <label for="MaterialVariation">Material</label>
+                                    <input type="text" id="MaterialVariation" name="MaterialVariation0" class="form-control"
+                                        placeholder="Eg. Plastic, Silicone, Metal">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Style">Style</label>
+                                    <input type="text" id="Style" name="Style0" class="form-control"
                                         placeholder="Eg. Red, Blue, Green">
                                 </div>
                             </div>
-                            <div class="col-4 d-flex flex-column justify-content-end">
-                                <div class="form-group ">
-                                    <span class="btn btn-primary w-100 addVariation">Add Variation</span>
+                            <div class="col-1 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Quanatity">Quanatity</label>
+                                    <input type="text" id="Quanatity" name="Quanatity0" class="form-control"
+                                        placeholder="Eg. 10, 20, 30">
                                 </div>
-                            </div>`
+                            </div>
+                            <div class="col-1 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Price">Price</label>
+                                    <input type="text" id="Price" name="Price0" class="form-control"
+                                        placeholder="Eg. 10, 20, 30">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                            <label>Choose Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name='variationImage0' id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>            
+                                        </div>
+                            </div>   
+                        </div>                        
+                            `
                     $('#getVariations').html(getVariations);
+                    $('#getVariations').append(`<div class='container-fluid mb-4 mt-0' id='addVaritionbtn'><span id='addVarition' class='btn btn-primary'>Add More</span></div>`)
                 } else {
                     $('#getVariations').html('');
                 }
             });
+           var count = 1;
+            $(document).on('click', '#addVarition', function(){
+                var getVariations = ` 
+                    <div class='container-fluid row'>
+                    <div class="col-2">
+                                <div class="form-group">
+                                    <label for="ColorVariation">Enter Color</label>
+                                    <input type="text" id="ColorVariation" name="ColorVariation${count}" class="form-control"
+                                        placeholder="Eg. Red, Blue, Green">
+                                </div>
 
-            $(document).on('click', '.addVariation', function() {
-                var element = $(this).closest('.row');
-                var optionType = element.find('#OptionType').val();
-                var optionValue = element.find('#optionValue').val();
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="SizeVariation">Enter Size</label>
+                                    <input type="text" id="SizeVariation" name="SizeVariation${count}" class="form-control"
+                                        placeholder="Eg. Small, Medium, Large">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="MaterialVariation">Material</label>
+                                    <input type="text" id="MaterialVariation" name="MaterialVariation${count}" class="form-control"
+                                        placeholder="Eg. Plastic, Silicone, Metal">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Style">Style</label>
+                                    <input type="text" id="Style" name="Style${count}" class="form-control"
+                                        placeholder="Eg. Red, Blue, Green">
+                                </div>
+                            </div>
+                            <div class="col-1 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Quanatity">Quanatity</label>
+                                    <input type="text" id="Quanatity" name="Quanatity${count}" class="form-control"
+                                        placeholder="Eg. 10, 20, 30">
+                                </div>
+                            </div>
+                            <div class="col-1 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                    <label for="Price">Price</label>
+                                    <input type="text" id="Price" name="Price${count}" class="form-control"
+                                        placeholder="Eg. 10, 20, 30">
+                                </div>
+                            </div>
+                            <div class="col-2 d-flex flex-column justify-content-end">
+                                <div class="form-group">
+                                            <label>Choose Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" name='variationImage${count}' id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>            
+                                        </div>
+                            </div>   
+                        </div>                        
+                            `
+                    $('#addVaritionbtn').before(getVariations);
+                    count++; 
+            })
 
-                var variant = `
-                    <div class='row'>
-                        <div class='col-4'>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' readonly value='${optionValue}'>
-                            </div>
-                        </div>
-                        <div class='col-4'>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' Placeholder='qty'>
-                            </div>
-                        </div>
-                        <div class='col-4'>
-                            <div class='form-group'>
-                                <input type='text' class='form-control' placeholder='price'>
-                            </div>
-                        </div>
-                    </div>
+            // var variations = [];
+            // $(document).on('click', '.addVariation', function() {
+            //     var element = $(this).closest('.row');
+            //     var optionType = element.find('#OptionType').val();
+            //     var optionValue = element.find('#optionValue').val();
+
+
+            //     var variant = `
+            //         <div class='row'>
+            //             <div class='col-2'>
+            //                 <div class='form-group'>
+            //                     <input type='text' class='form-control' readonly value='${optionValue}'>
+            //                 </div>
+            //             </div>
+            //             <div class='col-2'>
+            //                 <div class='form-group'>
+            //                     <input type='text' class='form-control' Placeholder='qty'>
+            //                 </div>
+            //             </div>
+            //             <div class='col-2'>
+            //                 <div class='form-group'>
+            //                     <input type='text' class='form-control' Placeholder='price'>
+            //                 </div>
+            //             </div>
+            //             <div class='col-2'>
+            //                 <div class='form-group'>
+            //                     <input type='text' class='form-control' Placeholder='Seller SKU'>
+            //                 </div>
+            //             </div>
+            //             <div class='col-2'>
+            //                 <div class='form-group'>
+            //                     <input type='file' class='form-control' placeholder='Image'>
+            //                 </div>
+            //             </div>
+            //         </div>
                     
-             
-                `
+                    
+            //     `
 
-                $('#getVariationDetails').append(variant);
+            //     $('#getVariationDetails').append(variant);
 
-                element.find('#optionValue').val('')
-            });
+            //     element.find('#optionValue').val('')
+            // });
         })
     </script>
 @endsection

@@ -32,12 +32,16 @@ Route::get('/', [IndexPageController::class, 'getIndexPage'])->name('indexPage')
 Route::prefix('api/v1')->group(function () {
     Route::post('/register', [AuthController::class, 'registerSeller'])->name('auth.register');
     Route::post('/logout', [AuthController::class, 'logoutSeller'])->name('auth.logout');
+    Route::post('/seller/login', [AuthController::class, 'sellerLogin'])->name('login.seller');
 
-    Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('login.admin');
 
-    Route::post('verfiication', [AuthController::class, 'verifySeller'])->name('auth.verifySeller');
+    Route::middleware('seller')->prefix('seller')->group(function () {
+        Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('login.admin');
 
-    Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
+        Route::post('verfiication', [AuthController::class, 'verifySeller'])->name('auth.verifySeller');
+
+        Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
+    });
 
 
     Route::middleware('admin')->prefix('admin')->group(function () {
@@ -54,6 +58,7 @@ Route::prefix('api/v1')->group(function () {
 
 // All sellers route
 Route::get('seller/register', [AuthController::class, 'getRegisterPage'])->name('register');
+Route::get('seller/login', [AuthController::class, 'getLoginPage'])->name('seller.login');
 Route::middleware('seller')->prefix('seller')->group(function () {
     Route::get('/verification-form', [AuthController::class, 'verificationForm'])->name('auth.verificationForm');
     Route::get('/dashboard', [SellerDashboardController::class, 'getDashboardPage'])->name('seller.dashboard');
