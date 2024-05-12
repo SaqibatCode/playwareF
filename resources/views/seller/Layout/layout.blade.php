@@ -275,6 +275,18 @@
                             </ul>
                         </li>
 
+                        <li>
+                            @php
+                                $verified = Auth::user()->approved == 0 ? true : false;
+                            @endphp
+                        
+                            @if($verified)
+                                <a href="{{ route('auth.verificationForm') }}" class="waves-effect">
+                                    <i class="bx bx-badge-check"></i><span>Verification</span>
+                                </a>
+                            @endif
+                        </li>
+
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i
                                     class="bx bx-calendar"></i><span>Calendar</span></a></li>
 

@@ -39,10 +39,16 @@
                                             </div>
                                             <form action="{{route('login.admin')}}" method="POST" class="p-2">
                                                 @csrf
+                                                @if(Session::has('error'))
+                                                <div class="alert alert-warning">{{ Session::get('error') }}</div>
+                                                @endif
                                                 <div class="form-group">
                                                     <label for="emailaddress">Email address</label>
                                                     <input class="form-control" name="email" type="email"
                                                         id="emailaddress" required="" placeholder="john@deo.com">
+                                                    @error('email')
+                                                        <span class="text-danger">{{$message}}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">Password</label>

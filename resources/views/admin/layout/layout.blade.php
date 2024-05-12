@@ -282,6 +282,7 @@
                                 <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval Required</a></li>
                                 <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
                                 <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
+                                <li><a href="{{ route('admin.getCategoriesPage') }}">Categories</a></li>
                             </ul>
                         </li>
                         <li>
@@ -291,6 +292,8 @@
                                 <li><a href="{{ route('admin.HomePageEdit') }}">Home Page</a></li>
                             </ul>
                         </li>
+
+                        
 
 
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i

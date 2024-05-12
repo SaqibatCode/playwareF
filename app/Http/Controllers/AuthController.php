@@ -20,12 +20,27 @@ class AuthController extends Controller
         $validate = $request->validate([
             'username' => 'required|string',
             'FatherName' => 'required|string',
-            'EmailAddress' => 'required|email',
+            'EmailAddress' => 'required|email|unique:users,Email',
             'DateOfBirth' => 'required|string',
             'Address' => 'required|string',
-            'phoneNumber' => 'required|string',
-            'password' => 'required|confirmed|min:6',
+            'phoneNumber' => 'required|string|unique:users,number',
+            'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'required|min:6',
             'confirmTermsAndConditions' => 'required'
+        ], [
+            'username.required' => 'Please Enter Your Full Name',
+            'username.string' => 'Make Sure To Write Your Name In Correct Format',
+            'FatherName.required' => 'Please Enter Your Father Name',
+            'FatherName.string' => 'Please Enter Your Father Name In Correct Format',
+            'EmailAddress.required' => 'Please Enter Your Email Address',
+            'EmailAddress.unique' => 'This Email Address is already Take, Please Login To Your Account',
+            'DateOfBirth.required' => 'Please Enter Your date of birth',
+            'Address.required' => 'Please Enter Your Address',
+            'phoneNumber.required' => 'Please Enter Your Phone Number',
+            'password.required' => "Please Enter Your Correct Password",
+            'password.requried_with' => 'Your Password Doesn"t match',
+            'password.same' => 'Your Password Doesn"t match',
+            'confirmTermsAndConditions.required' => 'Please Select Checkbox if you confirm with our Terms and Conditions',
         ]);
 
 
@@ -59,14 +74,28 @@ class AuthController extends Controller
 
         $validate = $request->validate([
             'AccountType' => 'required',
-            'cnicNumber' => 'required|string|max:16',
-            'CNICFrontPicture' => 'required|mimes:png',
-            'CNICBackPicture' => 'required|mimes:png',
+            'cnicNumber' => 'required|string|max:16|unique:users,CNIC',
+            'CNICFrontPicture' => 'required|mimes:png,jpg,jpeg',
+            'CNICBackPicture' => 'required|mimes:png,jpg,jpeg',
             'shopAddress' => $request->input('AccountType') == 'Shopkeepr' ? 'required' : '',
             'shopName' => $request->input('AccountType') == 'Shopkeepr' ? 'required' : '',
-            'shopPicture' => $request->input('AccountType') == 'Shopkeepr' ? 'required' : '',
-            'businessCardPicture' => $request->input('AccountType') == 'Shopkeepr' ? 'required' : '',
+            'shopPicture' => $request->input('AccountType') == 'Shopkeepr' ? 'required|mimes:png,jpg,jpeg' : '',
+            'businessCardPicture' => $request->input('AccountType') == 'Shopkeepr' ? 'required|mimes:png,jpg,jpeg' : '',
+        ], [
+            'AccountType.required' => 'Please select Account Type.',
+            'cnicNumber.required' => 'Please Enter Your Correct 13 Digits CNIC Number.', // Corrected the typo here
+            'cnicNumber.unique' => 'The CNIC number has already been taken.', // Corrected the typo here
+            'CNICFrontPicture.mimes' => 'Make sure to upload image in png, jpg, or jpeg format.',
+            'CNICFrontPicture.required' => 'Your CNIC Front Picture is required.',
+            'CNICBackPicture.mimes' => 'Make sure to upload image in png, jpg, or jpeg format.',
+            'CNICBackPicture.required' => 'Your CNIC Back Picture is required.',
+            'shopAddress.required' => 'Your Shop Address is required.',
+            'shopPicture.required' => 'Your Shop Picture is required.',
+            'businessCardPicture.required' => 'Your Business Card Picture is required.', // Corrected the typo here
+            'businessCardPicture.mimes' => 'Make sure to upload image in png, jpg, or jpeg format.', // Added 'jpg' here for consistency
+            'shopPicture.mimes' => 'Make sure to upload image in png, jpg, or jpeg format.', // Added 'jpg' here for consistency
         ]);
+
 
         $folderPath = 'user_folders/verification/' . Auth::user()->id . '_' . Auth::user()->fullName;
 
@@ -118,7 +147,8 @@ class AuthController extends Controller
     }
 
 
-    public function getLoginPage(){
+    public function getLoginPage()
+    {
         return view('seller.Auth.Login');
     }
 
@@ -141,6 +171,11 @@ class AuthController extends Controller
     // ADMIN FUNCTIONS
     public function loginAdmin(Request $request)
     {
+        $validate = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $email = $request->input('email');
         $password = $request->input('password');
 

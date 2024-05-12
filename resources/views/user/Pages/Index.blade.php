@@ -20,7 +20,7 @@
 
         <section class="">
             <div
-                class="relative h-96 bg-[url('assets/images/banner-images/bg-slider.jpg')] bg-cover bg-center bg-no-repeat">
+                class="relative h-96 bg-[url('{{asset('assets/images/banner-images/bg-slider.jpg')}}')] bg-cover bg-center bg-no-repeat">
                 <div class="flex md:hidden absolute left-0 top-0 h-full w-full bg-blue-600/20"></div>
 
                 <!-- Mobile -->

@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         // Other middleware...
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'seller' => \App\Http\Middleware\SellerMiddleware::class,
+        'isLogin' => \App\Http\Middleware\isUserLogin::class,
     ];
 
     /**

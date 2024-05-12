@@ -28,7 +28,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="productTitle">Product Title</label>
-                            <input type="text" id="productTitle" name="productTitle" class="form-control"
+                            <input type="text" value="{{old('productTitle')}}" id="productTitle" name="productTitle" class="form-control"
                                 placeholder="Brand + Product Type + Color + Material Eg. Adidas T20 Shoes red leather">
                             @error('productTitle')
                                 <span class="text-danger">{{ $message }}</span>
@@ -41,13 +41,13 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
-                                    <input type="text" id="brandName" name="brandName" class="form-control"
+                                    <input type="text" id="brandName" name="brandName" {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'readonly' : ''}} value="{{old('brandName')}}" class="form-control"
                                         placeholder="Brand Name">
 
 
                                     <div class="custom-control mt-2 custom-checkbox checkbox-primary">
                                         <input type="checkbox" name="thisBrandDoesNotHaveProduct"
-                                            class="custom-control-input" id="checkbox-signin">
+                                            class="custom-control-input" {{old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : ''}} id="checkbox-signin">
                                         <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
                                             Brand
                                             Name.</label>
@@ -62,7 +62,10 @@
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
-                                        <option selected>Select Category</option>
+                                        <option value="" selected>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <x-categories-select :category="$category" />
+                                        @endforeach
                                     </select>
                                     @error('productCategory')
                                         <span class="text-danger">{{ $message }}</span>
@@ -77,7 +80,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="productQuantity">Product Quantity</label>
-                                    <input type="number" id="productQuantity" name="productQuantity" class="form-control"
+                                    <input type="number" id="productQuantity" value="{{old('productQuantity')}}" name="productQuantity" class="form-control"
                                         placeholder="Eg. 50">
                                     @error('productQuantity')
                                         <span class="text-danger">{{ $message }}</span>
@@ -87,7 +90,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="productSku">Product SKU</label>
-                                    <input type="text" id="productSku" name="productSku" class="form-control"
+                                    <input type="text" id="productSku" value="{{old('productSku')}}" name="productSku" class="form-control"
                                         placeholder="Eg. 50">
                                     @error('productSku')
                                         <span class="text-danger">{{ $message }}</span>
@@ -101,12 +104,12 @@
                                 <div class="form-group">
                                     <label for="Manufacturer">Manufacturer</label>
                                     <input type="text" id="Manufacturer" name="Manufacturer" class="form-control"
-                                        placeholder="Eg. Adidas">
+                                        placeholder="Eg. Adidas" value="{{old('Manufacturer')}}">
                                     @error('Manufacturer')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox" name="thisProductHaveVariations" class="custom-control-input"
+                                        <input type="checkbox" {{old('thisProductHaveVariations') == 'on' ? 'checked' : ''}} name="thisProductHaveVariations" class="custom-control-input"
                                             id="VariationCheckBox">
                                         <label class="custom-control-label" for="VariationCheckBox">This Product Have
                                             Variations? (Eg.
@@ -117,7 +120,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="CountryOfOrigin">Country of Origin</label>
-                                    <input type="text" id="CountryOfOrigin" name="CountryOfOrigin" class="form-control"
+                                    <input type="text" id="CountryOfOrigin" value="{{old('CountryOfOrigin')}}" name="CountryOfOrigin" class="form-control"
                                         placeholder="Eg. Manufacture In Pakistan, Turkey, UAE">
                                     @error('CountryOfOrigin')
                                         <span class="text-danger">{{ $message }}</span>
@@ -127,7 +130,7 @@
                         </div>
 
                         <div class="row" id="getVariations">
-                        
+
                         </div>
 
                         <div class='contianer-fluid' id="getVariationDetails"></div>
@@ -150,7 +153,7 @@
                             @error('productDescription')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <textarea name="productDescription" id="productDescription" class="form-control" style="height: 400px;"
+                            <textarea name="productDescription" value="{{old('productDescription')}}"  id="productDescription" class="form-control" style="height: 400px;"
                                 placeholder="Enter Your Product Description, For A+ Content Just Paste HTML Content Here."></textarea>
                             <p>You Can Use This Editor For Your <a href="#">A+ Content.</a></p>
                         </div>
@@ -399,13 +402,15 @@
                         </div>                        
                             `
                     $('#getVariations').html(getVariations);
-                    $('#getVariations').append(`<div class='container-fluid mb-4 mt-0' id='addVaritionbtn'><span id='addVarition' class='btn btn-primary'>Add More</span></div>`)
+                    $('#getVariations').append(
+                        `<div class='container-fluid mb-4 mt-0' id='addVaritionbtn'><span id='addVarition' class='btn btn-primary'>Add More</span></div>`
+                        )
                 } else {
                     $('#getVariations').html('');
                 }
             });
-           var count = 1;
-            $(document).on('click', '#addVarition', function(){
+            var count = 1;
+            $(document).on('click', '#addVarition', function() {
                 var getVariations = ` 
                     <div class='container-fluid row'>
                     <div class="col-2">
@@ -462,8 +467,8 @@
                             </div>   
                         </div>                        
                             `
-                    $('#addVaritionbtn').before(getVariations);
-                    count++; 
+                $('#addVaritionbtn').before(getVariations);
+                count++;
             })
 
             // var variations = [];
@@ -474,36 +479,36 @@
 
 
             //     var variant = `
-            //         <div class='row'>
-            //             <div class='col-2'>
-            //                 <div class='form-group'>
-            //                     <input type='text' class='form-control' readonly value='${optionValue}'>
-            //                 </div>
-            //             </div>
-            //             <div class='col-2'>
-            //                 <div class='form-group'>
-            //                     <input type='text' class='form-control' Placeholder='qty'>
-            //                 </div>
-            //             </div>
-            //             <div class='col-2'>
-            //                 <div class='form-group'>
-            //                     <input type='text' class='form-control' Placeholder='price'>
-            //                 </div>
-            //             </div>
-            //             <div class='col-2'>
-            //                 <div class='form-group'>
-            //                     <input type='text' class='form-control' Placeholder='Seller SKU'>
-            //                 </div>
-            //             </div>
-            //             <div class='col-2'>
-            //                 <div class='form-group'>
-            //                     <input type='file' class='form-control' placeholder='Image'>
-            //                 </div>
-            //             </div>
-            //         </div>
-                    
-                    
-            //     `
+        //         <div class='row'>
+        //             <div class='col-2'>
+        //                 <div class='form-group'>
+        //                     <input type='text' class='form-control' readonly value='${optionValue}'>
+        //                 </div>
+        //             </div>
+        //             <div class='col-2'>
+        //                 <div class='form-group'>
+        //                     <input type='text' class='form-control' Placeholder='qty'>
+        //                 </div>
+        //             </div>
+        //             <div class='col-2'>
+        //                 <div class='form-group'>
+        //                     <input type='text' class='form-control' Placeholder='price'>
+        //                 </div>
+        //             </div>
+        //             <div class='col-2'>
+        //                 <div class='form-group'>
+        //                     <input type='text' class='form-control' Placeholder='Seller SKU'>
+        //                 </div>
+        //             </div>
+        //             <div class='col-2'>
+        //                 <div class='form-group'>
+        //                     <input type='file' class='form-control' placeholder='Image'>
+        //                 </div>
+        //             </div>
+        //         </div>
+
+
+        //     `
 
             //     $('#getVariationDetails').append(variant);
 

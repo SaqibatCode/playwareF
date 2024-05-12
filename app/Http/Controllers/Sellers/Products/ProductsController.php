@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sellers\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
 use App\Models\Products;
 use App\Models\ProductVariations;
 use Illuminate\Http\Request;
@@ -22,8 +23,10 @@ class ProductsController extends Controller
 
     public function addNewProduct()
     {
+        $categories = Categories::root()->get();
         return view('seller.pages.products.addNewProduct', [
             'title' => 'Add New Product',
+            'categories' => $categories
         ]);
     }
 
