@@ -1,5 +1,6 @@
 @extends('admin.Layout.layout')
 @section('main-content')
+
     <div class="page-content">
         <div class="container-fluid">
 
@@ -21,6 +22,10 @@
             </div>
             <!-- end page title -->
 
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
             <div class="row">
                 <div class="col-4">
                     <div class="card">
@@ -31,13 +36,16 @@
                                 <div class="form-group">
                                     <label for="categoryName">Name</label>
                                     <input class="form-control" name="categoryName" type="text" id="categoryName"
-                                        required=""
+                                        required="" value="{{old('categoryName')}}"
                                         placeholder="Enter Category Name Eg. Hard Disk, Mobile Cover, Mobile">
                                 </div>
                                 <div class="form-group">
                                     <label for="CategorySlug">Slug</label>
+                                    @error('CategorySlug')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                     <input class="form-control" name="CategorySlug" type="text" id="CategorySlug"
-                                        required=""
+                                        required=""  value="{{old('CategorySlug')}}"
                                         placeholder="Enter Category Slug Eg. Hard-Disk, Mobile-SCover, Mobile">
                                     <p>The "Slug" is the URL-friendly version of the name. it is usually all lowercase and
                                         contains only letters, numbers and hyphens.</p>
@@ -59,8 +67,7 @@
 
 
                                         @foreach ($categories as $category)
-                                        
-                                        <x-categories-select :category="$category" />
+                                            <x-categories-select :category="$category" />
                                         @endforeach
                                     </select>
                                     <p>Assign a parent term to create a hirarchy. The term jaxx, for example, would be the
@@ -69,7 +76,7 @@
 
                                 <div class="form-group">
                                     <label for="CategoryDescription">Description</label>
-                                    <textarea name="CategoryDescription" id="CategoryDescription" class="form-control" style="height: 200px;"></textarea>
+                                    <textarea name="CategoryDescription" id="CategoryDescription" class="form-control" style="height: 200px;">{{old('CategoryDescription')}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary">Add Category</button>
@@ -82,8 +89,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h3>All Categories</h3>
-                            <div class="table-responsive">
-                                <table class="table table-hover mb-0">
+                            <div  class="table-responsive">
+                                <table id="myTable" class="table table-hover mb-0 display" >
                                     <thead>
                                         <tr>
                                             <th>Image</th>
@@ -93,9 +100,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         @foreach ($categories as $category)
-                                        <x-adminCategoryItem :category="$category" />
+                                            <x-adminCategoryItem :category="$category" />
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -113,3 +120,4 @@
         </div> <!-- container-fluid -->
     </div>
 @endsection
+

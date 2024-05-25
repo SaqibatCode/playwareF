@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Products;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
 {
@@ -12,16 +13,16 @@ class CategoriesController extends Controller
     {
         $ParentCategories = Categories::all();
 
-        $categories = Categories::root()->paginate(10);
+        $categories = Categories::root()->get();
 
-     
+
 
 
         return view('admin.pages.products.categories.categories', [
             'title' => 'Categories',
             'parent' => $ParentCategories,
             'categories' => $categories
-            
+
         ]);
     }
 
@@ -31,16 +32,18 @@ class CategoriesController extends Controller
 
         $validate = $request->validate([
             'categoryName' => 'required|String',
-            'CategorySlug' => 'nullable|String',
+            'CategorySlug' => 'nullable|String|unique:categories,slug',
             'ParentCategory' => 'nullable|String',
             'CategoryDescription' => 'nullable|String',
             'image' => 'nullable|mimes:png,jpg,jpeg'
+        ],[
+            'CategorySlug.unique' => 'Please Enter Unique Slug, This Already Exists, Enter Something Meaningfull for E.g Apple-Accesscories'
         ]);
 
         $category = new Categories;
         $category->name = $validate['categoryName'];
         if ($request->has('CategorySlug')) {
-            $category->slug = $validate['CategorySlug'];
+            $category->slug = Str::slug($validate['CategorySlug'], '-');
         } else {
             $category->slug = $validate['categoryName'];
         }
@@ -66,9 +69,18 @@ class CategoriesController extends Controller
             $category->image = $name;
         }
 
+        $category->status = 1;
 
         $category->save();
 
         return back()->with('success', $request->input('categoryName') . ' Created Successfully');
+    }
+
+
+    public function deleteCategory($id)
+    {
+        Categories::find($id)->delete();
+
+        return back()->with(['success' => 'Category deleted successfully']);
     }
 }

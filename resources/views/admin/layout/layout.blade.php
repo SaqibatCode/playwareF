@@ -11,11 +11,14 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
-  
+
     <!-- App css -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/theme.min.css') }}" rel="stylesheet" type="text/css" />
+
+    @yield('additionsStyles')
+
 
 </head>
 
@@ -232,7 +235,8 @@
                             </a>
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
-                                <button class="dropdown-item d-flex align-items-center justify-content-between" type="submit">Log Out</button>
+                                <button class="dropdown-item d-flex align-items-center justify-content-between"
+                                    type="submit">Log Out</button>
                             </form>
 
                         </div>
@@ -283,6 +287,7 @@
                                 <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
                                 <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
                                 <li><a href="{{ route('admin.getCategoriesPage') }}">Categories</a></li>
+                                <li><a href="{{ route('admin.getBrandsPage') }}">Brands</a></li>
                             </ul>
                         </li>
                         <li>
@@ -290,10 +295,28 @@
                                     class="bx bx-file"></i><span>Pages</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.HomePageEdit') }}">Home Page</a></li>
+                                <li><a href="{{ route('admin.TermsAndConditionsEditor') }}">Terms & Conditions </a>
+                                </li>
+                                <li><a href="{{ route('admin.privacyPolicy') }}">Privacy Policy</a></li>
+                                <li><a href="{{ route('admin.RefundPolicy') }}">Refund Policy</a></li>
                             </ul>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.supportTicket') }}" class="waves-effect"><i
+                                    class='bx bx-support'></i><span>Support Ticket</span></a>
 
-                        
+                        </li>
+                        <li>
+
+
+                            <a href="{{ route('admin.reports') }}" class="waves-effect"><i
+                                    class='bx bxs-no-entry'></i><span>Reports</span>
+                                <span class="badge badge-pill badge-danger float-right">0</span>
+                            </a>
+
+                        </li>
+
+
 
 
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i
@@ -440,6 +463,7 @@
 
     <!-- App js -->
     <script src="{{ asset('assets/js/theme.js') }}"></script>
+
 
     @yield('additionScript')
 

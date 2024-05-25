@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sellers\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\Products;
 use App\Models\ProductVariations;
@@ -24,20 +25,17 @@ class ProductsController extends Controller
     public function addNewProduct()
     {
         $categories = Categories::root()->get();
+        $brands = Brands::get();
         return view('seller.pages.products.addNewProduct', [
             'title' => 'Add New Product',
-            'categories' => $categories
+            'categories' => $categories,
+            'brands' => $brands
         ]);
     }
 
     public function uploadProduct(Request $request)
     {
         // dd($request->all());
-
-       
-
-      
-
 
         $validate = $request->validate([
             'productTitle' => 'required|string',
@@ -101,7 +99,7 @@ class ProductsController extends Controller
         if ($validate['brandName']) {
             $product->brandName = $validate['productTitle'];
         }
-        
+
         $product->productCategory = $validate['productCategory'];
         $product->productQuantity = $validate['productQuantity'];
         $product->productSku = $validate['productSku'];
@@ -119,9 +117,9 @@ class ProductsController extends Controller
         if ($request->file('fifthImage')) {
             $product->fifthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fifthImageName;
         }
-        if(Auth::user()->approved !=0){
+        if (Auth::user()->approved != 0) {
             $product->approved = 1;
-        }else{
+        } else {
             $product->approved = 0;
         }
         $product->save();
@@ -133,8 +131,9 @@ class ProductsController extends Controller
 
         // Loop through $requestData to extract variation data
         while (isset($request["Price{$i}"])) {
-            
-            $variationImage = $request["variationImage{$i}"];;
+
+            $variationImage = $request["variationImage{$i}"];
+            ;
             $variationImageName = time() . '_' . 'Varitaion' . $i . '.' . $variationImage->getClientOriginalExtension();
             $variationImage->move(public_path($folderPath), $variationImageName);
             $variation = [
@@ -157,5 +156,14 @@ class ProductsController extends Controller
         }
 
         return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+    }
+
+
+    // Version 2 Setup
+    public function addNewProducts()
+    {
+        return view('seller.pages.product.addNewProduct', [
+            'title' => 'Add New Products',
+        ]);
     }
 }

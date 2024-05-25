@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin\Pages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Content;
+use App\Models\policyPages;
 use Illuminate\Http\Request;
 
 class HomePageController extends Controller
 {
+
+
+    // Home Page Content Edits.
     public function getHomePageEditor()
     {
         $slide1 = Content::where('contentId', '1')->first();
@@ -71,4 +75,87 @@ class HomePageController extends Controller
         }
 
     }
+
+    // Terms & Conditions 
+    public function getTermsAndConditionsEditor()
+    {
+        $content = policyPages::where('type', 'TermsAndConditions')->first();
+
+        return view('admin.pages.Edit.Terms', [
+            'title' => 'Terms and Conditions',
+            'content' => $content
+        ]);
+    }
+
+    public function UpdateTermsAndConditions(Request $request)
+    {
+        $policy = policyPages::where('type', 'TermsAndConditions')->first();
+        if ($policy) {
+            $policy->update([
+                'content' => $request->input('content'),
+            ]);
+            return back()->with(['success' => 'Policy Updated Successfully']);
+        } else {
+            $policy = new policyPages;
+            $policy->type = 'TermsAndConditions';
+            $policy->content = $request->input('content');
+            $policy->save();
+            return back()->with(['success' => 'Policy Created Successfully']);
+        }
+
+    }
+
+    // Privacy Policy
+    public function getPrivacyPolicy()
+    {
+        $content = policyPages::where('type', 'PrivacyPolicy')->first();
+        return view('admin.pages.edit.privacy', [
+            'title' => 'Terms and Conditions',
+            'content' => $content
+        ]);
+    }
+
+    public function UpdatePrivacyPolicy(Request $request)
+    {
+        $policy = policyPages::where('type', 'PrivacyPolicy')->first();
+        if ($policy) {
+            $policy->update([
+                'content' => $request->input('content'),
+            ]);
+            return back()->with(['success' => 'Policy Updated Successfully']);
+        } else {
+            $policy = new policyPages;
+            $policy->type = 'PrivacyPolicy';
+            $policy->content = $request->input('content');
+            $policy->save();
+            return back()->with(['success' => 'Policy Created Successfully']);
+        }
+    }
+
+    // Refund Policy
+    public function getRefundPolicy()
+    {
+        $content = policyPages::where('type', 'RefundPolicy')->first();
+        return view('admin.pages.Edit.RefundPolicy', [
+            'title' => 'Refund Policy',
+            'content' => $content
+        ]);
+    }
+    public function UpdateRefundPolicy(Request $request)
+    {
+        $policy = policyPages::where('type', 'RefundPolicy')->first();
+        if ($policy) {
+            $policy->update([
+                'content' => $request->input('content'),
+            ]);
+            return back()->with(['success' => 'Policy Updated Successfully']);
+        } else {
+            $policy = new policyPages;
+            $policy->type = 'RefundPolicy';
+            $policy->content = $request->input('content');
+            $policy->save();
+            return back()->with(['success' => 'Policy Created Successfully']);
+        }
+    }
+
 }

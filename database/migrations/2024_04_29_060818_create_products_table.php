@@ -16,7 +16,8 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('productTitle');
             $table->string('brandName')->default('Generic');
-            $table->string('productCategory');
+            $table->unsignedBigInteger('productCategory');
+            $table->foreign('productCategory')->references('id')->on('categories')->onDelete('cascade');
             $table->string('AboutThisitem');
             $table->integer('productQuantity');
             $table->string('productSku');

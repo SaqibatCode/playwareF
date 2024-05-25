@@ -3,16 +3,19 @@
     <div class="page-content">
         <div class="container-fluid">
             @if (Auth::user()->accountType == 'Individual' || Auth::user()->accountType == 'Shopkeepr')
-                <div style="position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; flex-direction: column">
+                <div
+                    style="position: absolute; top: 50%; left: 60%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; flex-direction: column">
                     <div class="spinner-grow avatar-lg text-success m-2" role="status"></div>
-                    <h1>Hello, {{Auth::user()->fullName}}</h1>
-                    <p>We are verifying your account, Please bear with us, this process of verification take anywhere from 24 to 48 hours.</p>
-                    <p>You Can check your account detail you send for <a href="seller/account/details">verification from here</a></p>
+                    <h1>Hello, {{ Auth::user()->fullName }}</h1>
+                    <p>We are verifying your account, Please bear with us, this process of verification take anywhere from
+                        24 to 48 hours.</p>
+                    <p>You Can check your account detail you send for <a href="{{ route('seller.details') }}">verification
+                            from here</a></p>
                     <p>You Can still upload product with an unverified account!</p>
                     <p>If you need any help, you can contact us</p>
-                    <a href="#" class="btn btn-success text-white"> <span class="bx bx-support"></span> Contact Support</a>
+                    <a href="#" class="btn btn-success text-white"> <span class="bx bx-support"></span> Contact
+                        Support</a>
                 </div>
-            
             @else
                 <!-- start page title -->
                 <div class="row">
@@ -73,8 +76,9 @@
                                         style="display: {{ old('AccountType') == 'Shopkeepr' || old('AccountType') == 'Individual' ? 'block' : 'none' }};">
                                         <div class="form-group">
                                             <label>Your CNIC (13 Digits Computerised National Identity Card)</label>
-                                            <input type="text" min="13" name="cnicNumber" class="form-control"
-                                                placeholder="XXXXX-XXXXXX-X" value='{{ old('cnicNumber') }}'>
+                                            <input type="text" maxlength="15" id="cnicNumber" name="cnicNumber"
+                                                class="form-control" placeholder="XXXXX-XXXXXX-X"
+                                                value='{{ old('cnicNumber') }}'>
                                             @error('cnicNumber')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -224,13 +228,14 @@
             $('#cnicNumber').on('input', function() {
                 var inputValue = $(this).val();
 
-                // Validate the input value against the pattern
-                var pattern = /^\d{5}-[A-Za-z]{6}-[A-Za-z]$/;
-                if (pattern.test(inputValue)) {
-                    console.log('Input format is valid.');
-                } else {
-                    alert('Invalid input format. Please enter in the format XXXXX-XXXXXX-X');
+                inputValue.replace(/-/g, '')
+                if (inputValue.length >= 5 && inputValue.length <= 5) {
+                    inputValue = inputValue.slice(0, 5) + '-' + inputValue.slice(5);
                 }
+                if (inputValue.length >= 13 && inputValue.length <= 14) {
+                    inputValue = inputValue.slice(0, 13) + '-' + inputValue.slice(13);
+                }
+                $(this).val(inputValue);
             });
         });
     </script>

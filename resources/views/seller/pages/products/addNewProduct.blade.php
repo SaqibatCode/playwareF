@@ -26,9 +26,15 @@
                 <div class="card-body">
                     <form action="{{ route('auth.uploadProduct') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+
+
+
+
                         <div class="form-group">
                             <label for="productTitle">Product Title</label>
-                            <input type="text" value="{{old('productTitle')}}" id="productTitle" name="productTitle" class="form-control"
+                            <input type="text" value="{{ old('productTitle') }}" id="productTitle" name="productTitle"
+                                class="form-control"
                                 placeholder="Brand + Product Type + Color + Material Eg. Adidas T20 Shoes red leather">
                             @error('productTitle')
                                 <span class="text-danger">{{ $message }}</span>
@@ -37,28 +43,23 @@
                         </div>
 
 
-                        <div class="row">
-                            <div class="col-6">
+                        <div class="row" id="productTypeData">
+                            <div class="col-4" id="selectProducttype">
                                 <div class="form-group">
-                                    <label for="brandName">Brand Name</label>
-                                    <input type="text" id="brandName" name="brandName" {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'readonly' : ''}} value="{{old('brandName')}}" class="form-control"
-                                        placeholder="Brand Name">
-
-
-                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox" name="thisBrandDoesNotHaveProduct"
-                                            class="custom-control-input" {{old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : ''}} id="checkbox-signin">
-                                        <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
-                                            Brand
-                                            Name.</label>
-                                        @error('brandName')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                    <label for="ProductType">Product Type</label>
+                                    <select name="ProductType" class="form-control" id="ProductType">
+                                        <option value="0" selected>Select Your Product Type</option>
+                                        <option value="1">Sell A Used Product</option>
+                                        <option value="2">Sell a New Product</option>
+                                        <option value="3">Sell Package of products</option>
+                                        <option value="4">Complete PCs</option>
+                                        <option value="5">Laptops</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <div class="col-6">
+
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -70,29 +71,66 @@
                                     @error('productCategory')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+                                </div>
+                            </div>
 
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="brandName">Brand Name</label>
+                                    <select name="brandName" class="form-control" id="brandName">
+                                        <option value="" selected>Select Brand</option>
+                                        @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
 
+                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
+                                        <input type="checkbox" name="thisBrandDoesNotHaveProduct"
+                                            class="custom-control-input"
+                                            {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : '' }}
+                                            id="checkbox-signin">
+                                        <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
+                                            Brand
+                                            Name.</label>
+                                        @error('brandName')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="productQuantity">Product Quantity</label>
-                                    <input type="number" id="productQuantity" value="{{old('productQuantity')}}" name="productQuantity" class="form-control"
-                                        placeholder="Eg. 50">
+                                    <input type="number" id="productQuantity" value="{{ old('productQuantity') }}"
+                                        name="productQuantity" class="form-control" placeholder="Eg. 50">
                                     @error('productQuantity')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label for="productSku">Product SKU</label>
-                                    <input type="text" id="productSku" value="{{old('productSku')}}" name="productSku" class="form-control"
-                                        placeholder="Eg. 50">
+                                    <input type="text" id="productSku" value="{{ old('productSku') }}" name="productSku"
+                                        class="form-control"
+                                        placeholder="Eg. Seller123, Product123, For Your Convineiece After Order">
                                     @error('productSku')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="warranty">Check warranty</label>
+
+                                    <select name="warranty" id="warranty" class="form-control">
+                                        <option value="" selected>Please Select Warranty</option>
+                            
+                                    </select>
+                                    @error('warranty')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -104,12 +142,14 @@
                                 <div class="form-group">
                                     <label for="Manufacturer">Manufacturer</label>
                                     <input type="text" id="Manufacturer" name="Manufacturer" class="form-control"
-                                        placeholder="Eg. Adidas" value="{{old('Manufacturer')}}">
+                                        placeholder="Eg. Adidas" value="{{ old('Manufacturer') }}">
                                     @error('Manufacturer')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                     <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox" {{old('thisProductHaveVariations') == 'on' ? 'checked' : ''}} name="thisProductHaveVariations" class="custom-control-input"
+                                        <input type="checkbox"
+                                            {{ old('thisProductHaveVariations') == 'on' ? 'checked' : '' }}
+                                            name="thisProductHaveVariations" class="custom-control-input"
                                             id="VariationCheckBox">
                                         <label class="custom-control-label" for="VariationCheckBox">This Product Have
                                             Variations? (Eg.
@@ -120,7 +160,8 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="CountryOfOrigin">Country of Origin</label>
-                                    <input type="text" id="CountryOfOrigin" value="{{old('CountryOfOrigin')}}" name="CountryOfOrigin" class="form-control"
+                                    <input type="text" id="CountryOfOrigin" value="{{ old('CountryOfOrigin') }}"
+                                        name="CountryOfOrigin" class="form-control"
                                         placeholder="Eg. Manufacture In Pakistan, Turkey, UAE">
                                     @error('CountryOfOrigin')
                                         <span class="text-danger">{{ $message }}</span>
@@ -130,7 +171,80 @@
                         </div>
 
                         <div class="row" id="getVariations">
+                            @php
+                                $i = 0;
+                            @endphp
+                            @while (old('Price' . $i))
+                                <div class='container-fluid row'>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label for="ColorVariation">Enter Color</label>
+                                            <input type="text" id="ColorVariation"
+                                                name="ColorVariation{{ $i }}" class="form-control"
+                                                value="{{ old('ColorVariation' . $i) }}"
+                                                placeholder="Eg. Red, Blue, Green">
+                                        </div>
 
+                                    </div>
+                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label for="SizeVariation">Enter Size</label>
+                                            <input type="text" id="SizeVariation"
+                                                name="SizeVariation{{ $i }}" class="form-control"
+                                                value="{{ old('SizeVariation' . $i) }}"
+                                                placeholder="Eg. Small, Medium, Large">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label for="MaterialVariation">Material</label>
+                                            <input type="text" id="MaterialVariation"
+                                                name="MaterialVariation{{ $i }}" class="form-control"
+                                                value="{{ old('MaterialVariation' . $i) }}"
+                                                placeholder="Eg. Plastic, Silicone, Metal">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label for="Style">Style</label>
+                                            <input type="text" id="Style" name="Style{{ $i }}"
+                                                class="form-control" value="{{ old('Style' . $i) }}"
+                                                placeholder="Eg. Red, Blue, Green">
+                                        </div>
+                                    </div>
+                                    <div class="col-1 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label for="Quanatity">Quanatity</label>
+                                            <input type="text" value="{{ old('Quanatity' . $i) }}" id="Quanatity"
+                                                name="Quanatity{{ $i }}" class="form-control"
+                                                placeholder="Eg. 10, 20, 30">
+                                        </div>
+                                    </div>
+                                    <div class="col-1 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label for="Price">Price</label>
+                                            <input type="text" id="Price" name="Price{{ $i }}"
+                                                class="form-control" value="{{ old('Price' . $i) }}"
+                                                placeholder="Eg. 10, 20, 30">
+                                        </div>
+                                    </div>
+                                    <div class="col-2 d-flex flex-column justify-content-end">
+                                        <div class="form-group">
+                                            <label>Choose Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    name='variationImage{{ $i }}'
+                                                    value="{{ old('variationImage' . $i) }}" id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $i++;
+                                @endphp
+                            @endwhile
                         </div>
 
                         <div class='contianer-fluid' id="getVariationDetails"></div>
@@ -144,6 +258,16 @@
                             @error('AboutThisitem')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
+                            @if (old('AboutThisitem'))
+                                @php
+                                    $AboutThisItem = json_decode(old('AboutThisitem'));
+                                @endphp
+
+                                @foreach ($AboutThisItem as $data)
+                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
+                                        placeholder="About This Item" value="{{ $data }}">
+                                @endforeach
+                            @endif
                         </div>
 
 
@@ -153,8 +277,9 @@
                             @error('productDescription')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <textarea name="productDescription" value="{{old('productDescription')}}"  id="productDescription" class="form-control" style="height: 400px;"
-                                placeholder="Enter Your Product Description, For A+ Content Just Paste HTML Content Here."></textarea>
+                            <textarea name="productDescription" value="{{ old('productDescription') }}" id="productDescription"
+                                class="form-control" style="height: 400px;"
+                                placeholder="Enter Your Product Description, For A+ Content Just Paste HTML Content Here.">{{ old('productDescription') }}</textarea>
                             <p>You Can Use This Editor For Your <a href="#">A+ Content.</a></p>
                         </div>
 
@@ -404,7 +529,7 @@
                     $('#getVariations').html(getVariations);
                     $('#getVariations').append(
                         `<div class='container-fluid mb-4 mt-0' id='addVaritionbtn'><span id='addVarition' class='btn btn-primary'>Add More</span></div>`
-                        )
+                    )
                 } else {
                     $('#getVariations').html('');
                 }
@@ -471,49 +596,47 @@
                 count++;
             })
 
-            // var variations = [];
-            // $(document).on('click', '.addVariation', function() {
-            //     var element = $(this).closest('.row');
-            //     var optionType = element.find('#OptionType').val();
-            //     var optionValue = element.find('#optionValue').val();
+            $('#ProductType').change(function() {
+                var usedProducts = `
+                        <option value='1 week'>1 week</option>
+                        <option value='1 Month'>1 Month</option>
+                        <option value='3 Months'>3 Months</option>
+                    `;
+                var newProduct = `
+                        <option value='6 Months'>6 Months</option>
+                        <option value='1 Year'>1 Year</option>
+                        <option value='2 Years'>2 Years</option>
+                        <option value='3 Years'>3 Years</option>
+                    `;
+                var productTypeData = `
+                        
+                    `;
 
+                if (this.value == '1') {
+                    $('#warranty').empty();
+                    $('#warranty').html(
+                        '<option value="" selected>Please Select Warranty</option>');
+                    $('#warranty').append(usedProducts);
+                }
+                if (this.value == '2') {
+                    $('#warranty').empty();
+                    $('#warranty').html(
+                        '<option value="" selected>Please Select Warranty</option>');
+                    $('#warranty').append(newProduct);
+                }
 
-            //     var variant = `
-        //         <div class='row'>
-        //             <div class='col-2'>
-        //                 <div class='form-group'>
-        //                     <input type='text' class='form-control' readonly value='${optionValue}'>
-        //                 </div>
-        //             </div>
-        //             <div class='col-2'>
-        //                 <div class='form-group'>
-        //                     <input type='text' class='form-control' Placeholder='qty'>
-        //                 </div>
-        //             </div>
-        //             <div class='col-2'>
-        //                 <div class='form-group'>
-        //                     <input type='text' class='form-control' Placeholder='price'>
-        //                 </div>
-        //             </div>
-        //             <div class='col-2'>
-        //                 <div class='form-group'>
-        //                     <input type='text' class='form-control' Placeholder='Seller SKU'>
-        //                 </div>
-        //             </div>
-        //             <div class='col-2'>
-        //                 <div class='form-group'>
-        //                     <input type='file' class='form-control' placeholder='Image'>
-        //                 </div>
-        //             </div>
-        //         </div>
-
-
-        //     `
-
-            //     $('#getVariationDetails').append(variant);
-
-            //     element.find('#optionValue').val('')
-            // });
+                if (this.value == '3') {
+                    $('#selectProducttype').removeClass('col-4')
+                    $('#selectProducttype').addClass('col-12')
+                    
+                    var ProductCondition = `
+                        <select>
+                            <option value='1'>New Product</option>
+                            <option value='2'></option>
+                        </select>
+                    `;
+                }
+            });
         })
     </script>
 @endsection

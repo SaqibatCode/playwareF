@@ -209,28 +209,10 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>Inbox</span>
-                                <span>
-                                    <span class="badge badge-pill badge-info">3</span>
-                                </span>
+                                href="{{route('seller.details')}}">
+                                Profile
                             </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>Profile</span>
-                                <span>
-                                    <span class="badge badge-pill badge-warning">1</span>
-                                </span>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                Settings
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="javascript:void(0)">
-                                <span>Lock Account</span>
-                            </a>
-                            
+
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <button class="dropdown-item d-flex align-items-center justify-content-between" type="submit">Log Out</button>
@@ -286,6 +268,8 @@
                                 </a>
                             @endif
                         </li>
+
+                       
 
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i
                                     class="bx bx-calendar"></i><span>Calendar</span></a></li>

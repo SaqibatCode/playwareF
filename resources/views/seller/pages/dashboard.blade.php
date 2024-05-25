@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <i class="bx bx-layer float-right m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Orders</h6>
-                        <h3 class="mb-3" data-plugin="counterup">1,587</h3>
+                        <h3 class="mb-3" data-plugin="counterup">0</h3>
                         <span class="badge badge-success mr-1"> +11% </span> <span class="text-muted">From previous period</span>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <i class="bx bx-dollar-circle float-right m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Revenue</h6>
-                        <h3 class="mb-3">$<span data-plugin="counterup">46,782</span></h3>
+                        <h3 class="mb-3">$<span data-plugin="counterup">0</span></h3>
                         <span class="badge badge-danger mr-1"> -29% </span> <span class="text-muted">From previous period</span>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="card-body">
                         <i class="bx bx-bx bx-analyse float-right m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Average Price</h6>
-                        <h3 class="mb-3">$<span data-plugin="counterup">15.9</span></h3>
+                        <h3 class="mb-3">$<span data-plugin="counterup">0</span></h3>
                         <span class="badge badge-warning mr-1"> 0% </span> <span class="text-muted">From previous period</span>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                     <div class="card-body">
                         <i class="bx bx-basket float-right m-0 h2 text-muted"></i>
                         <h6 class="text-muted text-uppercase mt-0">Product Sold</h6>
-                        <h3 class="mb-3" data-plugin="counterup">1,890</h3>
+                        <h3 class="mb-3" data-plugin="counterup">0</h3>
                         <span class="badge badge-success mr-1"> +89% </span> <span class="text-muted">Last year</span>
                     </div>
                 </div>
@@ -126,11 +126,11 @@
 
                         <div class="row text-center mt-4">
                             <div class="col-6">
-                                <h4>$1875.54</h4>
+                                <h4>0</h4>
                                 <p class="text-muted mb-0">Revenue</p>
                             </div>
                             <div class="col-6">
-                                <h4>541</h4>
+                                <h4>0</h4>
                                 <p class="text-muted mb-0">Total Offers</p>
                             </div>
                         </div>
@@ -160,11 +160,11 @@
 
                         <div class="row text-center mt-4">
                             <div class="col-6">
-                                <h4>$7841.12</h4>
+                                <h4>0</h4>
                                 <p class="text-muted mb-0">Total Revenue</p>
                             </div>
                             <div class="col-6">
-                                <h4>17</h4>
+                                <h4>0</h4>
                                 <p class="text-muted mb-0">Open Compaign</p>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
                                                     style="width:85%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-truncate">$ 1200.00</td>
+                                        <td class="text-truncate">0</td>
                                     </tr>
                                     <tr>
                                         <td class="text-truncate">iPad</td>
@@ -239,7 +239,7 @@
                                                     style="width:72%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-truncate">$ 1190.00</td>
+                                        <td class="text-truncate">0</td>
                                     </tr>
                                     <tr>
                                         <td class="text-truncate">OnePlus</td>
@@ -255,7 +255,7 @@
                                                     style="width:43%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-truncate">$ 999.00</td>
+                                        <td class="text-truncate">0</td>
                                     </tr>
                                     <tr>
                                         <td class="text-truncate">ZenPad</td>
@@ -271,7 +271,7 @@
                                                     style="width:37%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-truncate">$ 1150.00</td>
+                                        <td class="text-truncate">0</td>
                                     </tr>
                                     <tr>
                                         <td class="text-truncate">Pixel 2</td>
@@ -287,7 +287,7 @@
                                                     style="width:82%"></div>
                                             </div>
                                         </td>
-                                        <td class="text-truncate">$ 1180.00</td>
+                                        <td class="text-truncate">0</td>
                                     </tr>
                                     <tr>
                                         <td class="text-truncate">Pixel 2</td>
