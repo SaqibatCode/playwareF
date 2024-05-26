@@ -31,33 +31,40 @@
 
 
 
-                        <div class="form-group">
-                            <label for="productTitle">Product Title</label>
-                            <input type="text" value="{{ old('productTitle') }}" id="productTitle" name="productTitle"
-                                class="form-control"
-                                placeholder="Brand + Product Type + Color + Material Eg. Adidas T20 Shoes red leather">
-                            @error('productTitle')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-
-                        </div>
-
-
-                        <div class="row" id="productTypeData">
-                            <div class="col-4" id="selectProducttype">
+                        <div class="row">
+                            <div class="col-6" id="selectProducttype">
                                 <div class="form-group">
                                     <label for="ProductType">Product Type</label>
                                     <select name="ProductType" class="form-control" id="ProductType">
                                         <option value="0" selected>Select Your Product Type</option>
                                         <option value="1">Sell A Used Product</option>
                                         <option value="2">Sell a New Product</option>
-                                        <option value="3">Sell Package of products</option>
+                                        {{-- <option value="3">Sell Package of products</option> --}}
                                         <option value="4">Complete PCs</option>
                                         <option value="5">Laptops</option>
                                     </select>
                                 </div>
                             </div>
 
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="productTitle">Product Title</label>
+                                    <input type="text" value="{{ old('productTitle') }}" id="productTitle"
+                                        name="productTitle" class="form-control"
+                                        placeholder="Brand + Product Type + Color + Material Eg. Adidas T20 Shoes red leather">
+                                    @error('productTitle')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row" id="productTypeData">
 
                             <div class="col-4">
                                 <div class="form-group">
@@ -98,10 +105,57 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-4" id="selectProductYear">
+                                <div class="form-group">
+                                    <label for="yearOfProduct">Year-Make of Product</label>
+
+                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                        <option value="0" selected>Select Year/Make of Your Product</option>
+
+                                    </select>
+                                </div>
+
+
+
+                            </div>
+
+
                         </div>
 
                         <div class="row">
                             <div class="col-4">
+                                <div class="form-group">
+                                    <label for="warranty">Check warranty</label>
+                                    <select name="warranty" id="warranty" class="form-control">
+                                        <option value="" selected>Please Select Warranty</option>
+
+                                    </select>
+                                    @error('warranty')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-4 d-none" id="repairedProductDiv">
+
+                            </div>
+
+                            <div class="col-4" id="reasonForSellingDiv">
+                                <div class="form-group">
+                                    <label for="reason">Reason for Selling (Optional)</label>
+                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="explainRepairingDiv" class="d-none">
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="productQuantity">Product Quantity</label>
                                     <input type="number" id="productQuantity" value="{{ old('productQuantity') }}"
@@ -111,28 +165,33 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label for="productSku">Product SKU</label>
-                                    <input type="text" id="productSku" value="{{ old('productSku') }}" name="productSku"
-                                        class="form-control"
+                                    <input type="text" id="productSku" value="{{ old('productSku') }}"
+                                        name="productSku" class="form-control"
                                         placeholder="Eg. Seller123, Product123, For Your Convineiece After Order">
                                     @error('productSku')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
+                        </div>
 
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
-                            
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="originalPrice">Original Price</label>
+                                    <input type="number" id="originalPrice" name="originalPrice" class="form-control"
+                                        placeholder="Eg. 1500">
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="sellPrice">Sale Price (Leave Empty If Not On Sale)</label>
+                                    <input type="number" id="sellPrice" name="sellPrice" class="form-control"
+                                        placeholder="Eg. 1200">
                                 </div>
                             </div>
                         </div>
@@ -407,6 +466,10 @@
         });
 
 
+
+
+
+
         let Container = document.querySelector('#aboutThisItemContainer');
         let addMoreBtn = document.querySelector('#addMoreBtn');
         let isMoreThanSeven = 1; // You forgot to declare this variable with `let`
@@ -467,10 +530,11 @@
             }
         });
 
+
         $(document).ready(function() {
             $('#VariationCheckBox').on('change', function() {
                 if ($(this).prop('checked') == true) {
-                    var getVariations = ` 
+                    var getVariations = `
                     <div class='container-fluid row'>
                     <div class="col-2">
                                 <div class="form-group">
@@ -521,10 +585,10 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name='variationImage0' id="customFile">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>            
+                                            </div>
                                         </div>
-                            </div>   
-                        </div>                        
+                            </div>
+                        </div>
                             `
                     $('#getVariations').html(getVariations);
                     $('#getVariations').append(
@@ -536,7 +600,7 @@
             });
             var count = 1;
             $(document).on('click', '#addVarition', function() {
-                var getVariations = ` 
+                var getVariations = `
                     <div class='container-fluid row'>
                     <div class="col-2">
                                 <div class="form-group">
@@ -587,10 +651,10 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name='variationImage${count}' id="customFile">
                                                 <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>            
+                                            </div>
                                         </div>
-                            </div>   
-                        </div>                        
+                            </div>
+                        </div>
                             `
                 $('#addVaritionbtn').before(getVariations);
                 count++;
@@ -609,34 +673,108 @@
                         <option value='3 Years'>3 Years</option>
                     `;
                 var productTypeData = `
-                        
+
                     `;
+
+                let yearOfProduct = document.getElementById('yearOfProduct')
+
+                let years;
+                let currentYear = new Date().getFullYear()
+                let yearValue = 1
+
+                for (let index = 2010; index <= currentYear; index++) {
+                    years += `<option value='${yearValue}'>${index}</option>`;
+                    yearValue++;
+                }
+
+                $('#repairedProductDiv').addClass('d-none')
+                $('#repairedProductDiv').empty();
+                $('#explainRepairingDiv').addClass('d-none');
+                $('#explainRepairingDiv').empty();
+
 
                 if (this.value == '1') {
                     $('#warranty').empty();
                     $('#warranty').html(
                         '<option value="" selected>Please Select Warranty</option>');
                     $('#warranty').append(usedProducts);
+
+                    $('#yearOfProduct').empty();
+                    $('#yearOfProduct').html(
+                        '<option value="" selected>Please Select Year/Make of Product</option>');
+                    $('#yearOfProduct').append(years);
+
+                    $('#repairedProductDiv').removeClass('d-none');
+                    $('#repairedProductDiv').empty();
+                    $('#repairedProductDiv').html(
+                        `<div class="form-group">
+                                    <label for="repaired">Is Product Repaired/Opened?</label>
+                                    <select name="repaired" id="repaired" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>`
+                    );
+
+
+                    $('#repaired').change(function() {
+
+                        if (this.value == "1") {
+                            $('#explainRepairingDiv').removeClass('d-none');
+                            $('#explainRepairingDiv').html(
+                                `<div class="form-group">
+                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..."></textarea>
+                            </div>`
+                            );
+
+                        } else {
+                            $('#explainRepairingDiv').addClass('d-none');
+                            $('#explainRepairingDiv').empty();
+                        }
+
+                    });
+
+
                 }
                 if (this.value == '2') {
                     $('#warranty').empty();
                     $('#warranty').html(
                         '<option value="" selected>Please Select Warranty</option>');
                     $('#warranty').append(newProduct);
+
+                    $('#yearOfProduct').empty();
+                    $('#yearOfProduct').html(
+                        '<option value="" selected>Please Select Year/Make of Product</option>');
+                    $('#yearOfProduct').append(years);
+
+                    $('#repairedProductDiv').addClass('d-none')
+                    $('#repairedProductDiv').empty();
+
+                    $('#explainRepairingDiv').addClass('d-none');
+                    $('#explainRepairingDiv').empty();
                 }
 
                 if (this.value == '3') {
                     $('#selectProducttype').removeClass('col-4')
                     $('#selectProducttype').addClass('col-12')
-                    
+
                     var ProductCondition = `
                         <select>
                             <option value='1'>New Product</option>
                             <option value='2'></option>
                         </select>
                     `;
+
+                    $('#repairedProductDiv').addClass('d-none')
+                    $('#repairedProductDiv').empty();
+
+                    $('#explainRepairingDiv').addClass('d-none');
+                    $('#explainRepairingDiv').empty();
                 }
             });
+
         })
     </script>
 @endsection
