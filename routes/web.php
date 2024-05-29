@@ -16,6 +16,7 @@ use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboar
 use App\Http\Controllers\Sellers\Products\ProductsController;
 use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
 use App\Http\Controllers\Sellers\Shop\ShopController;
+use App\Http\Controllers\Sellers\Package\PackageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,6 +91,7 @@ Route::middleware('seller')->prefix('seller')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/all-products', [ProductsController::class, 'getAllProducts'])->name('seller.allProducts');
         Route::get('/add-new-product', [ProductsController::class, 'addNewProduct'])->name('seller.addNewProduct');
+        Route::get('/add-new-package', [PackageController::class, 'getNewPackage'])->name('seller.getNewPackage');
         Route::get('/draft-products', [ProductsController::class, 'draftProducts'])->name('seller.draftProducts');
     });
 

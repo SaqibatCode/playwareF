@@ -252,7 +252,8 @@
                                     class="bx bx-file"></i><span>Products</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('seller.allProducts') }}">All Products</a></li>
-                                <li><a href="{{ route('seller.addNewProduct') }}">Add New Products</a></li>
+                                <li><a href="{{ route('seller.addNewProduct') }}">Add New Product</a></li>
+                                <li><a href="{{ route('seller.getNewPackage') }}">Add New Package</a></li>
                                 {{-- <li><a href="{{ route('seller.draftProducts') }}">Draft Porducts</a></li> --}}
                             </ul>
                         </li>
@@ -261,7 +262,7 @@
                             @php
                                 $verified = Auth::user()->approved == 0 ? true : false;
                             @endphp
-                        
+
                             @if($verified)
                                 <a href="{{ route('auth.verificationForm') }}" class="waves-effect">
                                     <i class="bx bx-badge-check"></i><span>Verification</span>
@@ -269,7 +270,7 @@
                             @endif
                         </li>
 
-                       
+
 
                         {{-- <li><a href="calendar.html" class=" waves-effect"><i
                                     class="bx bx-calendar"></i><span>Calendar</span></a></li>

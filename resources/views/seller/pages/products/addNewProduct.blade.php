@@ -725,7 +725,7 @@
                             $('#explainRepairingDiv').html(
                                 `<div class="form-group">
                                     <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
-                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..."></textarea>
+                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
                             </div>`
                             );
 
