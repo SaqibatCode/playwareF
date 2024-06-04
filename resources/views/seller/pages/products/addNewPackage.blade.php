@@ -30,8 +30,7 @@
                         <div class="form-group">
                             <label for="productTitle">Package Title</label>
                             <input type="text" value="{{ old('productTitle') }}" id="productTitle" name="productTitle"
-                                class="form-control"
-                                placeholder="Package 1 Flash Deal">
+                                class="form-control" placeholder="Package 1 Flash Deal">
                             {{-- @error('productTitle')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror --}}
@@ -249,7 +248,7 @@
         `
 
                 packageProducts++
-            }else{
+            } else {
                 return alert('Maximum Product Limit Reached For Package')
             }
         })

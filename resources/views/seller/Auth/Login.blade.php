@@ -62,6 +62,10 @@
                                                     <button class="btn btn-primary btn-block" type="submit"> Sign In
                                                     </button>
                                                 </div>
+                                                <div class="mb-3 text-center">
+                                                    <a href="#" class="btn btn-success btn-block"> Sign Up
+                                                    </a>
+                                                </div>
                                             </form>
                                         </div>
                                         <!-- end card-body -->
