@@ -146,6 +146,8 @@
 
                             <div class="col-4 d-none" id="repairedProductDiv"></div>
 
+                            <div class="col-4 d-none" id="laptopUsedOrNotDiv"></div>
+
                         </div>
 
                         <div id="explainRepairingDiv" class="d-none">
@@ -475,8 +477,6 @@
 
 
 
-        let Container = document.querySelector('#aboutThisItemContainer');
-        let addMoreBtn = document.querySelector('#addMoreBtn');
         let isMoreThanSeven = 1; // You forgot to declare this variable with `let`
 
         function isMoreThanSevenFunc() {
@@ -493,6 +493,8 @@
                 let input = document.createElement('input');
                 input.classList.add('form-control', 'AboutThisItem', 'mt-2');
                 input.placeholder = 'About This Item';
+                let addMoreBtn = document.querySelector('#addMoreBtn');
+                let Container = document.querySelector('#aboutThisItemContainer');
                 Container.insertBefore(input, addMoreBtn);
                 isMoreThanSeven += 1;
                 isMoreThanSevenFunc(); // Corrected function call
@@ -536,6 +538,7 @@
 
         let countStorage = 2
         let countAdditionalPCParts = 2
+        let countLaptopStorage = 2
 
 
         $(document).ready(function() {
@@ -669,7 +672,7 @@
 
             $('#ProductType').change(function() {
                 var usedProducts = `
-                        <option value='1 week'>1 week</option>
+                        <option value='1 Week'>1 Week</option>
                         <option value='1 Month'>1 Month</option>
                         <option value='3 Months'>3 Months</option>
                     `;
@@ -679,9 +682,15 @@
                         <option value='2 Years'>2 Years</option>
                         <option value='3 Years'>3 Years</option>
                     `;
-                var productTypeData = `
-
+                var laptop = `
+                        <option value='1 Week'>1 Week</option>
+                        <option value='1 Month'>1 Month</option>
+                        <option value='3 Months'>3 Months</option>
+                        <option value='6 Months'>6 Months</option>
+                        <option value='1 Year'>1 Year</option>
                     `;
+
+                var productTypeData = ``;
 
                 let yearOfProduct = document.getElementById('yearOfProduct')
 
@@ -860,6 +869,7 @@
                     `);
 
                 }
+
                 if (this.value == '2') {
                     let brandNameDiv = document.getElementById('brandNameDiv')
                     let productCategoryDiv = document.getElementById('productCategoryDiv')
@@ -991,7 +1001,6 @@
 
 
                 }
-
 
                 if (this.value == '4') {
 
@@ -1176,7 +1185,7 @@
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
-                                                    placeholder="Eg. GSkill 12GB DDR4 ">
+                                                    placeholder="Eg. GSkill 16GB DDR4 ">
                                             </div>
                                         </div>
                                         <div class="col-3">
@@ -1432,8 +1441,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-`)
+                            </div>`)
 
                     $('#addMoreStorageBtn').click(function() {
                         $('#storageSpecsDiv').append(`<div id="row${countStorage}" class='row'>
@@ -1597,6 +1605,345 @@
                     $('#yearOfProduct').append(years);
 
                 }
+
+                if (this.value == '5') {
+
+
+                    let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
+                    productReasonAndWarrantyDiv.innerHTML =
+                        `<div class="col-4 d-none" id="repairedProductDiv"></div>`
+
+
+                    document.getElementById("productTypeData").innerHTML = `
+                    <div class="col-4" id="warrantyDiv">
+                                <div class="form-group">
+                                    <label for="warranty">Check warranty</label>
+                                    <select name="warranty" id="warranty" class="form-control">
+                                        <option value="" selected>Please Select Warranty</option>
+
+                                    </select>
+                                    @error('warranty')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-4" id="reasonForSellingDiv">
+                                <div class="form-group">
+                                    <label for="reason">Reason for Selling (Optional)</label>
+                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                                </div>
+                            </div>
+                            <div class="col-4" id="selectProductYear">
+                                <div class="form-group">
+                                    <label for="yearOfProduct">Year-Make of Product</label>
+
+                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                        <option value="0" selected>Select Year/Make of Your Product</option>
+
+                                    </select>
+                                </div>
+                            </div>`
+
+
+
+
+
+                    $('#completePCparts').removeClass('d-none')
+                    $("#completePCparts").empty()
+                    $("#completePCparts").html(`
+                    <h2>Laptop Parts:</h2>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Processor:</h4>
+                                </div>
+                                <div class="col-12">
+                                    <div class='row'>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="processorName">Enter Name</label>
+                                                <input type="text" id="processorName" name="processorName"
+                                                    class="form-control" placeholder="Eg. Core i7 10th Gen">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="processorBrand">Brand</label>
+                                                <select id="processorBrand" name="processorBrand" class="form-control">
+                                                    <option value="0">Please Select Brand</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Graphic Card:</h4>
+                                </div>
+                                <div class="col-12">
+                                    <div class='row'>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="graphicCardName">Enter Name</label>
+                                                <input type="text" id="graphicCardName" name="graphicCardName"
+                                                    class="form-control" placeholder="Eg. Gigabyte GTX 1050">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="graphicCardBrand">Brand</label>
+                                                <select id="graphicCardBrand" name="graphicCardBrand"
+                                                    class="form-control">
+                                                    <option value="0">Please Select Brand</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="graphicCardMemory">Memory</label>
+                                                <select id="graphicCardMemory" name="graphicCardMemory"
+                                                    class="form-control">
+                                                    <option value="0">Please Select Memory</option>
+                                                    <option value="1">1 GB</option>
+                                                    <option value="2">2 GB</option>
+                                                    <option value="2">3 GB</option>
+                                                    <option value="2">4 GB</option>
+                                                    <option value="2">6 GB</option>
+                                                    <option value="2">8 GB</option>
+                                                    <option value="2">12 GB</option>
+                                                    <option value="2">24 GB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>RAM:</h4>
+                                </div>
+                                <div class="col-12">
+                                    <div class='row'>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="ramName">Enter Name</label>
+                                                <input type="text" id="ramName" name="ramName" class="form-control"
+                                                    placeholder="Eg. Kingston 8GB DDR4 ">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="ramBrand">Brand</label>
+                                                <select id="ramBrand" name="ramBrand" class="form-control">
+                                                    <option value="0">Please Select Brand</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="ramMemory">Memory</label>
+                                                <select id="ramMemory" name="ramMemory" class="form-control">
+                                                    <option value="0">Please Select Memory</option>
+                                                    <option value="1">1 GB</option>
+                                                    <option value="2">2 GB</option>
+                                                    <option value="2">4 GB</option>
+                                                    <option value="2">8 GB</option>
+                                                    <option value="2">16 GB</option>
+                                                    <option value="2">32 GB</option>
+                                                    <option value="2">64 GB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="ramQuantity">Quantity</label>
+                                                <input type="number" id="ramQuantity" Quantity="ramName"
+                                                    class="form-control" placeholder="Eg. 2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4>Storage:</h4>
+                                </div>
+                                <div id="storageSpecsDiv" class="col-12">
+                                    <div id="row1" class='row'>
+                                        <div class="col-12">
+                                         <h5>storage 1</h5>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageName1">Enter Name</label>
+                                                <input type="text" id="storageName1" name="storageName1"
+                                                    class="form-control"
+                                                    placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageBrand1">Brand</label>
+                                                <select id="storageBrand1" name="storageBrand1" class="form-control">
+                                                    <option value="0">Please Select Brand</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageType1">Type</label>
+                                                <select id="storageType1" name="storageType1" class="form-control">
+                                                    <option value="0">Please Select Type</option>
+                                                    <option value="1">HDD</option>
+                                                    <option value="2">SSD</option>
+                                                    <option value="3">NVMe</option>
+                                                    <option value="4">M.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageMemory1">Memory</label>
+                                                <select id="storageMemory1" name="storageMemory1" class="form-control">
+                                                    <option value="0">Please Select Memory</option>
+                                                    <option value="1">120 GB</option>
+                                                    <option value="2">240 GB</option>
+                                                    <option value="3">250 GB</option>
+                                                    <option value="4">256 GB</option>
+                                                    <option value="5">480 GB</option>
+                                                    <option value="6">500 GB</option>
+                                                    <option value="7">512 GB</option>
+                                                    <option value="8">1 TB</option>
+                                                    <option value="9">2 TB</option>
+                                                    <option value="10">4 TB</option>
+                                                    <option value="11">8 TB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-3 mb-3">
+                                    <button type="button" class="btn btn-primary" id="addMoreStorageBtn">Add More Storage</button>
+                                </div>
+                            </div>`)
+
+                    $('#addMoreStorageBtn').click(function() {
+                        $('#storageSpecsDiv').append(`<div id="row${countLaptopStorage}" class='row'>
+                                        <div class="col-12">
+                                         <h5>storage ${countLaptopStorage}</h5>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageName${countLaptopStorage}">Enter Name</label>
+                                                <input type="text" id="storageName${countLaptopStorage}" name="storageName${countLaptopStorage}"
+                                                    class="form-control"
+                                                    placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageBrand${countLaptopStorage}">Brand</label>
+                                                <select id="storageBrand${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control">
+                                                    <option value="0">Please Select Brand</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageType${countLaptopStorage}">Type</label>
+                                                <select id="storageType${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control">
+                                                    <option value="0">Please Select Type</option>
+                                                    <option value="1">HDD</option>
+                                                    <option value="2">SSD</option>
+                                                    <option value="3">NVMe</option>
+                                                    <option value="4">M.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-group">
+                                                <label for="storageMemory${countLaptopStorage}">Memory</label>
+                                                <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control">
+                                                    <option value="0">Please Select Memory</option>
+                                                    <option value="1">120 GB</option>
+                                                    <option value="2">240 GB</option>
+                                                    <option value="3">250 GB</option>
+                                                    <option value="4">256 GB</option>
+                                                    <option value="5">480 GB</option>
+                                                    <option value="6">500 GB</option>
+                                                    <option value="7">512 GB</option>
+                                                    <option value="8">1 TB</option>
+                                                    <option value="9">2 TB</option>
+                                                    <option value="10">4 TB</option>
+                                                    <option value="11">8 TB</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <button type="button" class="btn btn-danger mb-3" id="removeStorage${countLaptopStorage}" onclick="removeStorage(${countLaptopStorage})">Remove</button>
+                                        </div>
+                                    </div>`)
+                        countLaptopStorage++
+                    })
+
+                    $('#warranty').empty();
+                    $('#warranty').html(
+                        '<option value="" selected>Please Select Warranty</option>');
+                    $('#warranty').append(laptop);
+
+                    $('#yearOfProduct').empty();
+                    $('#yearOfProduct').html(
+                        '<option value="" selected>Please Select Year/Make of Product</option>');
+                    $('#yearOfProduct').append(years);
+
+                    $('#repairedProductDiv').removeClass('d-none');
+                    $('#repairedProductDiv').empty();
+                    $('#repairedProductDiv').html(
+                        `<div class="form-group">
+                                    <label for="repaired">Is Product Repaired/Opened?</label>
+                                    <select name="repaired" id="repaired" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>`
+                    );
+
+
+                    $('#repaired').change(function() {
+
+                        if (this.value == "1") {
+                            $('#explainRepairingDiv').removeClass('d-none');
+                            $('#explainRepairingDiv').html(
+                                `<div class="form-group">
+                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
+                            </div>`
+                            );
+
+                        } else {
+                            $('#explainRepairingDiv').addClass('d-none');
+                            $('#explainRepairingDiv').empty();
+                        }
+
+                    });
+
+
+
+                    $('#additionalPCparts').addClass('d-none');
+                    $('#additionalPCparts').empty();
+
+                    $('#aboutThisItemContainer').empty();
+
+
+                }
             });
 
         })
@@ -1604,7 +1951,14 @@
 
         const removeStorage = (id) => {
 
-            countStorage--
+
+            if (countStorage > 1) {
+                countStorage--
+            }
+
+            if (countLaptopStorage > 1) {
+                countLaptopStorage--
+            }
 
 
             let productRow = document.getElementById(`row${id}`)
