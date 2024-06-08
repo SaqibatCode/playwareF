@@ -200,7 +200,7 @@
 
                         </div>
 
-                        <div class="row" id="manufacturerAndCountryOfOriginDiv">
+                        {{-- <div class="row" id="manufacturerAndCountryOfOriginDiv">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="Manufacturer">Manufacturer</label>
@@ -308,15 +308,16 @@
                                     $i++;
                                 @endphp
                             @endwhile
-                        </div>
+                        </div> --}}
 
-                        <div class='contianer-fluid' id="getVariationDetails"></div>
+                        {{-- <div class='contianer-fluid' id="getVariationDetails"></div> --}}
 
                         <div class="form-group" id="aboutThisItemContainer">
                             <label for="AboutThisItem">About this item</label>
                             <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
                                 placeholder="About This Item">
-                            <span class="btn btn-primary mt-2" id="addMoreBtn">Add More</span>
+                            <button type="button" class="btn btn-primary mt-2" id="addMoreBtn"
+                                onclick="addMoreAbout()">Add More</button>
                             <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
                             @error('AboutThisitem')
                                 <span class="text-danger">{{ $message }}</span>
@@ -486,9 +487,8 @@
             }
         }
 
-        addMoreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
 
+        function addMoreAbout() {
             if (isMoreThanSeven < 7) {
                 let input = document.createElement('input');
                 input.classList.add('form-control', 'AboutThisItem', 'mt-2');
@@ -497,8 +497,8 @@
                 isMoreThanSeven += 1;
                 isMoreThanSevenFunc(); // Corrected function call
             }
-        });
 
+        }
         // Initial check when the page loads
         isMoreThanSevenFunc();
 
@@ -837,6 +837,28 @@
                     $('#additionalPCparts').empty();
 
 
+                    $('#aboutThisItemContainer').empty();
+                    $('#aboutThisItemContainer').append(`
+                    <label for="AboutThisItem">About this item</label>
+                            <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
+                                placeholder="About This Item">
+                            <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
+                            <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
+                            @error('AboutThisitem')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            @if (old('AboutThisitem'))
+                                @php
+                                    $AboutThisItem = json_decode(old('AboutThisitem'));
+                                @endphp
+
+                                @foreach ($AboutThisItem as $data)
+                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
+                                        placeholder="About This Item" value="{{ $data }}">
+                                @endforeach
+                            @endif
+                    `);
+
                 }
                 if (this.value == '2') {
                     let brandNameDiv = document.getElementById('brandNameDiv')
@@ -931,6 +953,7 @@
                         '<option value="" selected>Please Select Year/Make of Product</option>');
                     $('#yearOfProduct').append(years);
 
+
                     $('#repairedProductDiv').addClass('d-none')
                     $('#repairedProductDiv').empty();
 
@@ -942,6 +965,30 @@
 
                     $('#additionalPCparts').addClass('d-none');
                     $('#additionalPCparts').empty();
+
+
+                    $('#aboutThisItemContainer').empty();
+                    $('#aboutThisItemContainer').append(`
+                    <label for="AboutThisItem">About this item</label>
+                            <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
+                                placeholder="About This Item">
+                            <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
+                            <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
+                            @error('AboutThisitem')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            @if (old('AboutThisitem'))
+                                @php
+                                    $AboutThisItem = json_decode(old('AboutThisitem'));
+                                @endphp
+
+                                @foreach ($AboutThisItem as $data)
+                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
+                                        placeholder="About This Item" value="{{ $data }}">
+                                @endforeach
+                            @endif
+                    `);
+
 
                 }
 
@@ -1498,7 +1545,10 @@
 
 
                     $('#addMoreadditionalPCpartBtn').click(function() {
-                        $('#additionalPCpartsSpecs').append(`<div id="row${countAdditionalPCParts}" class='row'>
+
+                        if (countAdditionalPCParts <= 5) {
+
+                            $('#additionalPCpartsSpecs').append(`<div id="row${countAdditionalPCParts}" class='row'>
                                     <div class="col-12">
                                         <h5>Additional Part ${countAdditionalPCParts}</h5>
                                     </div>
@@ -1523,14 +1573,16 @@
                                     </div>
                                 </div>`)
 
-                        countAdditionalPCParts++
+                            countAdditionalPCParts++
+                        } else {
+                            alert('You Can Only Add 5 Additional Parts')
+                        }
                     })
 
 
 
-
-                    $('#manufacturerAndCountryOfOriginDiv').empty();
-                    $('#getVariations').empty();
+                    // $('#manufacturerAndCountryOfOriginDiv').empty();
+                    // $('#getVariations').empty();
                     $('#aboutThisItemContainer').empty();
 
                     $('#warranty').empty();
