@@ -194,7 +194,9 @@
                             </div>
                         </div>
 
-                        <div id="completePCparts" class="d-none">
+                        <div id="completePCparts" class="d-none"></div>
+
+                        <div id="additionalPCparts" class="row d-none">
 
                         </div>
 
@@ -533,6 +535,7 @@
         });
 
         let countStorage = 2
+        let countAdditionalPCParts = 2
 
 
         $(document).ready(function() {
@@ -827,6 +830,12 @@
 
                     });
 
+                    $('#completePCparts').addClass('d-none')
+                    $("#completePCparts").empty()
+
+                    $('#additionalPCparts').addClass('d-none');
+                    $('#additionalPCparts').empty();
+
 
                 }
                 if (this.value == '2') {
@@ -928,6 +937,11 @@
                     $('#explainRepairingDiv').addClass('d-none');
                     $('#explainRepairingDiv').empty();
 
+                    $('#completePCparts').addClass('d-none')
+                    $("#completePCparts").empty()
+
+                    $('#additionalPCparts').addClass('d-none');
+                    $('#additionalPCparts').empty();
 
                 }
 
@@ -974,6 +988,7 @@
                     $('#completePCparts').removeClass('d-none')
                     $("#completePCparts").empty()
                     $("#completePCparts").html(`
+                    <h2>PC Parts:</h2>
                             <div class="row">
                                 <div class="col-12">
                                     <h4>Processor:</h4>
@@ -1168,7 +1183,7 @@
                                 <div id="storageSpecsDiv" class="col-12">
                                     <div id="row1" class='row'>
                                         <div class="col-12">
-                                         <h5>storage 1:</h5>
+                                         <h5>storage 1</h5>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
@@ -1376,7 +1391,7 @@
                     $('#addMoreStorageBtn').click(function() {
                         $('#storageSpecsDiv').append(`<div id="row${countStorage}" class='row'>
                                         <div class="col-12">
-                                         <h5>storage ${countStorage}:</h5>
+                                         <h5>storage ${countStorage}</h5>
                                         </div>
                                         <div class="col-3">
                                             <div class="form-group">
@@ -1441,6 +1456,82 @@
                         countStorage++
                     })
 
+
+                    $('#additionalPCparts').removeClass('d-none');
+                    $('#additionalPCparts').empty();
+                    $('#additionalPCparts').append(` <div class="col-12">
+                                <h2>Additional PC Parts:</h2>
+                            </div>
+                            <div id="additionalPCpartsSpecs" class="col-12">
+                                <div id="row1" class='row'>
+                                    <div class="col-12">
+                                        <h5>Additional Part 1</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalPCpartName1">Enter Name</label>
+                                            <input type="text" id="additionalPCpartName1" name="additionalPCpartName1"
+                                                class="form-control"
+                                                placeholder="Eg. Case Fans">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalPCpartUsedOrNew1">Used Or New?</label>
+                                            <select id="additionalPCpartUsedOrNew1" name="additionalPCpartUsedOrNew1" class="form-control">
+                                                <option value="0">Please Select</option>
+                                                <option value="1">Used</option>
+                                                <option value="2">New</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mb-3">
+                                <p>You can add upto 5 additional parts.</p>
+                                <button type="button" class="btn btn-primary" id="addMoreadditionalPCpartBtn">Add More
+                                    Parts</button>
+                            </div>`);
+
+
+
+
+                    $('#addMoreadditionalPCpartBtn').click(function() {
+                        $('#additionalPCpartsSpecs').append(`<div id="row${countAdditionalPCParts}" class='row'>
+                                    <div class="col-12">
+                                        <h5>Additional Part ${countAdditionalPCParts}</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalPCpartName${countAdditionalPCParts}">Enter Name</label>
+                                            <input type="text" id="additionalPCpartName${countAdditionalPCParts}" name="additionalPCpartName${countAdditionalPCParts}"
+                                                class="form-control"
+                                                placeholder="Eg. Case Fans">
+                                        </div>
+                                    </div>
+                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
+                                        <div class="form-group">
+                                            <label for="additionalPCpartUsedOrNew${countAdditionalPCParts}">Used Or New?</label>
+                                            <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control">
+                                                <option value="0">Please Select</option>
+                                                <option value="1">Used</option>
+                                                <option value="2">New</option>
+                                            </select>
+                                        </div>
+                                        <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalPCpart${countAdditionalPCParts}" onclick="removeAdditionalPCpart(${countAdditionalPCParts})">Remove</button>
+                                    </div>
+                                </div>`)
+
+                        countAdditionalPCParts++
+                    })
+
+
+
+
+                    $('#manufacturerAndCountryOfOriginDiv').empty();
+                    $('#getVariations').empty();
+                    $('#aboutThisItemContainer').empty();
 
                     $('#warranty').empty();
                     $('#warranty').html(
@@ -1530,6 +1621,72 @@
                         }
                         if (labelIndex == 4) {
                             labelElement.setAttribute('for', `storageUsedOrNew${i+1}`);
+                        }
+
+                    })
+                })
+
+
+
+            }
+
+
+        }
+
+        const removeAdditionalPCpart = (id) => {
+
+            countAdditionalPCParts--
+
+
+            let productRow = document.getElementById(`row${id}`)
+
+            if (productRow.parentNode.id == 'additionalPCpartsSpecs') {
+
+                productRow.parentNode.removeChild(productRow)
+
+                let allRows = Array.from(document.getElementById('additionalPCpartsSpecs').children);
+
+                console.log(allRows);
+
+                let allLabels = []
+
+                allRows.forEach((e, i) => {
+                    e.id = `row${i + 1}`;
+
+                    let heading = e.querySelector('.col-12 h5').innerText = `Additional Part ${i+1}`;
+                    let label = e.querySelectorAll('.col-3 .form-group label');
+                    let input = e.querySelector('.col-3 .form-group input');
+                    let select = e.querySelectorAll('.col-3 .form-group select');
+                    let button = e.querySelector('.align-items-center button');
+
+                    if (i > 0) {
+                        button.id = `removeAdditionalPCpart${i+1}`;
+                        button.setAttribute('onclick', `removeAdditionalPCpart(${i+1})`)
+                    }
+
+
+                    input.id = `additionalPCpartName${i+1}`
+                    input.name = `additionalPCpartName${i+1}`
+
+                    allLabels = Array.from(label);
+                    allSelects = Array.from(select);
+
+
+                    allSelects[0].id = `additionalPCpartUsedOrNew${i+1}`
+                    allSelects[0].name = `additionalPCpartUsedOrNew${i+1}`
+
+
+
+                    allLabels.forEach((labelElement, labelIndex) => {
+
+                        let forAttr = labelElement.getAttribute('for');
+
+
+                        if (labelIndex == 0) {
+                            labelElement.setAttribute('for', `additionalPCpartName${i+1}`);
+                        }
+                        if (labelIndex == 1) {
+                            labelElement.setAttribute('for', `additionalPCpartUsedOrNew${i+1}`);
                         }
 
                     })
