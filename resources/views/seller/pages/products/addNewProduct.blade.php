@@ -711,6 +711,9 @@
 
                 if (this.value == '1') {
 
+                    countStorage = 2;
+                    countLaptopStorage = 2;
+                    countAdditionalPCParts = 2;
 
                     let brandNameDiv = document.getElementById('brandNameDiv')
                     let productCategoryDiv = document.getElementById('productCategoryDiv')
@@ -871,6 +874,11 @@
                 }
 
                 if (this.value == '2') {
+
+                    countLaptopStorage = 2;
+                    countStorage = 2;
+                    countAdditionalPCParts = 2;
+
                     let brandNameDiv = document.getElementById('brandNameDiv')
                     let productCategoryDiv = document.getElementById('productCategoryDiv')
 
@@ -1003,6 +1011,8 @@
                 }
 
                 if (this.value == '4') {
+
+                    countLaptopStorage = 2
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
@@ -1518,7 +1528,7 @@
                                 <h2>Additional PC Parts:</h2>
                             </div>
                             <div id="additionalPCpartsSpecs" class="col-12">
-                                <div id="row1" class='row'>
+                                <div id="additionalPCpartsrow1" class='row'>
                                     <div class="col-12">
                                         <h5>Additional Part 1</h5>
                                     </div>
@@ -1556,7 +1566,7 @@
 
                         if (countAdditionalPCParts <= 5) {
 
-                            $('#additionalPCpartsSpecs').append(`<div id="row${countAdditionalPCParts}" class='row'>
+                            $('#additionalPCpartsSpecs').append(`<div id="additionalPCpartsrow${countAdditionalPCParts}" class='row'>
                                     <div class="col-12">
                                         <h5>Additional Part ${countAdditionalPCParts}</h5>
                                     </div>
@@ -1608,11 +1618,27 @@
 
                 if (this.value == '5') {
 
+                    countStorage = 2
+                    countAdditionalPCParts = 2;
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col-4 d-none" id="repairedProductDiv"></div>`
+                        `<div class="col-4 d-none" id="repairedProductDiv"></div>
+                        <div class="col-4 d-none" id="laptopUsedOrNotDiv"></div>`
 
+                    $('#laptopUsedOrNotDiv').removeClass('d-none');
+                    $('#laptopUsedOrNotDiv').empty();
+                    $('#laptopUsedOrNotDiv').append(`
+                                            <div class="form-group">
+                                                <label for="laptopUsedOrNew">Used Or New?</label>
+                                                <select id="laptopUsedOrNew" name="laptopUsedOrNew"
+                                                    class="form-control">
+                                                    <option value="0">Please Select</option>
+                                                    <option value="1">Used</option>
+                                                    <option value="2">New</option>
+                                                </select>
+                                            </div>
+                                        `);
 
                     document.getElementById("productTypeData").innerHTML = `
                     <div class="col-4" id="warrantyDiv">
@@ -1887,7 +1913,7 @@
                                             </div>
                                         </div>
                                         <div class="col-3">
-                                            <button type="button" class="btn btn-danger mb-3" id="removeStorage${countLaptopStorage}" onclick="removeStorage(${countLaptopStorage})">Remove</button>
+                                            <button type="button" class="btn btn-danger mb-3" id="removeLaptopStorage${countLaptopStorage}" onclick="removeLaptopStorage(${countLaptopStorage})">Remove</button>
                                         </div>
                                     </div>`)
                         countLaptopStorage++
@@ -1956,9 +1982,6 @@
                 countStorage--
             }
 
-            if (countLaptopStorage > 1) {
-                countLaptopStorage--
-            }
 
 
             let productRow = document.getElementById(`row${id}`)
@@ -2044,7 +2067,9 @@
             countAdditionalPCParts--
 
 
-            let productRow = document.getElementById(`row${id}`)
+            let productRow = document.getElementById(`additionalPCpartsrow${id}`)
+
+            console.log(productRow);
 
             if (productRow.parentNode.id == 'additionalPCpartsSpecs') {
 
@@ -2052,12 +2077,9 @@
 
                 let allRows = Array.from(document.getElementById('additionalPCpartsSpecs').children);
 
-                console.log(allRows);
-
-                let allLabels = []
 
                 allRows.forEach((e, i) => {
-                    e.id = `row${i + 1}`;
+                    e.id = `additionalPCpartsrow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `Additional Part ${i+1}`;
                     let label = e.querySelectorAll('.col-3 .form-group label');
@@ -2103,6 +2125,72 @@
             }
 
 
+        }
+
+        const removeLaptopStorage = (id) => {
+            if (countLaptopStorage > 1) {
+                countLaptopStorage--
+            }
+
+            let productRow = document.getElementById(`row${id}`)
+
+            if (productRow.parentNode.id == 'storageSpecsDiv') {
+
+                productRow.parentNode.removeChild(productRow)
+
+                let allRows = Array.from(document.getElementById('storageSpecsDiv').children);
+
+
+                allRows.forEach((e, i) => {
+                    e.id = `row${i + 1}`;
+
+                    let heading = e.querySelector('.col-12 h5').innerText = `storage ${i+1}`;
+
+                    let allLabels = Array.from(e.querySelectorAll('.col-3 .form-group label'));
+                    let allSelects = Array.from(e.querySelectorAll('.col-3 .form-group select'));
+
+                    let button = e.querySelector('.col-3 button');
+
+                    if (i > 0) {
+                        button.id = `removeLaptopStorage${i+1}`;
+                        button.setAttribute('onclick', `removeLaptopStorage(${i+1})`)
+                    }
+
+
+
+                    let input = e.querySelector('.col-3 .form-group input');
+                    input.id = `storageName${i+1}`
+                    input.name = `storageName${i+1}`
+
+                    allLabels.forEach((label, labelIndex) => {
+
+
+                        if (labelIndex == 0) {
+                            label.setAttribute('for', `storageName${i+1}`);
+                            allSelects[labelIndex].id = `storageBrand${i+1}`
+                            allSelects[labelIndex].name = `storageBrand${i+1}`
+                        }
+                        if (labelIndex == 1) {
+                            label.setAttribute('for', `storageBrand${i+1}`);
+                            allSelects[labelIndex].id = `storageType${i+1}`
+                            allSelects[labelIndex].name = `storageType${i+1}`
+                        }
+                        if (labelIndex == 2) {
+                            label.setAttribute('for', `storageType${i+1}`);
+                            allSelects[labelIndex].id = `storageMemory${i+1}`
+                            allSelects[labelIndex].name = `storageMemory${i+1}`
+                        }
+                        if (labelIndex == 3) {
+                            label.setAttribute('for', `storageMemory${i+1}`);
+                        }
+                    })
+
+
+
+                })
+
+
+            }
         }
     </script>
 @endsection
