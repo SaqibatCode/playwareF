@@ -196,11 +196,11 @@
                             </div>
                         </div>
 
-                        <div id="completePCparts" class="d-none"></div>
+                        <div id="completePCparts" class="d-none mt-5"></div>
 
-                        <div id="additionalPCparts" class="row d-none"></div>
+                        <div id="additionalPCparts" class="row d-none mt-5"></div>
 
-                        <div id="additionalProducts" class="row d-none"></div>
+                        <div id="additionalProducts" class="row d-none mt-5"></div>
 
                         {{-- <div class="row" id="manufacturerAndCountryOfOriginDiv">
                             <div class="col-6">
@@ -1514,7 +1514,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3 d-flex align-items-center" style="gap:20px;">
+                                        <div class="col-3">
                                             <div class="form-group">
                                                 <label for="storageUsedOrNew${countStorage}">Used Or New?</label>
                                                 <select id="storageUsedOrNew${countStorage}" name="storageUsedOrNew${countStorage}"
@@ -1524,6 +1524,8 @@
                                                     <option value="2">New</option>
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="col-3 d-flex align-items-center">
                                             <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeStorage${countStorage}" onclick="removeStorage(${countStorage})">Remove</button>
                                         </div>
                                     </div>`)
@@ -1587,7 +1589,7 @@
                                                 placeholder="Eg. Case Fans">
                                         </div>
                                     </div>
-                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
+                                    <div class="col-3">
                                         <div class="form-group">
                                             <label for="additionalPCpartUsedOrNew${countAdditionalPCParts}">Used Or New?</label>
                                             <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control">
@@ -1596,6 +1598,8 @@
                                                 <option value="2">New</option>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-3 d-flex align-items-center">
                                         <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalPCpart${countAdditionalPCParts}" onclick="removeAdditionalPCpart(${countAdditionalPCParts})">Remove</button>
                                     </div>
                                 </div>`)
@@ -1678,7 +1682,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
+                                                    <div class="col-3">
                                                         <div class="form-group">
                                                             <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
                                                             <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control">
@@ -1687,6 +1691,8 @@
                                                                 <option value="2">New</option>
                                                             </select>
                                                         </div>
+                                                    </div>
+                                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
                                                         <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalProduct${countAdditionalProducts}" onclick="removeAdditionalProduct(${countAdditionalProducts})">Remove</button>
                                                     </div>
                                                 </div>`)
