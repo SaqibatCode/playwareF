@@ -198,9 +198,9 @@
 
                         <div id="completePCparts" class="d-none"></div>
 
-                        <div id="additionalPCparts" class="row d-none">
+                        <div id="additionalPCparts" class="row d-none"></div>
 
-                        </div>
+                        <div id="additionalProducts" class="row d-none"></div>
 
                         {{-- <div class="row" id="manufacturerAndCountryOfOriginDiv">
                             <div class="col-6">
@@ -539,6 +539,7 @@
         let countStorage = 2
         let countAdditionalPCParts = 2
         let countLaptopStorage = 2
+        let countAdditionalProducts = 2
 
 
         $(document).ready(function() {
@@ -714,6 +715,7 @@
                     countStorage = 2;
                     countLaptopStorage = 2;
                     countAdditionalPCParts = 2;
+                    countAdditionalProducts = 2;
 
                     let brandNameDiv = document.getElementById('brandNameDiv')
                     let productCategoryDiv = document.getElementById('productCategoryDiv')
@@ -848,6 +850,9 @@
                     $('#additionalPCparts').addClass('d-none');
                     $('#additionalPCparts').empty();
 
+                    $('#additionalProducts').addClass('d-none');
+                    $('#additionalProducts').empty();
+
 
                     $('#aboutThisItemContainer').empty();
                     $('#aboutThisItemContainer').append(`
@@ -878,6 +883,7 @@
                     countLaptopStorage = 2;
                     countStorage = 2;
                     countAdditionalPCParts = 2;
+                    countAdditionalProducts = 2;
 
                     let brandNameDiv = document.getElementById('brandNameDiv')
                     let productCategoryDiv = document.getElementById('productCategoryDiv')
@@ -983,6 +989,9 @@
 
                     $('#additionalPCparts').addClass('d-none');
                     $('#additionalPCparts').empty();
+
+                    $('#additionalProducts').addClass('d-none');
+                    $('#additionalProducts').empty();
 
 
                     $('#aboutThisItemContainer').empty();
@@ -1599,6 +1608,95 @@
 
 
 
+                    $('#additionalProducts').removeClass('d-none');
+                    $('#additionalProducts').empty();
+                    $('#additionalProducts').append(` <div class="col-12">
+                                <h2>Additional Products:</h2>
+                            </div>
+                            <div id="additionalProductsSpecs" class="col-12">
+                                <div id="additionalProductrow1" class='row'>
+                                    <div class="col-12">
+                                        <h5>Additional Product 1</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalProductName1">Enter Name</label>
+                                            <input type="text" id="additionalProductName1" name="additionalProductName1"
+                                                class="form-control"
+                                                placeholder="Product Title">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalProductCategory1">Product Category</label>
+                                            <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control">
+                                                <option value="0">Please Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="additionalProductUsedOrNew1">Used Or New?</label>
+                                            <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control">
+                                                <option value="0">Please Select</option>
+                                                <option value="1">Used</option>
+                                                <option value="2">New</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mb-3">
+                                <button type="button" class="btn btn-primary" id="addMoreadditionalProductsBtn">Add More
+                                    Products</button>
+                            </div>`);
+
+
+
+
+                    $('#addMoreadditionalProductsBtn').click(function() {
+
+
+                        $('#additionalProductsSpecs').append(`<div id="additionalProductrow${countAdditionalProducts}" class='row'>
+                                                    <div class="col-12">
+                                                        <h5>Additional Product ${countAdditionalProducts}</h5>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
+                                                            <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
+                                                                class="form-control"
+                                                                placeholder="Product Title">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
+                                                            <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control">
+                                                                <option value="0">Please Select</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
+                                                        <div class="form-group">
+                                                            <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
+                                                            <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control">
+                                                                <option value="0">Please Select</option>
+                                                                <option value="1">Used</option>
+                                                                <option value="2">New</option>
+                                                            </select>
+                                                        </div>
+                                                        <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalProduct${countAdditionalProducts}" onclick="removeAdditionalProduct(${countAdditionalProducts})">Remove</button>
+                                                    </div>
+                                                </div>`)
+
+                        countAdditionalProducts++
+
+                    })
+
+
+
                     // $('#manufacturerAndCountryOfOriginDiv').empty();
                     // $('#getVariations').empty();
                     $('#aboutThisItemContainer').empty();
@@ -1620,6 +1718,7 @@
 
                     countStorage = 2
                     countAdditionalPCParts = 2;
+                    countAdditionalProducts = 2;
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
@@ -1965,6 +2064,8 @@
 
                     $('#additionalPCparts').addClass('d-none');
                     $('#additionalPCparts').empty();
+                    $('#additionalProducts').addClass('d-none');
+                    $('#additionalProducts').empty();
 
                     $('#aboutThisItemContainer').empty();
 
@@ -2063,8 +2164,9 @@
         }
 
         const removeAdditionalPCpart = (id) => {
-
-            countAdditionalPCParts--
+            if (countAdditionalPCParts > 1) {
+                countAdditionalPCParts--
+            }
 
 
             let productRow = document.getElementById(`additionalPCpartsrow${id}`)
@@ -2191,6 +2293,78 @@
 
 
             }
+        }
+
+        const removeAdditionalProduct = (id) => {
+            if (countAdditionalProducts > 1) {
+                countAdditionalProducts--
+            }
+
+
+            let productRow = document.getElementById(`additionalProductrow${id}`)
+
+            console.log(productRow);
+
+            if (productRow.parentNode.id == 'additionalProductsSpecs') {
+
+                productRow.parentNode.removeChild(productRow)
+
+                let allRows = Array.from(document.getElementById('additionalProductsSpecs').children);
+
+
+                allRows.forEach((e, i) => {
+                    e.id = `additionalProductrow${i + 1}`;
+
+                    let heading = e.querySelector('.col-12 h5').innerText = `Additional Product ${i+1}`;
+                    let label = e.querySelectorAll('.col-3 .form-group label');
+                    let input = e.querySelector('.col-3 .form-group input');
+                    let select = e.querySelectorAll('.col-3 .form-group select');
+                    let button = e.querySelector('.align-items-center button');
+
+                    if (i > 0) {
+                        button.id = `removeAdditionalProduct${i+1}`;
+                        button.setAttribute('onclick', `removeAdditionalProduct(${i+1})`)
+                    }
+
+
+                    input.id = `additionalProductName${i+1}`
+                    input.name = `additionalProductName${i+1}`
+
+                    allLabels = Array.from(label);
+                    allSelects = Array.from(select);
+
+
+                    allSelects[0].id = `additionalProductCategory${i+1}`
+                    allSelects[0].name = `additionalProductCategory${i+1}`
+
+                    allSelects[1].id = `additionalProductUsedOrNew${i+1}`
+                    allSelects[1].name = `additionalProductUsedOrNew${i+1}`
+
+
+
+                    allLabels.forEach((labelElement, labelIndex) => {
+
+                        let forAttr = labelElement.getAttribute('for');
+
+
+                        if (labelIndex == 0) {
+                            labelElement.setAttribute('for', `additionalProductName${i+1}`);
+                        }
+                        if (labelIndex == 1) {
+                            labelElement.setAttribute('for', `additionalProductCategory${i+1}`);
+                        }
+                        if (labelIndex == 2) {
+                            labelElement.setAttribute('for', `additionalProductUsedOrNew${i+1}`);
+                        }
+
+                    })
+                })
+
+
+
+            }
+
+
         }
     </script>
 @endsection
