@@ -62,7 +62,15 @@
 
                         <div class="row">
                             <div id="packageProductsDiv" class="col-12">
-                                <div class='row' id="row1">
+                                {{-- <div class='row' id="row1">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="productTitle1">Select Product Title 1:</label>
+                                            <select name="productTitle1" class="form-control" id="productTitle1">
+                                                <option value="0" selected>Select Your Product</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="product1">Select Product 1:</label>
@@ -71,9 +79,37 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-3 d-flex align-items-center">
-                                        <button type="button" class="btn btn-danger" style="margin-top: 10px;"
-                                            id="removeProduct1" onclick="removeProduct(1)">Remove</button>
+                                </div> --}}
+                                <div id="packageProductrow1" class='row'>
+                                    <div class="col-12">
+                                        <h5>Product 1</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductName1">Enter Name</label>
+                                            <input type="text" id="packageProductName1" name="packageProductName1"
+                                                class="form-control" placeholder="Product Title">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductCategory1">Product Category</label>
+                                            <select id="packageProductCategory1" name="packageProductCategory1"
+                                                class="form-control">
+                                                <option value="0">Please Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductUsedOrNew1">Used Or New?</label>
+                                            <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
+                                                class="form-control">
+                                                <option value="0">Please Select</option>
+                                                <option value="1">Used</option>
+                                                <option value="2">New</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -232,19 +268,43 @@
             if (packageProducts <= 15) {
 
                 document.getElementById('packageProductsDiv').innerHTML += `
-                             <div class='row' id="row${packageProducts}">
-                                 <div class="col-4">
-                                     <div class="form-group">
-                                         <label for="product${packageProducts}">Select Product ${packageProducts}:</label>
-                                         <select name="product${packageProducts}" class="form-control" id="product${packageProducts}">
-                                             <option value="0" selected>Select Your Product</option>
-                                         </select>
-                                     </div>
-                                </div>
-                                 <div class="col-3 d-flex align-items-center">
+
+
+                <div id="packageProductrow${packageProducts}" class='row'>
+                                    <div class="col-12">
+                                        <h5>Product ${packageProducts}</h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductName${packageProducts}">Enter Name</label>
+                                            <input type="text" id="packageProductName${packageProducts}" name="packageProductName${packageProducts}"
+                                                class="form-control" placeholder="Product Title">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductCategory${packageProducts}">Product Category</label>
+                                            <select id="packageProductCategory${packageProducts}" name="packageProductCategory${packageProducts}"
+                                                class="form-control">
+                                                <option value="0">Please Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label for="packageProductUsedOrNew${packageProducts}">Used Or New?</label>
+                                            <select id="packageProductUsedOrNew${packageProducts}" name="packageProductUsedOrNew${packageProducts}"
+                                                class="form-control">
+                                                <option value="0">Please Select</option>
+                                                <option value="1">Used</option>
+                                                <option value="2">New</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 d-flex align-items-center">
                                         <button type="button" class="btn btn-danger" id="removeProduct${packageProducts}" onclick="removeProduct(${packageProducts})" style="margin-top: 10px;">Remove</button>
+                                    </div>
                                 </div>
-                             </div>
         `
 
                 packageProducts++
@@ -254,31 +314,67 @@
         })
 
         const removeProduct = (id) => {
-            let productRow = document.getElementById(`row${id}`)
+
+
+            let productRow = document.getElementById(`packageProductrow${id}`)
             productRow.parentNode.removeChild(productRow)
 
             let allRows = Array.from(document.getElementById('packageProductsDiv').children);
 
             allRows.forEach((e, i) => {
-                e.id = `row${i + 1}`;
+                e.id = `packageProductrow${i + 1}`;
 
-                let label = e.querySelector('.col-4 .form-group label');
-                label.setAttribute('for', `product${i+1}`);
-                label.innerText = `Select Product ${i+1}:`;
-
-                let select = e.querySelector('.col-4 .form-group select');
-                select.id = `product${i+1}`;
-                select.name = `product${i+1}`;
-
-                let button = e.querySelector('.col-3 button');
-                button.id = `removeProduct${i+1}`;
-                button.setAttribute('onclick', `removeProduct(${i+1})`)
+                let heading = e.querySelector('.col-12 h5');
+                heading.innerText = `Product ${i+1}`;
 
 
+                let label = e.querySelectorAll('.col-3 .form-group label');
+                let input = e.querySelector('.col-3 .form-group input');
+                let select = e.querySelectorAll('.col-3 .form-group select');
+                let button = e.querySelector('.align-items-center button');
 
+                if (i > 0) {
+                    button.id = `removeProduct${i+1}`;
+                    button.setAttribute('onclick', `removeProduct(${i+1})`)
+                }
+
+
+                input.id = `packageProductName${i+1}`
+                input.name = `packageProductName${i+1}`
+
+                allLabels = Array.from(label);
+                allSelects = Array.from(select);
+
+
+                allSelects[0].id = `packageProductCategory${i+1}`
+                allSelects[0].name = `packageProductCategory${i+1}`
+
+                allSelects[1].id = `packageProductUsedOrNew${i+1}`
+                allSelects[1].name = `packageProductUsedOrNew${i+1}`
+
+
+
+                allLabels.forEach((labelElement, labelIndex) => {
+
+                    let forAttr = labelElement.getAttribute('for');
+
+
+                    if (labelIndex == 0) {
+                        labelElement.setAttribute('for', `packageProductName${i+1}`);
+                    }
+                    if (labelIndex == 1) {
+                        labelElement.setAttribute('for', `packageProductCategory${i+1}`);
+                    }
+                    if (labelIndex == 2) {
+                        labelElement.setAttribute('for', `packageProductUsedOrNew${i+1}`);
+                    }
+
+                })
             })
 
-            console.log(document.getElementById('packageProductsDiv'));
+
+
+
 
             packageProducts--
         }
