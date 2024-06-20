@@ -78,7 +78,6 @@
 
                         <div class="row">
                             <div id="packageProductsDiv" class="col-12">
-<<<<<<< HEAD
 
                                 <div id="packageProductrow1" class='row'>
                                     <input type="hidden" id="packageProductData" name="packageProductData">
@@ -86,18 +85,6 @@
                                         <h5>Product 1</h5>
                                     </div>
                                     <div class="col-md col-sm-12">
-=======
-                                {{-- <div class='row' id="row1">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <label for="productTitle1">Select Product Title 1:</label>
-                                            <select name="productTitle1" class="form-control" id="productTitle1">
-                                                <option value="0" selected>Select Your Product</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
->>>>>>> fd78ac706a21821c1d9637a1cb0977ef08658b84
                                         <div class="form-group">
                                             <label for="packageProductName1">Enter Name</label>
                                             <input type="text" id="packageProductName1" name="packageProductName1"
@@ -121,32 +108,6 @@
                                             <label for="packageProductUsedOrNew1">Used Or New?</label>
                                             <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
                                                 class="form-control packageProductUsedOrNew">
-                                </div> --}}
-                                <div id="packageProductrow1" class='row'>
-                                    <div class="col-12">
-                                        <h5>Product 1</h5>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductName1">Enter Name</label>
-                                            <input type="text" id="packageProductName1" name="packageProductName1"
-                                                class="form-control" placeholder="Product Title">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductCategory1">Product Category</label>
-                                            <select id="packageProductCategory1" name="packageProductCategory1"
-                                                class="form-control">
-                                                <option value="0">Please Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductUsedOrNew1">Used Or New?</label>
-                                            <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
-                                                class="form-control">
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
                                                 <option value="2">New</option>
@@ -311,7 +272,6 @@
                 rowDiv.id = `packageProductrow${packageProducts}`;
                 rowDiv.classList.add('row');
 
-<<<<<<< HEAD
                 // Create the inner content for the row div
                 rowDiv.innerHTML = `
             <div class="col-12">
@@ -352,47 +312,6 @@
                 <button type="button" class="btn btn-danger" id="removeProduct${packageProducts}" onclick="removeProduct(${packageProducts})" style="margin-top: 10px;">X</button>
             </div>
         `;
-=======
-                document.getElementById('packageProductsDiv').innerHTML += `
-
-
-                <div id="packageProductrow${packageProducts}" class='row'>
-                                    <div class="col-12">
-                                        <h5>Product ${packageProducts}</h5>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductName${packageProducts}">Enter Name</label>
-                                            <input type="text" id="packageProductName${packageProducts}" name="packageProductName${packageProducts}"
-                                                class="form-control" placeholder="Product Title">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductCategory${packageProducts}">Product Category</label>
-                                            <select id="packageProductCategory${packageProducts}" name="packageProductCategory${packageProducts}"
-                                                class="form-control">
-                                                <option value="0">Please Select</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="packageProductUsedOrNew${packageProducts}">Used Or New?</label>
-                                            <select id="packageProductUsedOrNew${packageProducts}" name="packageProductUsedOrNew${packageProducts}"
-                                                class="form-control">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">Used</option>
-                                                <option value="2">New</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 d-flex align-items-center">
-                                        <button type="button" class="btn btn-danger" id="removeProduct${packageProducts}" onclick="removeProduct(${packageProducts})" style="margin-top: 10px;">Remove</button>
-                                    </div>
-                                </div>
-        `
->>>>>>> fd78ac706a21821c1d9637a1cb0977ef08658b84
 
                 // Append the row div to the parent div
                 document.getElementById('packageProductsDiv').appendChild(rowDiv);
