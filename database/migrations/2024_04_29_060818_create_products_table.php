@@ -12,19 +12,24 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->integer('ProductType');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('productTitle');
-            $table->string('brandName')->default('Generic');
+            $table->unsignedBigInteger('brandName');
+            $table->foreign('brandName')->references('id')->on('brands')->onDelete('cascade');
             $table->unsignedBigInteger('productCategory');
             $table->foreign('productCategory')->references('id')->on('categories')->onDelete('cascade');
-            $table->string('AboutThisitem');
+            $table->string('AboutThisitem')->nullable();
             $table->integer('productQuantity');
+            $table->string('yearOfProduct');
             $table->string('productSku');
-            $table->string('Manufacturer');
-            $table->string('CountryOfOrigin');
+            $table->string('warranty');
+            $table->string('reason')->nullable();
+            $table->integer('repaired')->default(0);
+            $table->text('explainAboutRepairing')->nullable();
             $table->text('productDescription');
-            $table->float('regularPrice', 10,2)->nullable();
+            $table->float('originalPrice', 10,2)->nullable();
             $table->float('SellPrice', 10,2)->nullable();
             $table->string('mainImage');
             $table->string('firstImage');

@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+`@extends('admin.layout.layout')
 @section('main-content')
     <div class="page-content">
         <div class="container-fluid">

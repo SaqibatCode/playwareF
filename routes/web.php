@@ -31,11 +31,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
+
 Route::get('/', [IndexPageController::class, 'getIndexPage'])->name('indexPage');
 
 Route::get('/shop/{slug}', [ShopController::class, 'getShop'])->name('shop');
 
-// secure reoutes to for registration and verification (All Post Requests);
+// Secure Routes for registration and verification (All Post Requests);
 Route::prefix('api/v1')->group(function () {
     Route::post('/register', [AuthController::class, 'registerSeller'])->name('auth.register');
     Route::post('/logout', [AuthController::class, 'logoutSeller'])->name('auth.logout');
@@ -48,6 +50,8 @@ Route::prefix('api/v1')->group(function () {
         Route::post('verfiication', [AuthController::class, 'verifySeller'])->name('auth.verifySeller');
 
         Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
+
+        Route::post('upload-package', [PackageController::class, 'uploadPackage'])->name('auth.uploadPackage');
     });
 
 
@@ -68,6 +72,11 @@ Route::prefix('api/v1')->group(function () {
         Route::prefix('product')->group(function () {
             Route::post('/approve-product/{productId}', [ApprovedProductsController::class, 'ApproveProduct'])->name('admin.approveProducts');
             Route::post('/reject-product/{productId}', [ApprovedProductsController::class, 'RejectProduct'])->name('admin.rejectProduct');
+
+            Route::prefix('packages')->group(function () {
+                Route::post('/approve-packages/{packageId}', [ApprovedProductsController::class, 'ApprovedPackage'])->name('admin.approvePackages');
+                Route::post('/reject-packages/{packageId}', [ApprovedProductsController::class, 'RejectPackage'])->name('admin.rejectPackages');
+            });
 
             Route::prefix('category')->group(function () {
                 Route::post('/create-category', [CategoriesController::class, 'createCategory'])->name('admin.createCategory');
@@ -91,11 +100,12 @@ Route::middleware('seller')->prefix('seller')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/all-products', [ProductsController::class, 'getAllProducts'])->name('seller.allProducts');
         Route::get('/add-new-product', [ProductsController::class, 'addNewProduct'])->name('seller.addNewProduct');
-        Route::get('/add-new-package', [PackageController::class, 'getNewPackage'])->name('seller.getNewPackage');
-        Route::get('/draft-products', [ProductsController::class, 'draftProducts'])->name('seller.draftProducts');
     });
 
-
+    Route::prefix('packages')->group(function () {
+        Route::get('/all-packages', [PackageController::class, 'getAllPackages'])->name('seller.allPackages');
+        Route::get('/add-new-package', [PackageController::class, 'getNewPackage'])->name('seller.getNewPackage');
+    });
 
     Route::prefix('accounts')->group(function () {
         Route::get('/details', [ProfileDetailsController::class, 'getProfileDetailsPage'])->name('seller.details');
@@ -104,7 +114,6 @@ Route::middleware('seller')->prefix('seller')->group(function () {
 
 
 // All Admin Dashboard Routes
-
 Route::middleware('admin')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'getAdminDashboard'])->name('admin.dashboard');
 
@@ -112,9 +121,17 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/approved-products', [ApprovedProductsController::class, 'getApprovedProducts'])->name('admin.approvedProducts');
         Route::get('/rejected-products', [RejectProductsController::class, 'getRejectedProducts'])->name('admin.RejectProducts');
         Route::get('/approval-required', [ProductApprovalRequiredController::class, 'getApprovalRequiredProducts'])->name('admin.ApprovalRequiredProducts');
+
+        Route::prefix('packages')->group(function () {
+            Route::get('/approval-required', [ApprovedProductsController::class, 'getApprovedPackaged'])->name('admin.ApprovedPackages');
+            Route::get('/rejected-packages', [ApprovedProductsController::class, 'getRejectedPackaged'])->name('admin.RejectedPackages');
+            Route::get('/approved-packages', [ApprovedProductsController::class, 'getApprovedPackagesPage'])->name('admin.ApprovedPackage');
+        });
+
         Route::get('/categoires', [CategoriesController::class, 'getCategoriesPage'])->name('admin.getCategoriesPage');
         Route::get('/brands', [BrandController::class, 'getBrandsPage'])->name('admin.getBrandsPage');
     });
+
 
     Route::prefix('sellers')->group(function () {
         Route::get('/all-sellers', [SellersController::class, 'getAllSellers'])->name('admin.allSellers');
@@ -136,12 +153,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/reports', [ReportsController::class, 'getReportsPage'])->name('admin.reports');
     });
 
-
-
-
 });
 
 
+// If Seller Is Login, Do Not Allow them to visit Auth pages.
 Route::middleware('isLogin')->group(function () {
     Route::get('admin/login', [AdminDashboardController::class, 'getLoginPage'])->name('admin.Login');
     Route::get('seller/register', [AuthController::class, 'getRegisterPage'])->name('register');

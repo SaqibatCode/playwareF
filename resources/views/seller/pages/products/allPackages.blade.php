@@ -31,10 +31,9 @@
                                     <tr>
                                         <th>Image</th>
                                         <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th>Brand Name</th>
-                                        <th>Type</th>
-                                        <th>Available</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th># of Products</th>
                                         <th>Date Created</th>
                                         <th>Status</th>
                                         <th></th>
@@ -43,21 +42,22 @@
 
 
                                 <tbody>
-                                    @foreach ($Products as $product)
+
+                                    @foreach ($packages as $package)
+                                    
                                         <tr>
-                                            <td><img src='{{ asset('user_folders/Product_Images/') . '/' . $product->mainImage }}'
+                                            <td><img src='{{ asset('user_folders/Package_images/') . '/' . $package->mainImage }}'
                                                     style='width: 100px;'></td>
-                                            <td style="vertical-align: middle">{{ $product->productTitle }}</td>
-                                            <td style="vertical-align: middle">{{ $product->category->name }}</td>
-                                            <td style="vertical-align: middle">{{ $product->brand->name }}</td>
-                                            <td style="vertical-align: middle">{{ $product->ProductType == 1 ? 'Used Product' : 'New Product' }}</td>
-                                            <td style="vertical-align: middle">{{ $product->productQuantity }}</td>
-                                            <td style="vertical-align: middle">{{ $product->created_at }}</td>
-                                            <td style="vertical-align: middle">{{ $product->approved == 1 ? 'Approved' : 'Un-Approved' }}</td>
-                                            <td style="vertical-align: middle"><button class="btn btn-primary">Edit</button></td>
+                                            <td style="vertical-align: middle">{{ $package->title }}</td>
+                                            <td style="vertical-align: middle">{{ $package->quantity }}</td>
+                                            <td style="vertical-align: middle">
+                                               ${{ $package->SellPrice ?? $package->originalPrice }}</td>
+                                            <td style="vertical-align: middle">{{$package->packageProducts->count()}} Products</td>
+                                            <td style="vertical-align: middle">{{ $package->created_at }}</td>
+                                            <td style="vertical-align: middle">
+                                                {{ $package->approved == true ? 'Approved' : 'Un-Approved' }}</td>
                                         </tr>
                                     @endforeach
-
 
                                 </tbody>
                             </table>

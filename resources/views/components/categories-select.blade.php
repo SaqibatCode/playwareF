@@ -1,10 +1,10 @@
-@props(['category', 'level' => 0])
+@props(['category', 'level' => 0, 'oldValue' => null])
 
 @php
     $indentation = str_repeat('-', $level);
 @endphp
 
-<option value="{{$category->id}}">{{  $indentation . ' ' . $category->name }}</option>
+<option value="{{$category->id}}" {{ $oldValue == $category->id ? 'selected' : '' }}>{{  $indentation . ' ' . $category->name }}</option>
 
 @if ($category->children)
     @foreach ($category->children as $child)

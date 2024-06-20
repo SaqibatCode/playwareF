@@ -253,7 +253,7 @@
 
                 <div class="navbar-brand-box">
                     <a href="index.html" class="logo">
-                        <img src="{{ asset('assets/images/logo.svg') }}" />
+                        <img src="{{ asset('assets/images/logo-light.png') }}" />
                     </a>
                 </div>
 
@@ -281,15 +281,36 @@
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bxs-box"></i><span>Products</span></a>
+                                    class="bx bxs-box"></i><span>Products / Packages</span></a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval Required</a></li>
-                                <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
-                                <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
-                                <li><a href="{{ route('admin.getCategoriesPage') }}">Categories</a></li>
-                                <li><a href="{{ route('admin.getBrandsPage') }}">Brands</a></li>
+
+                                <li><a href="javascript: void(0);" class="has-arrow">Products</a>
+                                    <ul class="sub-menu" aria-expanded="true">
+                                        <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval
+                                                Required</a></li>
+                                        <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
+                                        <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
+                                    </ul>
+
+                                <li><a href="javascript: void(0);" class="has-arrow">Packages</a>
+                                    <ul class="sub-menu" aria-expanded="true">
+                                        <li><a href="{{route('admin.ApprovedPackages')}}">Approval
+                                                Required</a></li>
+                                        <li><a href="{{route('admin.RejectedPackages')}}">Rejected</a></li>
+                                        <li><a href="{{route('admin.ApprovedPackage')}}">Approved</a></li>
+                                    </ul>
+
+                                <li><a href="javascript: void(0);" class="has-arrow">Attributes</a>
+                                    <ul class="sub-menu" aria-expanded="true">
+                                        <li><a href="{{ route('admin.getCategoriesPage') }}">Categories</a></li>
+                                        <li><a href="{{ route('admin.getBrandsPage') }}">Brands</a></li>
+                                    </ul>
+                                </li>
+
                             </ul>
                         </li>
+
+                        
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-file"></i><span>Pages</span></a>
@@ -433,11 +454,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            2024 © SaqibCode.
+                            2024 © TeamDevs.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-right d-none d-sm-block">
-                                Design & Develop by SaqibCode
+                                Design & Develop by TeamDevs
                             </div>
                         </div>
                     </div>

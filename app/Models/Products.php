@@ -13,4 +13,17 @@ class Products extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
+    public function brand()
+    {
+        return $this->belongsTo(Brands::class, 'brandName');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class, 'productCategory');
+    }
+
+   
 }

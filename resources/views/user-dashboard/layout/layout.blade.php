@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ $title }}</title>
+    <title>{{ $title }} | Playware - Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="MyraStudio" name="author" />
@@ -16,6 +16,9 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/theme.min.css') }}" rel="stylesheet" type="text/css" />
+
+    @yield('additionsStyles')
+
 
 </head>
 
@@ -209,15 +212,33 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                href="{{ route('seller.details') }}">
-                                Profile
+                                href="javascript:void(0)">
+                                <span>Inbox</span>
+                                <span>
+                                    <span class="badge badge-pill badge-info">3</span>
+                                </span>
                             </a>
-
+                            <a class="dropdown-item d-flex align-items-center justify-content-between"
+                                href="javascript:void(0)">
+                                <span>Profile</span>
+                                <span>
+                                    <span class="badge badge-pill badge-warning">1</span>
+                                </span>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between"
+                                href="javascript:void(0)">
+                                Settings
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between"
+                                href="javascript:void(0)">
+                                <span>Lock Account</span>
+                            </a>
                             <form action="{{ route('auth.logout') }}" method="POST">
                                 @csrf
                                 <button class="dropdown-item d-flex align-items-center justify-content-between"
                                     type="submit">Log Out</button>
                             </form>
+
                         </div>
                     </div>
 
@@ -232,7 +253,7 @@
 
                 <div class="navbar-brand-box">
                     <a href="index.html" class="logo">
-                        <img src="{{ asset('assets/images/logo.svg') }}" />
+                        <img src="{{ asset('assets/images/logo-light.png') }}" />
                     </a>
                 </div>
 
@@ -244,42 +265,57 @@
 
                         <li>
                             {{-- <span class="badge badge-pill badge-primary float-right">7</span> --}}
-                            <a href="{{ route('seller.dashboard') }}" class="waves-effect"><i
+                            <a href="{{ route('admin.dashboard') }}" class="waves-effect"><i
                                     class='bx bx-home-smile'></i><span>Dashboard</span></a>
                         </li>
-
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-file"></i><span>Products</span></a>
+                                    class="bx bx-user"></i><span>Sellers</span></a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('seller.allProducts') }}">All Products</a></li>
-                                <li><a href="{{ route('seller.addNewProduct') }}">Add New Product</a></li>
-
+                                <li><a href="{{ route('admin.allSellers') }}">All Sellers</a></li>
+                                <li><a href="{{ route('admin.UnVerfiedSellers') }}">Un-Verified Sellers</a></li>
+                                <li><a href="{{ route('admin.verifiedSellers') }}">Verified Sellers</a></li>
+                                <li><a href="{{ route('admin.shopSellers') }}">Shop Sellers</a></li>
+                                <li><a href="{{ route('admin.corporateSellers') }}">Corporate Sellers</a></li>
                             </ul>
                         </li>
-
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-box"></i><span>Packages</span></a>
+                                    class="bx bxs-box"></i><span>Products</span></a>
                             <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="{{ route('seller.allPackages') }}">All Packages</a></li>
-
-                                <li><a href="{{ route('seller.getNewPackage') }}">Add New Package</a></li>
-
+                                <li><a href="{{ route('admin.ApprovalRequiredProducts') }}">Approval Required</a></li>
+                                <li><a href="{{ route('admin.RejectProducts') }}">Rejected</a></li>
+                                <li><a href="{{ route('admin.approvedProducts') }}">Approved</a></li>
+                                <li><a href="{{ route('admin.getCategoriesPage') }}">Categories</a></li>
+                                <li><a href="{{ route('admin.getBrandsPage') }}">Brands</a></li>
                             </ul>
                         </li>
-
                         <li>
-                            @php
-                                $verified = Auth::user()->approved == 0 ? true : false;
-                            @endphp
-
-                            @if ($verified)
-                                <a href="{{ route('auth.verificationForm') }}" class="waves-effect">
-                                    <i class="bx bx-badge-check"></i><span>Verification</span>
-                                </a>
-                            @endif
+                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
+                                    class="bx bx-file"></i><span>Pages</span></a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.HomePageEdit') }}">Home Page</a></li>
+                                <li><a href="{{ route('admin.TermsAndConditionsEditor') }}">Terms & Conditions </a>
+                                </li>
+                                <li><a href="{{ route('admin.privacyPolicy') }}">Privacy Policy</a></li>
+                                <li><a href="{{ route('admin.RefundPolicy') }}">Refund Policy</a></li>
+                            </ul>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.supportTicket') }}" class="waves-effect"><i
+                                    class='bx bx-support'></i><span>Support Ticket</span></a>
+
+                        </li>
+                        <li>
+
+
+                            <a href="{{ route('admin.reports') }}" class="waves-effect"><i
+                                    class='bx bxs-no-entry'></i><span>Reports</span>
+                                <span class="badge badge-pill badge-danger float-right">0</span>
+                            </a>
+
+                        </li>
+
 
 
 
@@ -427,8 +463,8 @@
 
     <!-- App js -->
     <script src="{{ asset('assets/js/theme.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
     @yield('additionScript')
 
 </body>

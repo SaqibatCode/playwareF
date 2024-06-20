@@ -24,12 +24,23 @@
 
             <div class="card">
                 <div class="card-body">
+                    @error('GlobalError')
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
+
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     <form action="{{ route('auth.uploadProduct') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-
-
-
-
 
                         <div class="row">
                             <div class="col-6" id="selectProducttype">
@@ -37,12 +48,19 @@
                                     <label for="ProductType">Product Type</label>
                                     <select name="ProductType" class="form-control" id="ProductType">
                                         <option value="0" selected>Select Your Product Type</option>
-                                        <option value="1">Sell A Used Product</option>
-                                        <option value="2">Sell a New Product</option>
-                                        {{-- <option value="3">Sell Package of products</option> --}}
-                                        <option value="4">Complete PCs</option>
-                                        <option value="5">Laptops</option>
+                                        <option value="1" {{ old('ProductType') == '1' ? 'selected' : '' }}>Sell A Used
+                                            Product</option>
+                                        <option value="2" {{ old('ProductType') == '2' ? 'selected' : '' }}>Sell a New
+                                            Product</option>
+                                        <option value="4" {{ old('ProductType') == '4' ? 'selected' : '' }}>Complete
+                                            PCs</option>
+                                        <option value="5" {{ old('ProductType') == '5' ? 'selected' : '' }}>Laptops
+                                        </option>
                                     </select>
+
+                                    @error('ProductType')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -55,7 +73,6 @@
                                     @error('productTitle')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
-
                                 </div>
                             </div>
 
@@ -65,14 +82,13 @@
 
 
                         <div class="row" id="productTypeData">
-
-                            <div id="productCategoryDiv" class="col-4">
+                            <div id="productCategoryDiv" class="col">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
                                         <option value="" selected>Select Category</option>
                                         @foreach ($categories as $category)
-                                            <x-categories-select :category="$category" />
+                                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
                                         @endforeach
                                     </select>
                                     @error('productCategory')
@@ -81,7 +97,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col-4">
+                            <div id="brandNameDiv" class="col">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -106,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4" id="selectProductYear">
+                            <div class="col" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -114,6 +130,10 @@
                                         <option value="0" selected>Select Year/Make of Your Product</option>
 
                                     </select>
+
+                                    @error('yearOfProduct')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
 
@@ -124,7 +144,7 @@
                         </div>
 
                         <div class="row" id="productReasonAndWarrantyDiv">
-                            <div class="col-4" id="warrantyDiv">
+                            <div class="col" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -137,16 +157,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-4" id="reasonForSellingDiv">
+                            <div class="col" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
 
-                            <div class="col-4 d-none" id="repairedProductDiv"></div>
+                            <div class="col d-none" id="repairedProductDiv"></div>
 
-                            <div class="col-4 d-none" id="laptopUsedOrNotDiv"></div>
+                            <div class="col d-none" id="laptopUsedOrNotDiv"></div>
 
                         </div>
 
@@ -183,7 +203,10 @@
                                 <div class="form-group">
                                     <label for="originalPrice">Original Price</label>
                                     <input type="number" id="originalPrice" name="originalPrice" class="form-control"
-                                        placeholder="Eg. 1500">
+                                        placeholder="Eg. 1500" value="{{ old('originalPrice') }}">
+                                    @error('originalPrice')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -191,7 +214,10 @@
                                 <div class="form-group">
                                     <label for="sellPrice">Sale Price (Leave Empty If Not On Sale)</label>
                                     <input type="number" id="sellPrice" name="sellPrice" class="form-control"
-                                        placeholder="Eg. 1200">
+                                        placeholder="Eg. 1200" value="{{ old('sellPrice') }}">
+                                    @error('sellPrice')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -202,120 +228,23 @@
 
                         <div id="additionalProducts" class="row d-none mt-5"></div>
 
-                        {{-- <div class="row" id="manufacturerAndCountryOfOriginDiv">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="Manufacturer">Manufacturer</label>
-                                    <input type="text" id="Manufacturer" name="Manufacturer" class="form-control"
-                                        placeholder="Eg. Adidas" value="{{ old('Manufacturer') }}">
-                                    @error('Manufacturer')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox"
-                                            {{ old('thisProductHaveVariations') == 'on' ? 'checked' : '' }}
-                                            name="thisProductHaveVariations" class="custom-control-input"
-                                            id="VariationCheckBox">
-                                        <label class="custom-control-label" for="VariationCheckBox">This Product Have
-                                            Variations? (Eg.
-                                            Color, Size, Material)</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="CountryOfOrigin">Country of Origin</label>
-                                    <input type="text" id="CountryOfOrigin" value="{{ old('CountryOfOrigin') }}"
-                                        name="CountryOfOrigin" class="form-control"
-                                        placeholder="Eg. Manufacture In Pakistan, Turkey, UAE">
-                                    @error('CountryOfOrigin')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row" id="getVariations">
-                            @php
-                                $i = 0;
-                            @endphp
-                            @while (old('Price' . $i))
-                                <div class='container-fluid row'>
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label for="ColorVariation">Enter Color</label>
-                                            <input type="text" id="ColorVariation"
-                                                name="ColorVariation{{ $i }}" class="form-control"
-                                                value="{{ old('ColorVariation' . $i) }}"
-                                                placeholder="Eg. Red, Blue, Green">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-2 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label for="SizeVariation">Enter Size</label>
-                                            <input type="text" id="SizeVariation"
-                                                name="SizeVariation{{ $i }}" class="form-control"
-                                                value="{{ old('SizeVariation' . $i) }}"
-                                                placeholder="Eg. Small, Medium, Large">
-                                        </div>
-                                    </div>
-                                    <div class="col-2 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label for="MaterialVariation">Material</label>
-                                            <input type="text" id="MaterialVariation"
-                                                name="MaterialVariation{{ $i }}" class="form-control"
-                                                value="{{ old('MaterialVariation' . $i) }}"
-                                                placeholder="Eg. Plastic, Silicone, Metal">
-                                        </div>
-                                    </div>
-                                    <div class="col-2 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label for="Style">Style</label>
-                                            <input type="text" id="Style" name="Style{{ $i }}"
-                                                class="form-control" value="{{ old('Style' . $i) }}"
-                                                placeholder="Eg. Red, Blue, Green">
-                                        </div>
-                                    </div>
-                                    <div class="col-1 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label for="Quanatity">Quanatity</label>
-                                            <input type="text" value="{{ old('Quanatity' . $i) }}" id="Quanatity"
-                                                name="Quanatity{{ $i }}" class="form-control"
-                                                placeholder="Eg. 10, 20, 30">
-                                        </div>
-                                    </div>
-                                    <div class="col-1 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label for="Price">Price</label>
-                                            <input type="text" id="Price" name="Price{{ $i }}"
-                                                class="form-control" value="{{ old('Price' . $i) }}"
-                                                placeholder="Eg. 10, 20, 30">
-                                        </div>
-                                    </div>
-                                    <div class="col-2 d-flex flex-column justify-content-end">
-                                        <div class="form-group">
-                                            <label>Choose Image</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input"
-                                                    name='variationImage{{ $i }}'
-                                                    value="{{ old('variationImage' . $i) }}" id="customFile">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                @php
-                                    $i++;
-                                @endphp
-                            @endwhile
-                        </div> --}}
-
-                        {{-- <div class='contianer-fluid' id="getVariationDetails"></div> --}}
 
                         <div class="form-group" id="aboutThisItemContainer">
                             <label for="AboutThisItem">About this item</label>
+
+                            @if (old('AboutThisitem'))
+                                @php
+                                    $AboutThisItem = json_decode(old('AboutThisitem'));
+                                @endphp
+
+                                @foreach ($AboutThisItem as $data)
+                                    @if ($data != null)
+                                        <input type="text" id="AboutThisItem" class="form-control mb-2 AboutThisItem"
+                                            placeholder="About This Item" value="{{ $data }}">
+                                    @endif
+                                @endforeach
+                            @endif
                             <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
                                 placeholder="About This Item">
                             <button type="button" class="btn btn-primary mt-2" id="addMoreBtn"
@@ -324,16 +253,7 @@
                             @error('AboutThisitem')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            @if (old('AboutThisitem'))
-                                @php
-                                    $AboutThisItem = json_decode(old('AboutThisitem'));
-                                @endphp
 
-                                @foreach ($AboutThisItem as $data)
-                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
-                                        placeholder="About This Item" value="{{ $data }}">
-                                @endforeach
-                            @endif
                         </div>
 
 
@@ -505,24 +425,29 @@
         isMoreThanSevenFunc();
 
 
-        let uploadProductForm = document.querySelector('form[action="{{ route('auth.uploadProduct') }}"]');
+        var uploadProductForm = document.querySelector('form[action="{{ route('auth.uploadProduct') }}"]');
         uploadProductForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+            let ProductType = $('#ProductType').val();
+            if (ProductType == 1 || ProductType == 2) {
+                e.preventDefault();
 
-            let AboutThisItem = document.querySelectorAll('.AboutThisItem');
-            let aboutThisItemhidden = document.querySelector('#aboutThisItemhidden');
-            let AboutThisItemValues = [];
+                let AboutThisItem = document.querySelectorAll('.AboutThisItem');
+                let aboutThisItemhidden = document.querySelector('#aboutThisItemhidden');
+                let AboutThisItemValues = [];
 
-            AboutThisItem.forEach(e => {
-                AboutThisItemValues.push(e.value);
-            });
+                AboutThisItem.forEach(e => {
+                    AboutThisItemValues.push(e.value);
+                });
 
-            let itemPointsJSON = JSON.stringify(AboutThisItemValues);
-            aboutThisItemhidden.value = itemPointsJSON;
+                let itemPointsJSON = JSON.stringify(AboutThisItemValues);
+                aboutThisItemhidden.value = itemPointsJSON;
 
-            // After setting the hidden input value, you can submit the form programmatically
-            this.submit();
+                this.submit();
+            }
         });
+
+
+
 
 
         let brandNameInput = document.getElementById('brandName');
@@ -688,7 +613,7 @@
                         <option value='1 Month'>1 Month</option>
                         <option value='3 Months'>3 Months</option>
                         <option value='6 Months'>6 Months</option>
-                        <option value='1 Year'>1 Year</option>
+                        <option value='1 Year'> 1 Year</option>
                     `;
 
                 var productTypeData = ``;
@@ -723,7 +648,7 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col-4">
+                            <div id="productCategoryDiv" class="col">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -738,7 +663,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col-4">
+                            <div id="brandNameDiv" class="col">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -763,7 +688,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4" id="selectProductYear">
+                            <div class="col" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -778,7 +703,7 @@
                             </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
-                        $('#productReasonAndWarrantyDiv').append(`<div class="col-4" id="warrantyDiv">
+                        $('#productReasonAndWarrantyDiv').append(`<div class="col" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -790,13 +715,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4" id="reasonForSellingDiv">
+                            <div class="col" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col-4 d-none" id="repairedProductDiv"></div>
+                            <div class="col d-none" id="repairedProductDiv"></div>
                     `);
 
                     }
@@ -822,6 +747,9 @@
                                         <option value="1">Yes</option>
                                         <option value="2">No</option>
                                     </select>
+                                    @error('repaired')
+                                        <span class='text-danger'>{{ $message }}</span>
+                                    @enderror
                                 </div>`
                     );
 
@@ -891,7 +819,7 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col-4">
+                            <div id="productCategoryDiv" class="col">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -906,7 +834,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col-4">
+                            <div id="brandNameDiv" class="col">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -931,7 +859,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-4" id="selectProductYear">
+                            <div class="col" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -946,7 +874,7 @@
                             </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
-                        $('#productReasonAndWarrantyDiv').append(`<div class="col-4" id="warrantyDiv">
+                        $('#productReasonAndWarrantyDiv').append(`<div class="col" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -958,13 +886,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4" id="reasonForSellingDiv">
+                            <div class="col" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col-4 d-none" id="repairedProductDiv"></div>
+                            <div class="col d-none" id="repairedProductDiv"></div>
                     `);
                     }
                     $('#warranty').empty();
@@ -1025,11 +953,11 @@
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col-4 d-none" id="repairedProductDiv"></div>`
+                        `<div class="col d-none" id="repairedProductDiv"></div>`
 
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col-4" id="warrantyDiv">
+                    <div class="col" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -1041,13 +969,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4" id="reasonForSellingDiv">
+                            <div class="col" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col-4" id="selectProductYear">
+                            <div class="col" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -1070,23 +998,27 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorName">Enter Name</label>
                                                 <input type="text" id="processorName" name="processorName"
                                                     class="form-control" placeholder="Eg. Core i7 10th Gen">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorBrand">Brand</label>
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorUsedOrNew">Used Or New?</label>
                                                 <select id="processorUsedOrNew" name="processorUsedOrNew"
@@ -1107,24 +1039,27 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardName">Enter Name</label>
                                                 <input type="text" id="graphicCardName" name="graphicCardName"
                                                     class="form-control" placeholder="Eg. Gigabyte GTX 1050">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardBrand">Brand</label>
                                                 <select id="graphicCardBrand" name="graphicCardBrand"
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardMemory">Memory</label>
                                                 <select id="graphicCardMemory" name="graphicCardMemory"
@@ -1141,7 +1076,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardUsedOrNew">Used Or New?</label>
                                                 <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew0"
@@ -1162,24 +1097,28 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardName">Enter Name</label>
                                                 <input type="text" id="motherboardName" name="motherboardName"
                                                     class="form-control" placeholder="Eg. MSI B450 TOMAHAWK MAX ATX AM4 ">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardBrand">Brand</label>
                                                 <select id="motherboardBrand" name="motherboardBrand"
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardUsedOrNew">Used Or New?</label>
                                                 <select id="motherboardUsedOrNew" name="motherboardUsedOrNew"
@@ -1200,22 +1139,26 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
                                                     placeholder="Eg. GSkill 16GB DDR4 ">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramBrand">Brand</label>
                                                 <select id="ramBrand" name="ramBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramMemory">Memory</label>
                                                 <select id="ramMemory" name="ramMemory" class="form-control">
@@ -1230,7 +1173,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramUsedOrNew">Used Or New?</label>
                                                 <select id="ramUsedOrNew" name="ramUsedOrNew" class="form-control">
@@ -1240,10 +1183,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramQuantity">Quantity</label>
-                                                <input type="number" id="ramQuantity" Quantity="ramName"
+                                                <input type="number" id="ramQuantity" name="ramQuantity"
                                                     class="form-control" placeholder="Eg. 2">
                                             </div>
                                         </div>
@@ -1255,31 +1198,36 @@
                                 <div class="col-12">
                                     <h4>Storage:</h4>
                                 </div>
+                                <input type="hidden" id="storageData" name="storageData">
                                 <div id="storageSpecsDiv" class="col-12">
                                     <div id="row1" class='row'>
                                         <div class="col-12">
                                          <h5>storage 1</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
                                                 <input type="text" id="storageName1" name="storageName1"
-                                                    class="form-control"
+                                                    class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1" name="storageBrand1" class="form-control">
+                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
-                                                <select id="storageType1" name="storageType1" class="form-control">
+                                                <select id="storageType1" name="storageType1" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1288,10 +1236,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
-                                                <select id="storageMemory1" name="storageMemory1" class="form-control">
+                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1307,11 +1255,11 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="storageUsedOrNew1">Used Or New?</label>
                                                 <select id="storageUsedOrNew1" name="storageUsedOrNew1"
-                                                    class="form-control">
+                                                    class="form-control storageUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
                                                     <option value="2">New</option>
@@ -1332,24 +1280,27 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuName">Enter Name</label>
                                                 <input type="text" id="psuName" name="psuName" class="form-control"
                                                     placeholder="Eg. Corsair CX550 550Watt 80+ Bronze ">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuBrand">Brand</label>
                                                 <select id="psuBrand" name="psuBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
 
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuWatts">Watts</label>
                                                 <select id="psuWatts" name="psuWatts" class="form-control">
@@ -1372,7 +1323,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuUsedOrNew">Used Or New?</label>
                                                 <select id="psuUsedOrNew" name="psuUsedOrNew" class="form-control">
@@ -1392,24 +1343,27 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseName">Enter Name</label>
                                                 <input type="text" id="caseName" name="caseName"
                                                     class="form-control" placeholder="Eg. NZXT H9 Flow Dual-Chamber Mid-Tower Airflow Case">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseBrand">Brand</label>
                                                 <select id="caseBrand" name="caseBrand"
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseUsedOrNew">Used Or New?</label>
                                                 <select id="caseUsedOrNew" name="caseUsedOrNew"
@@ -1430,24 +1384,27 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerName">Enter Name</label>
                                                 <input type="text" id="coolerName" name="coolerName"
                                                     class="form-control" placeholder="Eg. XPG VENTO 120 ARGB FAN Case Fan">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerBrand">Brand</label>
                                                 <select id="coolerBrand" name="coolerBrand"
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerUsedOrNew">Used Or New?</label>
                                                 <select id="coolerUsedOrNew" name="coolerUsedOrNew"
@@ -1463,30 +1420,35 @@
                             </div>`)
 
                     $('#addMoreStorageBtn').click(function() {
-                        $('#storageSpecsDiv').append(`<div id="row${countStorage}" class='row'>
+                        $('#storageSpecsDiv').append(`
+                        <div id="row" class='row'>
                                         <div class="col-12">
                                          <h5>storage ${countStorage}</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageName${countStorage}">Enter Name</label>
-                                                <input type="text" id="storageName${countStorage}" name="storageName${countStorage}"
-                                                    class="form-control"
+                                                <label for="storageName1">Enter Name</label>
+                                                <input type="text" id="storageName1" name="storageName1"
+                                                    class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageBrand${countStorage}">Brand</label>
-                                                <select id="storageBrand${countStorage}" name="storageBrand${countStorage}" class="form-control">
+                                                <label for="storageBrand1">Brand</label>
+                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageType${countStorage}">Type</label>
-                                                <select id="storageType${countStorage}" name="storageType${countStorage}" class="form-control">
+                                                <label for="storageType1">Type</label>
+                                                <select id="storageType1" name="storageType1" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1495,10 +1457,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageMemory${countStorage}">Memory</label>
-                                                <select id="storageMemory${countStorage}" name="storageMemory${countStorage}" class="form-control">
+                                                <label for="storageMemory1">Memory</label>
+                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1514,21 +1476,20 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageUsedOrNew${countStorage}">Used Or New?</label>
-                                                <select id="storageUsedOrNew${countStorage}" name="storageUsedOrNew${countStorage}"
-                                                    class="form-control">
+                                                <label for="storageUsedOrNew1">Used Or New?</label>
+                                                <select id="storageUsedOrNew1" name="storageUsedOrNew1"
+                                                    class="form-control storageUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
                                                     <option value="2">New</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3 d-flex align-items-center">
-                                            <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeStorage${countStorage}" onclick="removeStorage(${countStorage})">Remove</button>
-                                        </div>
-                                    </div>`)
+                                    </div>
+                                </div>
+                                    `)
                         countStorage++
                     })
 
@@ -1538,6 +1499,7 @@
                     $('#additionalPCparts').append(` <div class="col-12">
                                 <h2>Additional PC Parts:</h2>
                             </div>
+                            <input type="hidden" id="additionalPartsData" name="additionalPartsData">
                             <div id="additionalPCpartsSpecs" class="col-12">
                                 <div id="additionalPCpartsrow1" class='row'>
                                     <div class="col-12">
@@ -1547,14 +1509,14 @@
                                         <div class="form-group">
                                             <label for="additionalPCpartName1">Enter Name</label>
                                             <input type="text" id="additionalPCpartName1" name="additionalPCpartName1"
-                                                class="form-control"
+                                                class="form-control additionalPCPartName"
                                                 placeholder="Eg. Case Fans">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="additionalPCpartUsedOrNew1">Used Or New?</label>
-                                            <select id="additionalPCpartUsedOrNew1" name="additionalPCpartUsedOrNew1" class="form-control">
+                                            <select id="additionalPCpartUsedOrNew1" name="additionalPCpartUsedOrNew1" class="form-control additionalPCpartUsedOrNew">
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
                                                 <option value="2">New</option>
@@ -1585,14 +1547,14 @@
                                         <div class="form-group">
                                             <label for="additionalPCpartName${countAdditionalPCParts}">Enter Name</label>
                                             <input type="text" id="additionalPCpartName${countAdditionalPCParts}" name="additionalPCpartName${countAdditionalPCParts}"
-                                                class="form-control"
+                                                class="form-control additionalPCPartName"
                                                 placeholder="Eg. Case Fans">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="additionalPCpartUsedOrNew${countAdditionalPCParts}">Used Or New?</label>
-                                            <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control">
+                                            <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control additionalPCpartUsedOrNew">
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
                                                 <option value="2">New</option>
@@ -1606,7 +1568,7 @@
 
                             countAdditionalPCParts++
                         } else {
-                            alert('You Can Only Add 5 Additional Parts')
+                            $('#addMoreadditionalPCpartBtn').remove();
                         }
                     })
 
@@ -1617,6 +1579,7 @@
                     $('#additionalProducts').append(` <div class="col-12">
                                 <h2>Additional Products:</h2>
                             </div>
+                            <input type="hidden" id="additionProductData" name="additionProductData">
                             <div id="additionalProductsSpecs" class="col-12">
                                 <div id="additionalProductrow1" class='row'>
                                     <div class="col-12">
@@ -1626,22 +1589,25 @@
                                         <div class="form-group">
                                             <label for="additionalProductName1">Enter Name</label>
                                             <input type="text" id="additionalProductName1" name="additionalProductName1"
-                                                class="form-control"
+                                                class="form-control additionalProductName"
                                                 placeholder="Product Title">
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="additionalProductCategory1">Product Category</label>
-                                            <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control">
+                                            <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control additionalProductCategory">
                                                 <option value="0">Please Select</option>
+                                                @foreach ($categories as $category)
+                                                    <x-categories-select :category="$category" />
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-3">
                                         <div class="form-group">
                                             <label for="additionalProductUsedOrNew1">Used Or New?</label>
-                                            <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control">
+                                            <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
                                                 <option value="2">New</option>
@@ -1670,22 +1636,25 @@
                                                         <div class="form-group">
                                                             <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
                                                             <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
-                                                                class="form-control"
+                                                                class="form-control additionalProductName"
                                                                 placeholder="Product Title">
                                                         </div>
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="form-group">
                                                             <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
-                                                            <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control">
+                                                            <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
                                                                 <option value="0">Please Select</option>
+                                                                @foreach ($categories as $category)
+                                                                    <x-categories-select :category="$category" />
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-3">
                                                         <div class="form-group">
                                                             <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
-                                                            <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control">
+                                                            <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
                                                                 <option value="0">Please Select</option>
                                                                 <option value="1">Used</option>
                                                                 <option value="2">New</option>
@@ -1728,8 +1697,8 @@
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col-4 d-none" id="repairedProductDiv"></div>
-                        <div class="col-4 d-none" id="laptopUsedOrNotDiv"></div>`
+                        `<div class="col d-none" id="repairedProductDiv"></div>
+                        <div class="col d-none" id="laptopUsedOrNotDiv"></div>`
 
                     $('#laptopUsedOrNotDiv').removeClass('d-none');
                     $('#laptopUsedOrNotDiv').empty();
@@ -1746,7 +1715,7 @@
                                         `);
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col-4" id="warrantyDiv">
+                    <div class="col" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -1758,13 +1727,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-4" id="reasonForSellingDiv">
+                            <div class="col" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col-4" id="selectProductYear">
+                            <div class="col" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -1801,6 +1770,9 @@
                                                 <label for="processorBrand">Brand</label>
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
@@ -1828,6 +1800,9 @@
                                                 <select id="graphicCardBrand" name="graphicCardBrand"
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
 
                                             </div>
@@ -1860,22 +1835,25 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
                                                     placeholder="Eg. Kingston 8GB DDR4 ">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramBrand">Brand</label>
                                                 <select id="ramBrand" name="ramBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramMemory">Memory</label>
                                                 <select id="ramMemory" name="ramMemory" class="form-control">
@@ -1890,10 +1868,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramQuantity">Quantity</label>
-                                                <input type="number" id="ramQuantity" Quantity="ramName"
+                                                <input type="number" id="ramQuantity" name="ramQuantity"
                                                     class="form-control" placeholder="Eg. 2">
                                             </div>
                                         </div>
@@ -1905,31 +1883,36 @@
                                 <div class="col-12">
                                     <h4>Storage:</h4>
                                 </div>
+                                <input type="hidden" id="laptopStorage" name="laptopStorage">
                                 <div id="storageSpecsDiv" class="col-12">
                                     <div id="row1" class='row'>
                                         <div class="col-12">
                                          <h5>storage 1</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
                                                 <input type="text" id="storageName1" name="storageName1"
-                                                    class="form-control"
+                                                    class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1" name="storageBrand1" class="form-control">
+                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
-                                                <select id="storageType1" name="storageType1" class="form-control">
+                                                <select id="storageType1" name="storageType1" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1938,10 +1921,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
-                                                <select id="storageMemory1" name="storageMemory1" class="form-control">
+                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1966,30 +1949,34 @@
                             </div>`)
 
                     $('#addMoreStorageBtn').click(function() {
-                        $('#storageSpecsDiv').append(`<div id="row${countLaptopStorage}" class='row'>
+                        $('#storageSpecsDiv').append(`<div id="row" class='row'>
                                         <div class="col-12">
                                          <h5>storage ${countLaptopStorage}</h5>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName${countLaptopStorage}">Enter Name</label>
                                                 <input type="text" id="storageName${countLaptopStorage}" name="storageName${countLaptopStorage}"
-                                                    class="form-control"
+                                                    class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand${countLaptopStorage}">Brand</label>
-                                                <select id="storageBrand${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control">
+                                                <select id="storageBrand${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
+                                                    @foreach ($brands as $brand)
+                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                    @endforeach
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType${countLaptopStorage}">Type</label>
-                                                <select id="storageType${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control">
+                                                <select id="storageType${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1998,10 +1985,10 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageMemory${countLaptopStorage}">Memory</label>
-                                                <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control">
+                                                <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -2017,7 +2004,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-lg col-sm-12">
                                             <button type="button" class="btn btn-danger mb-3" id="removeLaptopStorage${countLaptopStorage}" onclick="removeLaptopStorage(${countLaptopStorage})">Remove</button>
                                         </div>
                                     </div>`)
@@ -2044,6 +2031,9 @@
                                         <option value="1">Yes</option>
                                         <option value="2">No</option>
                                     </select>
+                                    @error('repaired')
+                                        <span class='text-danger'>{{ $message }}</span>
+                                    @enderror
                                 </div>`
                     );
 
@@ -2372,5 +2362,158 @@
 
 
         }
+
+
+
+        $(document).ready(function() {
+            if ({{ old('ProductType') == '1' || old('ProductType') == '5' ? 'true' : 'false' }}) {
+                $('#repairedProductDiv').removeClass('d-none');
+                $('#repairedProductDiv').empty();
+                $('#repairedProductDiv').html(
+                    `<div class="form-group">
+                                    <label for="repaired">Is Product Repaired/Opened?</label>
+                                    <select name="repaired" id="repaired" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1" {{ old('repaired') == '1' ? 'selected' : null }}>Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                    @error('repaired')
+                                        <span class='text-danger'>{{ $message }}</span>
+                                    @enderror
+                                </div>`
+
+                )
+                if ({{ old('repaired') == '1' ? 'true' : 'false' }}) {
+                    $('#explainRepairingDiv').removeClass('d-none');
+                    $('#explainRepairingDiv').html(
+                        `<div class="form-group">
+                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                                    @error('repaired')
+                                        <span class='text-danger'>Please Enter the Reason</span>
+                                    @enderror
+
+                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required>{{ old('repaired') }}</textarea>
+                            </div>
+                            `
+
+                    );
+                }
+
+                var usedProducts = `
+                <option value='1 Week' {{ old('warranty') == '1 Week' ? 'selected' : '' }}>1 Week</option>
+                <option value='1 Month' {{ old('warranty') == '1 Month' ? 'selected' : '' }}>1 Month</option>
+                <option value='3 Months' {{ old('warranty') == '3 Months' ? 'selected' : '' }}>3 Months</option>
+                    `;
+                $('#warranty').append(usedProducts);
+
+            }
+
+
+
+            function gatherStorageData() {
+                const storageData = [];
+                // Get all storage rows
+                const rows = document.querySelectorAll('#storageSpecsDiv .row');
+
+                document.querySelectorAll('#storageSpecsDiv .row').forEach((row, index) => {
+                    const storageName = row.querySelector('.storageName').value;
+                    const storageBrand = row.querySelector('.storageBrand').value;
+                    const storageType = row.querySelector('.storageType').value;
+                    const storageMemory = row.querySelector('.storageMemory').value;
+                    const storageUsedOrNew = row.querySelector('.storageUsedOrNew').value;
+
+                    // Collect data into an object
+                    const storageItem = {
+                        name: storageName,
+                        brand: storageBrand,
+                        type: storageType,
+                        memory: storageMemory,
+                        usedOrNew: storageUsedOrNew
+                    };
+
+                    // Add the object to the array
+                    storageData.push(storageItem);
+                });
+
+                // Set the hidden input field value
+                document.getElementById('storageData').value = JSON.stringify(storageData);
+            }
+
+            uploadProductForm.addEventListener('submit', gatherStorageData);
+
+
+            function gatherAdditionalPartData() {
+                const AdditionPartsData = [];
+                const rows = document.querySelectorAll('#additionalPCpartsSpecs .row');
+
+                document.querySelectorAll('#additionalPCpartsSpecs .row').forEach((row, index) => {
+                    const AdditionalPartName = row.querySelector('.additionalPCPartName').value;
+                    const AdditionalPartUserOrnew = row.querySelector('.additionalPCpartUsedOrNew').value;
+
+                    const AdditionalItem = {
+                        name: AdditionalPartName,
+                        userOrnew: AdditionalPartUserOrnew
+                    }
+
+                    AdditionPartsData.push(AdditionalItem);
+                })
+
+                document.getElementById('additionalPartsData').value = JSON.stringify(AdditionPartsData);
+            }
+
+            uploadProductForm.addEventListener('submit', gatherAdditionalPartData);
+
+            function gatherAdditionalProductsData() {
+                const AdditionalProductsData = [];
+                const rows = document.querySelectorAll('#additionalProducts .row');
+
+                document.querySelectorAll('#additionalProducts .row').forEach((row, index) => {
+                    const AdditionalProductName = row.querySelector('.additionalProductName').value;
+                    const AdditionalProductCategory = row.querySelector('.additionalProductCategory').value;
+                    const AdditionalProductUsedOrNew = row.querySelector('.additionalProductUsedOrNew')
+                        .value;
+
+                    const AdditionalProduct = {
+                        name: AdditionalProductName,
+                        category: AdditionalProductCategory,
+                        usedOrNew: AdditionalProductUsedOrNew
+                    };
+
+                    AdditionalProductsData.push(AdditionalProduct);
+                });
+
+                document.getElementById('additionProductData').value = JSON.stringify(AdditionalProductsData);
+            }
+
+
+            uploadProductForm.addEventListener('submit', gatherAdditionalProductsData);
+
+            function gatherLaptopStorage() {
+                const LaptopStorageData = [];
+
+                const rows = document.querySelectorAll('#storageSpecsDiv .row');
+
+                rows.forEach((row, index) => {
+                    const LaptopStorageName = row.querySelector('.storageName').value;
+                    const LaptopStorageBrand = row.querySelector('.storageBrand').value;
+                    const LaptopStorageType = row.querySelector('.storageType').value;
+                    const LaptopstorageMemory = row.querySelector('.storageMemory').value;
+
+                    const LaptopStorage = {
+                        name: LaptopStorageName,
+                        brand: LaptopStorageBrand,
+                        type: LaptopStorageType,
+                        memory: LaptopstorageMemory
+                    };
+
+                    LaptopStorageData.push(LaptopStorage);
+                });
+
+                document.getElementById('laptopStorage').value = JSON.stringify(LaptopStorageData);
+            }
+
+            uploadProductForm.addEventListener('submit', gatherLaptopStorage);
+
+        })
     </script>
 @endsection
