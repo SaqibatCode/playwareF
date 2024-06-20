@@ -116,13 +116,11 @@
                                             </select>
                                         </div>
                                     </div>
-<<<<<<< HEAD
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
                                             <label for="packageProductUsedOrNew1">Used Or New?</label>
                                             <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
                                                 class="form-control packageProductUsedOrNew">
-=======
                                 </div> --}}
                                 <div id="packageProductrow1" class='row'>
                                     <div class="col-12">
@@ -149,7 +147,6 @@
                                             <label for="packageProductUsedOrNew1">Used Or New?</label>
                                             <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
                                                 class="form-control">
->>>>>>> fd78ac706a21821c1d9637a1cb0977ef08658b84
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
                                                 <option value="2">New</option>
