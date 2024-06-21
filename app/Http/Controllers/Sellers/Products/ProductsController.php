@@ -164,6 +164,10 @@ class ProductsController extends Controller
 
         if ($request->input('productCategory')) {
             $product->productCategory = $validate['productCategory'];
+        } elseif ($request->input('ProductType') == '4') {
+            $product->productCategory = 39;
+        } elseif ($request->input('ProductType') == '5') {
+            $product->productCategory = 40;
         }
 
         $product->productQuantity = $validate['productQuantity'];
@@ -179,8 +183,6 @@ class ProductsController extends Controller
 
         if ($request->input('AboutThisitem')) {
             $product->AboutThisitem = $validate['AboutThisitem'];
-        } else {
-            $product->AboutThisitem = 'test';
         }
 
         $product->mainImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $mainImageName;
