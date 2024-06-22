@@ -247,7 +247,7 @@
         </header>
 
         <!-- ========== Left Sidebar Start ========== -->
-        <div class="vertical-menu">
+        <div class="vertical-menu py-5">
 
             <div data-simplebar class="h-100">
 
@@ -310,7 +310,7 @@
                             </ul>
                         </li>
 
-                        
+
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-file"></i><span>Pages</span></a>

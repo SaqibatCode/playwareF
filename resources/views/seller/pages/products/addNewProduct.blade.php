@@ -31,14 +31,14 @@
                     @enderror
 
                     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('auth.uploadProduct') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
@@ -988,10 +988,171 @@
                             `
 
 
-                    $('#completePCparts').removeClass('d-none')
-                    $("#completePCparts").empty()
-                    $("#completePCparts").html(`
-                    <h2>PC Parts:</h2>
+
+                    appendPCParts(); // FUNCTION TO SHOW ALL PC PARTS ON SCREEN
+                    addMoreStorageInPcParts(); //FOR ADD MORE STORAGE BUTTON IN PC PARTS
+
+
+                    appendAdditionalPcParts(); // FUNCTION TO SHOW ADDITIONAL PC PARTS SECTION ON SCREEN
+                    addMoreAdditionalPcParts(); //FOR ADD MORE ADDITIONAL PC PARTS BUTTON
+
+
+                    appendAdditionalProducts(); // FUNCTION TO SHOW ADDITIONAL PRODUCTS SECTION ON SCREEN
+                    addMoreAdditionalProducts(); //FOR ADD MORE ADDITIONAL PRODCUTS BUTTON
+
+
+
+
+
+
+
+                    // $('#manufacturerAndCountryOfOriginDiv').empty();
+                    // $('#getVariations').empty();
+                    $('#aboutThisItemContainer').empty();
+
+                    $('#warranty').empty();
+                    $('#warranty').html(
+                        '<option value="" selected>Please Select Warranty</option>');
+                    $('#warranty').append(newProduct);
+
+                    $('#yearOfProduct').empty();
+                    $('#yearOfProduct').html(
+                        '<option value="" selected>Please Select Year/Make of Product</option>'
+                    );
+                    $('#yearOfProduct').append(years);
+
+                }
+
+                if (this.value == '5') {
+
+                    countStorage = 2
+                    countAdditionalPCParts = 2;
+                    countAdditionalProducts = 2;
+
+                    let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
+                    productReasonAndWarrantyDiv.innerHTML =
+                        `<div class="col d-none" id="repairedProductDiv"></div>
+                        <div class="col d-none" id="laptopUsedOrNotDiv"></div>`
+
+                    $('#laptopUsedOrNotDiv').removeClass('d-none');
+                    $('#laptopUsedOrNotDiv').empty();
+                    $('#laptopUsedOrNotDiv').append(`
+                                            <div class="form-group">
+                                                <label for="laptopUsedOrNew">Used Or New?</label>
+                                                <select id="laptopUsedOrNew" name="laptopUsedOrNew"
+                                                    class="form-control">
+                                                    <option value="0">Please Select</option>
+                                                    <option value="1">Used</option>
+                                                    <option value="2">New</option>
+                                                </select>
+                                            </div>
+                                        `);
+
+                    document.getElementById("productTypeData").innerHTML = `
+                    <div class="col" id="warrantyDiv">
+                                <div class="form-group">
+                                    <label for="warranty">Check warranty</label>
+                                    <select name="warranty" id="warranty" class="form-control">
+                                        <option value="" selected>Please Select Warranty</option>
+
+                                    </select>
+                                    @error('warranty')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col" id="reasonForSellingDiv">
+                                <div class="form-group">
+                                    <label for="reason">Reason for Selling (Optional)</label>
+                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                                </div>
+                            </div>
+                            <div class="col" id="selectProductYear">
+                                <div class="form-group">
+                                    <label for="yearOfProduct">Year-Make of Product</label>
+
+                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                        <option value="0" selected>Select Year/Make of Your Product</option>
+
+                                    </select>
+                                </div>
+                            </div>`
+
+
+
+
+                    appendLaptopParts(); // FUNCTION TO SHOW ALL LAPTOP PARTS ON SCREEN
+                    addMoreStorageInLaptop(); // FOR ADDING MORE STORAGE IN LAPTOP PARTS BUTTON
+
+                    $('#warranty').empty();
+                    $('#warranty').html(
+                        '<option value="" selected>Please Select Warranty</option>');
+                    $('#warranty').append(laptop);
+
+                    $('#yearOfProduct').empty();
+                    $('#yearOfProduct').html(
+                        '<option value="" selected>Please Select Year/Make of Product</option>');
+                    $('#yearOfProduct').append(years);
+
+                    $('#repairedProductDiv').removeClass('d-none');
+                    $('#repairedProductDiv').empty();
+                    $('#repairedProductDiv').html(
+                        `<div class="form-group">
+                                    <label for="repaired">Is Product Repaired/Opened?</label>
+                                    <select name="repaired" id="repaired" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                    @error('repaired')
+                                        <span class='text-danger'>{{ $message }}</span>
+                                    @enderror
+                                </div>`
+                    );
+
+
+                    $('#repaired').change(function() {
+
+                        if (this.value == "1") {
+                            $('#explainRepairingDiv').removeClass('d-none');
+                            $('#explainRepairingDiv').html(
+                                `<div class="form-group">
+                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
+                            </div>`
+                            );
+
+                        } else {
+                            $('#explainRepairingDiv').addClass('d-none');
+                            $('#explainRepairingDiv').empty();
+                        }
+
+                    });
+
+
+
+                    $('#additionalPCparts').addClass('d-none');
+                    $('#additionalPCparts').empty();
+                    $('#additionalProducts').addClass('d-none');
+                    $('#additionalProducts').empty();
+
+                    $('#aboutThisItemContainer').empty();
+
+
+                }
+            });
+
+        })
+
+
+
+        // FOR APPENDING PC PARTS
+        function appendPCParts() {
+
+            const completePCParts = document.getElementById('completePCparts');
+            completePCParts.classList.remove('d-none')
+
+            completePCParts.innerHTML = `<h2>PC Parts:</h2>
                             <div class="row">
                                 <div class="col-12">
                                     <h4>Processor:</h4>
@@ -1269,7 +1430,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3 mb-3">
+                                <div class="col-sm-12 col-lg mb-3">
                                     <button type="button" class="btn btn-primary" id="addMoreStorageBtn">Add More Storage</button>
                                 </div>
                             </div>
@@ -1417,26 +1578,35 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>`)
+                            </div>`
 
-                    $('#addMoreStorageBtn').click(function() {
-                        $('#storageSpecsDiv').append(`
-                        <div id="row" class='row'>
+
+        }
+
+        // FOR ADDING MORE STORAGE IN PC PARTS
+        function addMoreStorageInPcParts() {
+
+            document.getElementById('addMoreStorageBtn').addEventListener('click', function() {
+
+                let newDiv = document.createElement('div');
+                newDiv.id = `row${countStorage}`;
+                newDiv.className = 'row';
+                newDiv.innerHTML = `
                                         <div class="col-12">
                                          <h5>storage ${countStorage}</h5>
                                         </div>
                                         <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageName1">Enter Name</label>
-                                                <input type="text" id="storageName1" name="storageName1"
+                                                <label for="storageName${countStorage}">Enter Name</label>
+                                                <input type="text" id="storageName${countStorage}" name="storageName${countStorage}"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
+                                                <label for="storageBrand${countStorage}">Brand</label>
+                                                <select id="storageBrand${countStorage}" name="storageBrand${countStorage}" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -1447,8 +1617,8 @@
                                         </div>
                                         <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageType1">Type</label>
-                                                <select id="storageType1" name="storageType1" class="form-control storageType">
+                                                <label for="storageType${countStorage}">Type</label>
+                                                <select id="storageType${countStorage}" name="storageType${countStorage}" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1459,8 +1629,8 @@
                                         </div>
                                         <div class="col-sm-12 col-lg">
                                             <div class="form-group">
-                                                <label for="storageMemory1">Memory</label>
-                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
+                                                <label for="storageMemory${countStorage}">Memory</label>
+                                                <select id="storageMemory${countStorage}" name="storageMemory${countStorage}" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1476,27 +1646,39 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
-                                            <div class="form-group">
-                                                <label for="storageUsedOrNew1">Used Or New?</label>
-                                                <select id="storageUsedOrNew1" name="storageUsedOrNew1"
+                                        <div class="col-sm-12 col-lg w-100 d-flex align-items-center" style="gap:20px;">
+                                            <div class="form-group w-100">
+                                                <label for="storageUsedOrNew${countStorage}">Used Or New?</label>
+                                                <select id="storageUsedOrNew${countStorage}" name="storageUsedOrNew${countStorage}"
                                                     class="form-control storageUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
                                                     <option value="2">New</option>
                                                 </select>
                                             </div>
+                                            <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeStorage${countStorage}" onclick="removeStorage(${countStorage})">Remove</button>
                                         </div>
-                                    </div>
-                                </div>
-                                    `)
-                        countStorage++
-                    })
+                                    </div>`
+
+                document.getElementById('storageSpecsDiv').appendChild(newDiv)
+
+                countStorage++
+
+            })
 
 
-                    $('#additionalPCparts').removeClass('d-none');
-                    $('#additionalPCparts').empty();
-                    $('#additionalPCparts').append(` <div class="col-12">
+
+        }
+
+        // FOR APPENDING ADDITIONAL PC PARTS
+        function appendAdditionalPcParts() {
+
+
+            const additionalPCparts = document.getElementById('additionalPCparts');
+
+            additionalPCparts.classList.remove('d-none')
+
+            additionalPCparts.innerHTML = `<div class="col-12">
                                 <h2>Additional PC Parts:</h2>
                             </div>
                             <input type="hidden" id="additionalPartsData" name="additionalPartsData">
@@ -1505,7 +1687,7 @@
                                     <div class="col-12">
                                         <h5>Additional Part 1</h5>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-sm-12 col-lg">
                                         <div class="form-group">
                                             <label for="additionalPCpartName1">Enter Name</label>
                                             <input type="text" id="additionalPCpartName1" name="additionalPCpartName1"
@@ -1513,7 +1695,7 @@
                                                 placeholder="Eg. Case Fans">
                                         </div>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-sm-12 col-lg">
                                         <div class="form-group">
                                             <label for="additionalPCpartUsedOrNew1">Used Or New?</label>
                                             <select id="additionalPCpartUsedOrNew1" name="additionalPCpartUsedOrNew1" class="form-control additionalPCpartUsedOrNew">
@@ -1526,246 +1708,212 @@
                                 </div>
                             </div>
 
-                            <div class="col-3 mb-3">
+                            <div id="addMorePcPartsBtnDiv" class="col-12 mb-3">
                                 <p>You can add upto 5 additional parts.</p>
                                 <button type="button" class="btn btn-primary" id="addMoreadditionalPCpartBtn">Add More
                                     Parts</button>
-                            </div>`);
+                            </div>`
 
 
+        }
+
+        // FOR ADDING MORE ADDITIONAL PC PARTS
+        function addMoreAdditionalPcParts() {
 
 
-                    $('#addMoreadditionalPCpartBtn').click(function() {
-
-                        if (countAdditionalPCParts <= 5) {
-
-                            $('#additionalPCpartsSpecs').append(`<div id="additionalPCpartsrow${countAdditionalPCParts}" class='row'>
-                                    <div class="col-12">
-                                        <h5>Additional Part ${countAdditionalPCParts}</h5>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="additionalPCpartName${countAdditionalPCParts}">Enter Name</label>
-                                            <input type="text" id="additionalPCpartName${countAdditionalPCParts}" name="additionalPCpartName${countAdditionalPCParts}"
-                                                class="form-control additionalPCPartName"
-                                                placeholder="Eg. Case Fans">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="additionalPCpartUsedOrNew${countAdditionalPCParts}">Used Or New?</label>
-                                            <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control additionalPCpartUsedOrNew">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">Used</option>
-                                                <option value="2">New</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3 d-flex align-items-center">
-                                        <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalPCpart${countAdditionalPCParts}" onclick="removeAdditionalPCpart(${countAdditionalPCParts})">Remove</button>
-                                    </div>
-                                </div>`)
-
-                            countAdditionalPCParts++
-                        } else {
-                            $('#addMoreadditionalPCpartBtn').remove();
-                        }
-                    })
+            document.getElementById('addMoreadditionalPCpartBtn').addEventListener('click', function() {
 
 
-
-                    $('#additionalProducts').removeClass('d-none');
-                    $('#additionalProducts').empty();
-                    $('#additionalProducts').append(` <div class="col-12">
-                                <h2>Additional Products:</h2>
-                            </div>
-                            <input type="hidden" id="additionProductData" name="additionProductData">
-                            <div id="additionalProductsSpecs" class="col-12">
-                                <div id="additionalProductrow1" class='row'>
-                                    <div class="col-12">
-                                        <h5>Additional Product 1</h5>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="additionalProductName1">Enter Name</label>
-                                            <input type="text" id="additionalProductName1" name="additionalProductName1"
-                                                class="form-control additionalProductName"
-                                                placeholder="Product Title">
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="additionalProductCategory1">Product Category</label>
-                                            <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control additionalProductCategory">
-                                                <option value="0">Please Select</option>
-                                                @foreach ($categories as $category)
-                                                    <x-categories-select :category="$category" />
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <label for="additionalProductUsedOrNew1">Used Or New?</label>
-                                            <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">Used</option>
-                                                <option value="2">New</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3 mb-3">
-                                <button type="button" class="btn btn-primary" id="addMoreadditionalProductsBtn">Add More
-                                    Products</button>
-                            </div>`);
+                if (countAdditionalPCParts <= 5) {
 
 
-
-
-                    $('#addMoreadditionalProductsBtn').click(function() {
-
-
-                        $('#additionalProductsSpecs').append(`<div id="additionalProductrow${countAdditionalProducts}" class='row'>
-                                                    <div class="col-12">
-                                                        <h5>Additional Product ${countAdditionalProducts}</h5>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group">
-                                                            <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
-                                                            <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
-                                                                class="form-control additionalProductName"
-                                                                placeholder="Product Title">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group">
-                                                            <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
-                                                            <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
-                                                                <option value="0">Please Select</option>
-                                                                @foreach ($categories as $category)
-                                                                    <x-categories-select :category="$category" />
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <div class="form-group">
-                                                            <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
-                                                            <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
-                                                                <option value="0">Please Select</option>
-                                                                <option value="1">Used</option>
-                                                                <option value="2">New</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3 d-flex align-items-center" style="gap:20px;">
-                                                        <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalProduct${countAdditionalProducts}" onclick="removeAdditionalProduct(${countAdditionalProducts})">Remove</button>
-                                                    </div>
-                                                </div>`)
-
-                        countAdditionalProducts++
-
-                    })
-
-
-
-                    // $('#manufacturerAndCountryOfOriginDiv').empty();
-                    // $('#getVariations').empty();
-                    $('#aboutThisItemContainer').empty();
-
-                    $('#warranty').empty();
-                    $('#warranty').html(
-                        '<option value="" selected>Please Select Warranty</option>');
-                    $('#warranty').append(newProduct);
-
-                    $('#yearOfProduct').empty();
-                    $('#yearOfProduct').html(
-                        '<option value="" selected>Please Select Year/Make of Product</option>'
-                    );
-                    $('#yearOfProduct').append(years);
-
-                }
-
-                if (this.value == '5') {
-
-                    countStorage = 2
-                    countAdditionalPCParts = 2;
-                    countAdditionalProducts = 2;
-
-                    let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
-                    productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col d-none" id="repairedProductDiv"></div>
-                        <div class="col d-none" id="laptopUsedOrNotDiv"></div>`
-
-                    $('#laptopUsedOrNotDiv').removeClass('d-none');
-                    $('#laptopUsedOrNotDiv').empty();
-                    $('#laptopUsedOrNotDiv').append(`
-                                            <div class="form-group">
-                                                <label for="laptopUsedOrNew">Used Or New?</label>
-                                                <select id="laptopUsedOrNew" name="laptopUsedOrNew"
-                                                    class="form-control">
+                    let newDiv = document.createElement('div');
+                    newDiv.id = `additionalPCpartsrow${countAdditionalPCParts}`;
+                    newDiv.className = 'row';
+                    newDiv.innerHTML = `
+                                            <div class="col-12">
+                                                <h5>Additional Part ${countAdditionalPCParts}</h5>
+                                            </div>
+                                            <div class="col-sm-12 col-lg">
+                                                <div class="form-group">
+                                                <label for="additionalPCpartName${countAdditionalPCParts}">Enter Name</label>
+                                                <input type="text" id="additionalPCpartName${countAdditionalPCParts}" name="additionalPCpartName${countAdditionalPCParts}"
+                                                    class="form-control additionalPCPartName"
+                                                    placeholder="Eg. Case Fans">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-lg w-100 d-flex align-items-center" style="gap:20px;">
+                                                <div class="form-group w-100">
+                                                <label for="additionalPCpartUsedOrNew${countAdditionalPCParts}">Used Or New?</label>
+                                                <select id="additionalPCpartUsedOrNew${countAdditionalPCParts}" name="additionalPCpartUsedOrNew${countAdditionalPCParts}" class="form-control additionalPCpartUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
                                                     <option value="2">New</option>
                                                 </select>
-                                            </div>
-                                        `);
+                                                </div>
+                                                <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalPCpart${countAdditionalPCParts}" onclick="removeAdditionalPCpart(${countAdditionalPCParts})">Remove</button>
+                                            </div>`
 
-                    document.getElementById("productTypeData").innerHTML = `
-                    <div class="col" id="warrantyDiv">
+                    document.getElementById('additionalPCpartsSpecs').appendChild(newDiv)
+
+                    if (countAdditionalPCParts == 5) {
+                        const button = document.getElementById('addMoreadditionalPCpartBtn');
+                        button.setAttribute('disabled', true);
+                    }
+
+                    countAdditionalPCParts++
+
+
+                }
+
+            })
+
+
+
+        }
+
+        // FOR APPENDING ADDITIONAL PRODUCTS
+        function appendAdditionalProducts() {
+
+
+            const additionalProducts = document.getElementById('additionalProducts');
+            additionalProducts.classList.remove('d-none');
+
+            additionalProducts.innerHTML = `<div class="col-12">
+                     <h2>Additional Products:</h2>
+                 </div>
+                 <input type="hidden" id="additionProductData" name="additionProductData">
+                 <div id="additionalProductsSpecs" class="col-12">
+                     <div id="additionalProductrow1" class='row'>
+                         <div class="col-12">
+                             <h5>Additional Product 1</h5>
+                         </div>
+                         <div class="col-sm-12 col-lg">
+                             <div class="form-group">
+                                 <label for="additionalProductName1">Enter Name</label>
+                                 <input type="text" id="additionalProductName1" name="additionalProductName1"
+                                     class="form-control additionalProductName"
+                                     placeholder="Product Title">
+                             </div>
+                         </div>
+                         <div class="col-sm-12 col-lg">
+                             <div class="form-group">
+                                 <label for="additionalProductCategory1">Product Category</label>
+                                 <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control additionalProductCategory">
+                                     <option value="0">Please Select</option>
+                                     @foreach ($categories as $category)
+                                         <x-categories-select :category="$category" />
+                                     @endforeach
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="col-sm-12 col-lg">
+                             <div class="form-group">
+                                 <label for="additionalProductBrand1">Product Brand</label>
+                                 <select id="additionalProductBrand1" name="additionalProductBrand1" class="form-control additionalProductBrand">
+                                     <option value="0">Please Select</option>
+                                     @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                 </select>
+                             </div>
+                         </div>
+                         <div class="col-sm-12 col-lg">
+                             <div class="form-group">
+                                 <label for="additionalProductUsedOrNew1">Used Or New?</label>
+                                 <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
+                                     <option value="0">Please Select</option>
+                                     <option value="1">Used</option>
+                                     <option value="2">New</option>
+                                 </select>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+                 <div class="col-sm-12 col-lg mb-3">
+                     <button type="button" class="btn btn-primary" id="addMoreadditionalProductsBtn">Add More
+                         Products</button>
+                 </div>`
+
+
+        }
+
+        // FOR ADDING ADDITIONAL PRODUCTS
+        function addMoreAdditionalProducts() {
+
+
+            document.getElementById('addMoreadditionalProductsBtn').addEventListener('click', function() {
+                let newDiv = document.createElement('div');
+                newDiv.id = `additionalProductrow${countAdditionalProducts}`;
+                newDiv.className = 'row';
+                newDiv.innerHTML = `<div class="col-12">
+                                <h5>Additional Product ${countAdditionalProducts}</h5>
+                            </div>
+                            <div class="col-sm-12 col-lg">
                                 <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
-
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
+                                    <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
+                                        class="form-control additionalProductName"
+                                        placeholder="Product Title">
                                 </div>
                             </div>
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-sm-12 col-lg">
                                 <div class="form-group">
-                                    <label for="reason">Reason for Selling (Optional)</label>
-                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
-                                </div>
-                            </div>
-                            <div class="col" id="selectProductYear">
-                                <div class="form-group">
-                                    <label for="yearOfProduct">Year-Make of Product</label>
-
-                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
-                                        <option value="0" selected>Select Year/Make of Your Product</option>
-
+                                    <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
+                                    <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
+                                        <option value="0">Please Select</option>
+                                        @foreach ($categories as $category)
+                                            <x-categories-select :category="$category" />
+                                        @endforeach
                                     </select>
                                 </div>
+                            </div>
+                            <div class="col-sm-12 col-lg w-100 d-flex align-items-center" style="gap:20px;">
+                                <div class="form-group w-100">
+                                    <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
+                                    <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
+                                        <option value="0">Please Select</option>
+                                        <option value="1">Used</option>
+                                        <option value="2">New</option>
+                                    </select>
+                                </div>
+                                <button type="button" class="btn btn-danger" style="margin-top:13px;" id="removeAdditionalProduct${countAdditionalProducts}" onclick="removeAdditionalProduct(${countAdditionalProducts})">Remove</button>
                             </div>`
 
 
+                document.getElementById('additionalProductsSpecs').appendChild(newDiv)
+
+                countAdditionalProducts++
+
+            })
 
 
 
-                    $('#completePCparts').removeClass('d-none')
-                    $("#completePCparts").empty()
-                    $("#completePCparts").html(`
-                    <h2>Laptop Parts:</h2>
+
+
+        }
+
+        // FOR APPENDING LAPTOP PARTS
+        function appendLaptopParts() {
+            const completePCParts = document.getElementById('completePCparts');
+            completePCParts.classList.remove('d-none')
+
+            completePCParts.innerHTML = `<h2>Laptop Parts:</h2>
                             <div class="row">
                                 <div class="col-12">
                                     <h4>Processor:</h4>
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="processorName">Enter Name</label>
                                                 <input type="text" id="processorName" name="processorName"
                                                     class="form-control" placeholder="Eg. Core i7 10th Gen">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="processorBrand">Brand</label>
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
@@ -1787,14 +1935,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="graphicCardName">Enter Name</label>
                                                 <input type="text" id="graphicCardName" name="graphicCardName"
                                                     class="form-control" placeholder="Eg. Gigabyte GTX 1050">
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="graphicCardBrand">Brand</label>
                                                 <select id="graphicCardBrand" name="graphicCardBrand"
@@ -1807,7 +1955,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-sm-12 col-lg">
                                             <div class="form-group">
                                                 <label for="graphicCardMemory">Memory</label>
                                                 <select id="graphicCardMemory" name="graphicCardMemory"
@@ -1885,7 +2033,7 @@
                                 </div>
                                 <input type="hidden" id="laptopStorage" name="laptopStorage">
                                 <div id="storageSpecsDiv" class="col-12">
-                                    <div id="row1" class='row'>
+                                    <div id="additionalLaptopStoragerow1" class='row'>
                                         <div class="col-12">
                                          <h5>storage 1</h5>
                                         </div>
@@ -1943,14 +2091,26 @@
                                     </div>
                                 </div>
 
-                                <div class="col-3 mb-3">
+                                <div class="col-12 mb-3">
                                     <button type="button" class="btn btn-primary" id="addMoreStorageBtn">Add More Storage</button>
                                 </div>
-                            </div>`)
+                            </div>`
 
-                    $('#addMoreStorageBtn').click(function() {
-                        $('#storageSpecsDiv').append(`<div id="row" class='row'>
-                                        <div class="col-12">
+
+
+        }
+
+
+        // FOR ADDING MORE STORAGE IN LAPTOP PARTS
+        function addMoreStorageInLaptop() {
+
+
+            document.getElementById('addMoreStorageBtn').addEventListener('click', function() {
+
+                let newDiv = document.createElement('div');
+                newDiv.id = `additionalLaptopStoragerow${countLaptopStorage}`;
+                newDiv.className = 'row';
+                newDiv.innerHTML = `  <div class="col-12">
                                          <h5>storage ${countLaptopStorage}</h5>
                                         </div>
                                         <div class="col-lg col-sm-12">
@@ -1985,8 +2145,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
-                                            <div class="form-group">
+                                        <div class="col-lg col-sm-12 w-100 d-flex align-items-center" style="gap:20px;">
+                                            <div class="form-group w-100">
                                                 <label for="storageMemory${countLaptopStorage}">Memory</label>
                                                 <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
@@ -2003,75 +2163,19 @@
                                                     <option value="11">8 TB</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg col-sm-12">
-                                            <button type="button" class="btn btn-danger mb-3" id="removeLaptopStorage${countLaptopStorage}" onclick="removeLaptopStorage(${countLaptopStorage})">Remove</button>
-                                        </div>
-                                    </div>`)
-                        countLaptopStorage++
-                    })
-
-                    $('#warranty').empty();
-                    $('#warranty').html(
-                        '<option value="" selected>Please Select Warranty</option>');
-                    $('#warranty').append(laptop);
-
-                    $('#yearOfProduct').empty();
-                    $('#yearOfProduct').html(
-                        '<option value="" selected>Please Select Year/Make of Product</option>');
-                    $('#yearOfProduct').append(years);
-
-                    $('#repairedProductDiv').removeClass('d-none');
-                    $('#repairedProductDiv').empty();
-                    $('#repairedProductDiv').html(
-                        `<div class="form-group">
-                                    <label for="repaired">Is Product Repaired/Opened?</label>
-                                    <select name="repaired" id="repaired" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
-                                    </select>
-                                    @error('repaired')
-                                        <span class='text-danger'>{{ $message }}</span>
-                                    @enderror
-                                </div>`
-                    );
+                                            <button type="button" class="btn btn-danger" style="margin-top: 13px" id="removeLaptopStorage${countLaptopStorage}" onclick="removeLaptopStorage(${countLaptopStorage})">Remove</button>
+                                        </div>`
 
 
-                    $('#repaired').change(function() {
+                document.getElementById('storageSpecsDiv').appendChild(newDiv)
 
-                        if (this.value == "1") {
-                            $('#explainRepairingDiv').removeClass('d-none');
-                            $('#explainRepairingDiv').html(
-                                `<div class="form-group">
-                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
-                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
-                            </div>`
-                            );
-
-                        } else {
-                            $('#explainRepairingDiv').addClass('d-none');
-                            $('#explainRepairingDiv').empty();
-                        }
-
-                    });
+                countLaptopStorage++
+            })
 
 
+        }
 
-                    $('#additionalPCparts').addClass('d-none');
-                    $('#additionalPCparts').empty();
-                    $('#additionalProducts').addClass('d-none');
-                    $('#additionalProducts').empty();
-
-                    $('#aboutThisItemContainer').empty();
-
-
-                }
-            });
-
-        })
-
-
+        // FOR REMOVING STORAGE FROM PC PARTS
         const removeStorage = (id) => {
 
 
@@ -2094,12 +2198,14 @@
                 let allLabels = []
 
                 allRows.forEach((e, i) => {
+
+
                     e.id = `row${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `storage ${i+1}`;
-                    let label = e.querySelectorAll('.col-3 .form-group label');
-                    let input = e.querySelector('.col-3 .form-group input');
-                    let select = e.querySelectorAll('.col-3 .form-group select');
+                    let label = e.querySelectorAll('.col-lg .form-group label');
+                    let input = e.querySelector('.col-lg .form-group input');
+                    let select = e.querySelectorAll('.col-lg .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {
@@ -2108,9 +2214,11 @@
                         button.setAttribute('onclick', `removeStorage(${i+1})`)
                     }
 
+                    console.log(input, 'error here ============');
 
                     input.id = `storageName${i+1}`
                     input.name = `storageName${i+1}`
+
 
                     allLabels = Array.from(label);
                     allSelects = Array.from(select);
@@ -2159,15 +2267,23 @@
 
         }
 
+        // FOR REMOVING ADDITIONAL PC PARTS
         const removeAdditionalPCpart = (id) => {
+
+
+            if (countAdditionalPCParts == 6) {
+                const button = document.getElementById('addMoreadditionalPCpartBtn');
+                button.removeAttribute('disabled', false);
+            }
+
             if (countAdditionalPCParts > 1) {
                 countAdditionalPCParts--
             }
 
 
+
             let productRow = document.getElementById(`additionalPCpartsrow${id}`)
 
-            console.log(productRow);
 
             if (productRow.parentNode.id == 'additionalPCpartsSpecs') {
 
@@ -2180,9 +2296,9 @@
                     e.id = `additionalPCpartsrow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `Additional Part ${i+1}`;
-                    let label = e.querySelectorAll('.col-3 .form-group label');
-                    let input = e.querySelector('.col-3 .form-group input');
-                    let select = e.querySelectorAll('.col-3 .form-group select');
+                    let label = e.querySelectorAll('.col-lg .form-group label');
+                    let input = e.querySelector('.col-lg .form-group input');
+                    let select = e.querySelectorAll('.col-lg .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {
@@ -2225,12 +2341,13 @@
 
         }
 
+        // FOR REMOVING LAPTOP STORAGE
         const removeLaptopStorage = (id) => {
             if (countLaptopStorage > 1) {
                 countLaptopStorage--
             }
 
-            let productRow = document.getElementById(`row${id}`)
+            let productRow = document.getElementById(`additionalLaptopStoragerow${id}`)
 
             if (productRow.parentNode.id == 'storageSpecsDiv') {
 
@@ -2240,14 +2357,14 @@
 
 
                 allRows.forEach((e, i) => {
-                    e.id = `row${i + 1}`;
+                    e.id = `additionalLaptopStoragerow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `storage ${i+1}`;
 
-                    let allLabels = Array.from(e.querySelectorAll('.col-3 .form-group label'));
-                    let allSelects = Array.from(e.querySelectorAll('.col-3 .form-group select'));
+                    let allLabels = Array.from(e.querySelectorAll('.col-sm-12 .form-group label'));
+                    let allSelects = Array.from(e.querySelectorAll('.col-sm-12 .form-group select'));
 
-                    let button = e.querySelector('.col-3 button');
+                    let button = e.querySelector('.col-sm-12 button');
 
                     if (i > 0) {
                         button.id = `removeLaptopStorage${i+1}`;
@@ -2256,7 +2373,7 @@
 
 
 
-                    let input = e.querySelector('.col-3 .form-group input');
+                    let input = e.querySelector('.col-sm-12 .form-group input');
                     input.id = `storageName${i+1}`
                     input.name = `storageName${i+1}`
 
@@ -2291,6 +2408,7 @@
             }
         }
 
+        // FOR REMOVING ADDITIONAL PRODUCT
         const removeAdditionalProduct = (id) => {
             if (countAdditionalProducts > 1) {
                 countAdditionalProducts--
@@ -2299,7 +2417,6 @@
 
             let productRow = document.getElementById(`additionalProductrow${id}`)
 
-            console.log(productRow);
 
             if (productRow.parentNode.id == 'additionalProductsSpecs') {
 
@@ -2312,9 +2429,9 @@
                     e.id = `additionalProductrow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `Additional Product ${i+1}`;
-                    let label = e.querySelectorAll('.col-3 .form-group label');
-                    let input = e.querySelector('.col-3 .form-group input');
-                    let select = e.querySelectorAll('.col-3 .form-group select');
+                    let label = e.querySelectorAll('.col-lg .form-group label');
+                    let input = e.querySelector('.col-lg .form-group input');
+                    let select = e.querySelectorAll('.col-lg .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {
