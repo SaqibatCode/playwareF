@@ -14,16 +14,23 @@ class Categories extends Model
         $query->whereNull('parent_id');
     }
 
-    public function children(){
+    public function children()
+    {
         return $this->hasMany(Categories::class, 'parent_id');
     }
 
-    public function parent(){
+    public function parent()
+    {
         return $this->belongsTo(Categories::class, 'parent_id');
     }
 
     public function products()
     {
         return $this->hasMany(Products::class, 'productCategory');
+    }
+
+    public function brands()
+    {
+        return $this->belongsToMany(Brands::class, 'brand_category', 'category_id', 'brand_id');
     }
 }

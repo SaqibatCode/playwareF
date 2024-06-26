@@ -38,6 +38,8 @@ class ContentSeeder extends Seeder
                 'Highlight_Text' => 'SALES 40% OFF',
                 'contentId' => 3,
                 'featureText' => '& CHARGER',
+                'Price_Text' => 'Just',
+                'Amount_Percentage' => '$159.99',
                 'image' => 'small-banner-1.jpg',
                 'mainHeading' => 'IQOS 2.4 HOLDER',
             ],
@@ -46,11 +48,13 @@ class ContentSeeder extends Seeder
                 'ButtonText' => 'Shop Now',
                 'Highlight_Text' => 'Off',
                 'contentId' => 4,
-                'featureText' => null, // Adjust accordingly if needed
+                'featureText' => null,
+                'Price_Text' => 'Just',
+                'Amount_Percentage' => '$159.99',
                 'image' => 'small-banner-2.jpg',
                 'mainHeading' => 'IPHONE X 128GB RETINA DISPLAY',
             ],
-            
+
             // Add more data arrays as needed
         ];
 

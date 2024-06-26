@@ -104,7 +104,7 @@
                                                         src='{{ $brand->image ? asset('brand') . '/' . $brand->image : asset('assets/images/media/default.webp') }}'
                                                         style='width: 50px; height: 50px; object-fit: contain;' />
                                                 </td>
-                                                <td style="vertical-align: middle;">{{ $brand->name }}</td>
+                                                <td style="vertical-align: middle;"><a href="{{route('admin.editBrandsPage', ['id' => $brand->id])}}">{{ $brand->name }}</a></td>
                                                 <td style="vertical-align: middle;">{{ $brand->BrandDescription }}</td>
                                                 <td style="vertical-align: middle;">{{ $brand->BrandSlug }}</td>
                                                 <td>

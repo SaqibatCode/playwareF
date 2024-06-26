@@ -21,7 +21,20 @@
 
             <div class="row">
                 <div class="col-12">
-
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="card">
                         <div class="card-body">
                             <h4>Slider 1</h4>
@@ -62,7 +75,7 @@
                                             <label>Select Image</label>
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" name='image'
-                                                    id="customFile">
+                                                    id="customFile" value="{{ $slide1->image }}">
                                                 <label class="custom-file-label" for="customFile">Choose
                                                     file</label>
                                             </div>
@@ -70,7 +83,8 @@
                                         <div class="form-group">
                                             <label for="specialText">Featued Text</label>
                                             <input type="text" id="specialText" name="featuredText" class="form-control"
-                                                placeholder="Enter Your Featured Text Eg. Special Offer">
+                                                placeholder="Enter Your Featured Text Eg. Special Offer"
+                                                value="{{ $slide1->featureText }}">
                                         </div>
                                         <div class="row">
                                             <div class="col-8">
@@ -78,7 +92,8 @@
                                                     <label for="MainHeader">Main Heading</label>
                                                     <input type="text" id="MainHeader" name="MainHeading"
                                                         class="form-control"
-                                                        placeholder="Enter Main Heading Eg. MINI HELICOPTER DRONE 4 CHANNELS ">
+                                                        placeholder="Enter Main Heading Eg. MINI HELICOPTER DRONE 4 CHANNELS "
+                                                        value="{{ $slide1->mainHeading }}">
                                                 </div>
                                             </div>
                                             <div class="col-4">
@@ -86,19 +101,22 @@
                                                     <label for="HighlightText">Highlight Text</label>
                                                     <input type="text" id="HighlightText" name="HighlightText"
                                                         class="form-control"
-                                                        placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
+                                                        placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF"
+                                                        value={{ $slide1->Highlight_Text }}>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="ButtonText">Button Text</label>
                                             <input type="text" id="ButtonText" name="ButtonText" class="form-control"
-                                                placeholder="Enter Button Text Eg. Shop Now">
+                                                placeholder="Enter Button Text Eg. Shop Now"
+                                                value="{{ $slide1->ButtonText }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="ButtonLink">Enter Button Link</label>
-                                            <input type="url" id="ButtonLink" name="ButtonLink" class="form-control"
-                                                placeholder="Enter Button Text Eg. https://Playware.com/category/iPhones">
+                                            <input type="text" id="ButtonLink" name="ButtonLink" class="form-control"
+                                                placeholder="Enter Button Text Eg. https://Playware.com/category/iPhones"
+                                                value="{{ $slide1->ButtonLink }}">
                                         </div>
                                         <button class="btn btn-primary" type="submit">Update</button>
                                     </form>
@@ -152,16 +170,16 @@
                                         <div class="form-group">
                                             <label>Select Image</label>
                                             <div class="custom-file">
-                                                <input type="file" name='image' class="custom-file-input" id="customFile">
-                                                <label class="custom-file-label" 
-                                                    for="customFile">Choose
+                                                <input type="file" name='image' class="custom-file-input"
+                                                    id="customFile">
+                                                <label class="custom-file-label" for="customFile">Choose
                                                     file</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="specialText">Featued Text</label>
                                             <input type="text" id="specialText" name="featuredText"
-                                                class="form-control"
+                                                class="form-control" value="{{ $slide2->featureText }}"
                                                 placeholder="Enter Your Featured Text Eg. Special Offer">
                                         </div>
                                         <div class="row">
@@ -169,7 +187,7 @@
                                                 <div class="form-group">
                                                     <label for="MainHeader">Main Heading</label>
                                                     <input type="text" id="MainHeader" name="MainHeading"
-                                                        class="form-control"
+                                                        class="form-control" value="{{ $slide2->mainHeading }}"
                                                         placeholder="Enter Main Heading Eg. MINI HELICOPTER DRONE 4 CHANNELS ">
                                                 </div>
                                             </div>
@@ -177,7 +195,7 @@
                                                 <div class="form-group">
                                                     <label for="HighlightText">Highlight Text</label>
                                                     <input type="text" id="HighlightText" name="HighlightText"
-                                                        class="form-control"
+                                                        class="form-control" value="{{ $slide2->Highlight_Text }}"
                                                         placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
                                                 </div>
                                             </div>
@@ -185,11 +203,13 @@
                                         <div class="form-group">
                                             <label for="ButtonText">Button Text</label>
                                             <input type="text" id="ButtonText" name="ButtonText" class="form-control"
-                                                placeholder="Enter Button Text Eg. Shop Now">
+                                                placeholder="Enter Button Text Eg. Shop Now"
+                                                value="{{ $slide2->ButtonText }}">
                                         </div>
                                         <div class="form-group">
                                             <label for="ButtonLink">Enter Button Link</label>
-                                            <input type="url" id="ButtonLink" name="ButtonLink" class="form-control"
+                                            <input type="text" id="ButtonLink" name="ButtonLink"
+                                                value="{{ $slide2->ButtonLink }}" class="form-control"
                                                 placeholder="Enter Button Text Eg. https://Playware.com/category/iPhones">
                                         </div>
                                         <button class="btn btn-primary" type="submit">Update</button>
@@ -215,7 +235,8 @@
                                         <div
                                             style="width: 30%; position: absolute; left: 2%; top: 50%; transform: translateY(-50%)">
                                             <p class="text-uppercase" style="font-size: 30px; color: black;">
-                                                {{ $feature1->mainHeading }} <b>{{ $feature1->Highlight_Text }}</b></p>
+                                                <b>{{ $feature1->Highlight_Text }}</b> {{ $feature1->mainHeading }}
+                                            </p>
                                             <p style="font-size: 20px;">{{ $feature1->Price_Text }} <span
                                                     class="text-success"
                                                     style="font-weight: 800;">{{ $feature1->Amount_Percentage }}</span>
@@ -243,9 +264,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{ route('admin.updateContent') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $feature1->id }}">
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $feature1->id }}">
                                             <div class="form-group">
                                                 <label>Select Image</label>
                                                 <div class="custom-file">
@@ -261,7 +282,7 @@
                                                     <div class="form-group">
                                                         <label for="MainHeader">Main Heading</label>
                                                         <input type="text" id="MainHeader" name="MainHeading"
-                                                            class="form-control"
+                                                            class="form-control" value="{{ $feature1->mainHeading }}"
                                                             placeholder="Enter Main Heading Eg. MINI HELICOPTER DRONE 4 CHANNELS ">
                                                     </div>
                                                 </div>
@@ -269,7 +290,7 @@
                                                     <div class="form-group">
                                                         <label for="HighlightText">Highlight Text</label>
                                                         <input type="text" id="HighlightText" name="HighlightText"
-                                                            class="form-control"
+                                                            class="form-control" value="{{ $feature1->Highlight_Text }}"
                                                             placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
                                                     </div>
                                                 </div>
@@ -279,7 +300,8 @@
                                                     <div class="form-group">
                                                         <label for="PriceText">Price Text</label>
                                                         <input type="text" id="PriceText" name="PriceText"
-                                                            class="form-control" placeholder="Eg, Just, Off ">
+                                                            value="{{ $feature1->Price_Text }}" class="form-control"
+                                                            placeholder="Eg, Just, Off ">
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
@@ -287,6 +309,7 @@
                                                         <label for="Amount">Amount / Percentage</label>
                                                         <input type="text" id="Amount" name="Amount"
                                                             class="form-control"
+                                                            value="{{ $feature1->Amount_Percentage }}"
                                                             placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
                                                     </div>
                                                 </div>
@@ -294,12 +317,13 @@
                                             <div class="form-group">
                                                 <label for="ButtonText">Button Text</label>
                                                 <input type="text" id="ButtonText" name="ButtonText"
-                                                    class="form-control" placeholder="Enter Button Text Eg. Shop Now">
+                                                    class="form-control" placeholder="Enter Button Text Eg. Shop Now"
+                                                    value="{{ $feature1->ButtonText }}">
                                             </div>
                                             <div class="form-group">
                                                 <label for="ButtonLink">Enter Button Link</label>
-                                                <input type="url" id="ButtonLink" name="ButtonLink"
-                                                    class="form-control"
+                                                <input type="text" id="ButtonLink" name="ButtonLink"
+                                                    class="form-control" value="{{ $feature1->ButtonLink }}"
                                                     placeholder="Enter Button Text Eg. https://Playware.com/category/iPhones">
                                             </div>
                                             <button class="btn btn-primary" type="submit">Update</button>
@@ -350,9 +374,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{ route('admin.updateContent') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{ $feature2->id }}">
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $feature2->id }}">
                                             <div class="form-group">
                                                 <label>Select Image</label>
                                                 <div class="custom-file">
@@ -368,7 +392,7 @@
                                                     <div class="form-group">
                                                         <label for="MainHeader">Main Heading</label>
                                                         <input type="text" id="MainHeader" name="MainHeading"
-                                                            class="form-control"
+                                                            class="form-control" value="{{ $feature2->mainHeading }}"
                                                             placeholder="Enter Main Heading Eg. MINI HELICOPTER DRONE 4 CHANNELS ">
                                                     </div>
                                                 </div>
@@ -376,7 +400,7 @@
                                                     <div class="form-group">
                                                         <label for="HighlightText">Highlight Text</label>
                                                         <input type="text" id="HighlightText" name="HighlightText"
-                                                            class="form-control"
+                                                            class="form-control" value="{{ $feature2->Highlight_Text }}"
                                                             placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
                                                     </div>
                                                 </div>
@@ -386,6 +410,7 @@
                                                     <div class="form-group">
                                                         <label for="PriceText">Price Text</label>
                                                         <input type="text" id="PriceText" name="PriceText"
+                                                        value="{{ $feature2->Price_Text }}"
                                                             class="form-control" placeholder="Eg, Just, Off ">
                                                     </div>
                                                 </div>
@@ -394,6 +419,7 @@
                                                         <label for="Amount">Amount / Percentage</label>
                                                         <input type="text" id="Amount" name="Amount"
                                                             class="form-control"
+                                                            value="{{ $feature2->Amount_Percentage }}"
                                                             placeholder="Enter Your Highlighted Text Eg. SALES 40% OFF">
                                                     </div>
                                                 </div>
@@ -401,12 +427,15 @@
                                             <div class="form-group">
                                                 <label for="ButtonText">Button Text</label>
                                                 <input type="text" id="ButtonText" name="ButtonText"
-                                                    class="form-control" placeholder="Enter Button Text Eg. Shop Now">
+                                                    class="form-control" placeholder="Enter Button Text Eg. Shop Now"
+                                                    value="{{ $feature2->ButtonText }}"
+                                                    >
                                             </div>
                                             <div class="form-group">
                                                 <label for="ButtonLink">Enter Button Link</label>
-                                                <input type="url" id="ButtonLink" name="ButtonLink"
+                                                <input type="text" id="ButtonLink" name="ButtonLink"
                                                     class="form-control"
+                                                    value="{{ $feature2->ButtonLink }}"
                                                     placeholder="Enter Button Text Eg. https://Playware.com/category/iPhones">
                                             </div>
                                             <button class="btn btn-primary" type="submit">Update</button>

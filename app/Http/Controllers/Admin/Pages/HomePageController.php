@@ -18,6 +18,8 @@ class HomePageController extends Controller
         $slide2 = Content::where('contentId', '2')->first();
         $feature1 = Content::where('contentId', '3')->first();
         $feature2 = Content::where('contentId', '4')->first();
+
+        // return response()->json($feature1);
         return view('admin.pages.Edit.Home', [
             'title' => 'Edit Home Page',
             'slide1' => $slide1,
@@ -29,7 +31,6 @@ class HomePageController extends Controller
 
     public function UpdateContent(Request $request)
     {
-        // dd($request->all());
 
         $validate = $request->validate([
             'MainHeading' => 'required|string',
@@ -39,7 +40,7 @@ class HomePageController extends Controller
             'featuredText' => 'nullable|string',
             'ButtonText' => 'required|string',
             'ButtonLink' => 'required|string',
-            'image' => 'required|mimes:png,jpeg'
+            'image' => 'nullable|mimes:png,jpeg'
         ]);
 
         $id = $request->input('id');
@@ -49,24 +50,36 @@ class HomePageController extends Controller
         if ($content) {
 
             $folderPath = 'Content';
-            $contentImage = $request->file('image');
-            $contentImageName = time() . '_' . 'Slide_image' . '.' . $contentImage->getClientOriginalExtension();
-            $contentImage->move(public_path($folderPath), $contentImageName);
+            if ($request->file('image')) {
+                $contentImage = $request->file('image');
+                $contentImageName = time() . '_' . 'Slide_image' . '.' . $contentImage->getClientOriginalExtension();
+                $contentImage->move(public_path($folderPath), $contentImageName);
 
-            $content->image = $contentImageName;
+                $content->image = $contentImageName;
+            }
+
+
             if ($request->input('featuredText')) {
                 $content->featureText = $validate['featuredText'];
             }
-            $content->mainHeading = $validate['MainHeading'];
-            $content->Highlight_Text = $validate['HighlightText'];
+            if ($request->input('MainHeading')) {
+                $content->mainHeading = $validate['MainHeading'];
+            }
+            if ($request->input('HighlightText')) {
+                $content->Highlight_Text = $validate['HighlightText'];
+            }
             if ($request->input('PriceText')) {
                 $content->Price_Text = $validate['PriceText'];
             }
             if ($request->input('Amount')) {
                 $content->Amount_Percentage = $validate['Amount'];
             }
-            $content->ButtonText = $validate['ButtonText'];
-            $content->ButtonLink = $validate['ButtonLink'];
+            if ($request->input('ButtonText')) {
+                $content->ButtonText = $validate['ButtonText'];
+            }
+            if ($request->input('ButtonLink')) {
+                $content->ButtonLink = $validate['ButtonLink'];
+            }
             $content->save();
 
             return back()->with('success', 'Content Updated Successfully');

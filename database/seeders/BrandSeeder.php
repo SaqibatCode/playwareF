@@ -293,7 +293,7 @@ class BrandSeeder extends Seeder
             [
                 'id' => 47,
                 'name' => '1st Player',
-                'BrandSlug' => '1st Player',
+                'BrandSlug' => '1st-Player',
                 'BrandDescription' => '1st Player',
             ],
             [
@@ -374,6 +374,25 @@ class BrandSeeder extends Seeder
                 'BrandSlug' => 'Other',
                 'BrandDescription' => 'Other',
             ],
+            [
+                'id' => 61,
+                'name' => 'Lexar',
+                'BrandSlug' => 'Lexar',
+                'BrandDescription' => 'Lexar',
+            ],
+            [
+                'id' => 62,
+                'name' => 'Aukey',
+                'BrandSlug' => 'Aukey',
+                'BrandDescription' => 'Aukey',
+            ],
+            [
+                'id' => 63,
+                'name' => 'Generic',
+                'BrandSlug' => 'Generic',
+                'BrandDescription' => 'Generic',
+            ],
+
         ];
 
         Brands::insert($Brands);

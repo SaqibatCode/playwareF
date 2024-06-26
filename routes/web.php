@@ -52,6 +52,10 @@ Route::prefix('api/v1')->group(function () {
         Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
 
         Route::post('upload-package', [PackageController::class, 'uploadPackage'])->name('auth.uploadPackage');
+
+        Route::prefix('ajax')->group(function () {
+            Route::post('/get-brands-by-category', [ProductsController::class, 'getBrandsByCategory'])->name('seller.getBrandsByCategory');
+        });
     });
 
 
@@ -81,6 +85,10 @@ Route::prefix('api/v1')->group(function () {
             Route::prefix('category')->group(function () {
                 Route::post('/create-category', [CategoriesController::class, 'createCategory'])->name('admin.createCategory');
                 Route::delete('/delete-category/{id}', [CategoriesController::class, 'deleteCategory'])->name('admin.deleteCategory');
+                Route::post('/add-brand', [CategoriesController::class, 'addBrand'])->name('admin.addBrand');
+                Route::delete('/delete-brand/{categoryId}/{brandId}', [CategoriesController::class, 'deleteBrand'])->name('admin.deletBrand');
+                Route::post('/update-brand', [CategoriesController::class, 'updateBrand'])->name('admin.updateBrand');
+                Route::post('/update-category', [CategoriesController::class, 'updateCategory'])->name('admin.updateCategory');
             });
 
             Route::prefix('brands')->group(function () {
@@ -129,7 +137,9 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         });
 
         Route::get('/categoires', [CategoriesController::class, 'getCategoriesPage'])->name('admin.getCategoriesPage');
+        Route::get('/categoires/{id}', [CategoriesController::class, 'editCategoriesPage'])->name('admin.editCategoriesPage');
         Route::get('/brands', [BrandController::class, 'getBrandsPage'])->name('admin.getBrandsPage');
+        Route::get('/brands/{id}', [BrandController::class, 'editBrandsPage'])->name('admin.editBrandsPage');
     });
 
 

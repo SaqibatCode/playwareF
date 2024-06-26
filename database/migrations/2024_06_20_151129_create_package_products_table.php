@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('title');
             $table->unsignedBigInteger('CategoryID');
             $table->foreign('CategoryID')->references('id')->on('categories')->onDelete('cascade');
+            $table->unsignedBigInteger('BrandID');
+            $table->foreign('BrandID')->references('id')->on('brands')->onDelete('cascade');
             $table->string('usedOrNew');
             $table->timestamps();
         });

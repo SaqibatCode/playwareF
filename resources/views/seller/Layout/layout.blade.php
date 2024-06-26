@@ -5,9 +5,13 @@
     <meta charset="utf-8" />
     <title>{{ $title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="MyraStudio" name="author" />
+    <meta content="Playware A Place Where You Can Purchase All Your Computer Related Accessories" name="description" />
+    <meta content="PlayWare" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -34,7 +38,7 @@
                     </button>
 
                     <div class="dropdown d-none d-sm-inline-block">
-                        {{-- <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                        <button type="button" class="btn header-item waves-effect d-none" id="page-header-user-dropdown"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="mdi mdi-plus"></i> Create New
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
@@ -60,7 +64,7 @@
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 CRM App
                             </a>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
 
@@ -89,47 +93,6 @@
                             </form>
                         </div>
                     </div>
-
-                    {{-- <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="{{ asset('assets/images/flags/us.jpg') }}" alt="Header Language"
-                                height="16">
-                            <span class="d-none d-sm-inline-block ml-1">English</span>
-                            <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images/flags/spain.jpg') }}" alt="user-image" class="mr-1"
-                                    height="12">
-                                <span class="align-middle">Spanish</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images/flags/germany.jpg') }}" alt="user-image"
-                                    class="mr-1" height="12">
-                                <span class="align-middle">German</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images/flags/italy.jpg') }}" alt="user-image"
-                                    class="mr-1" height="12">
-                                <span class="align-middle">Italian</span>
-                            </a>
-
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <img src="{{ asset('assets/images/flags/russia.jpg') }}" alt="user-image"
-                                    class="mr-1" height="12">
-                                <span class="align-middle">Russian</span>
-                            </a>
-                        </div>
-                    </div> --}}
-
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item noti-icon waves-effect"
                             id="page-header-notifications-dropdown" data-toggle="dropdown" aria-haspopup="true"
@@ -158,7 +121,8 @@
                                             <h6 class="mt-0 mb-1">Samuel Coverdale</h6>
                                             <p class="font-size-13 mb-1">You have new follower on Instagram</p>
                                             <p class="font-size-12 mb-0 text-muted"><i
-                                                    class="mdi mdi-clock-outline"></i> 2 min ago</p>
+                                                    class="mdi mdi-clock-outline"></i> 2
+                                                min ago</p>
                                         </div>
                                     </div>
                                 </a>
@@ -174,7 +138,8 @@
                                             <p class="font-size-13 mb-1">Latest version of admin is now available.
                                                 Please download here.</p>
                                             <p class="font-size-12 mb-0 text-muted"><i
-                                                    class="mdi mdi-clock-outline"></i> 4 hours ago</p>
+                                                    class="mdi mdi-clock-outline"></i> 4
+                                                hours ago</p>
                                         </div>
                                     </div>
                                 </a>
@@ -186,7 +151,8 @@
                                             <h6 class="mt-0 mb-1">Victoria Mendis</h6>
                                             <p class="font-size-13 mb-1">Just upgraded to premium account.</p>
                                             <p class="font-size-12 mb-0 text-muted"><i
-                                                    class="mdi mdi-clock-outline"></i> 1 day ago</p>
+                                                    class="mdi mdi-clock-outline"></i>
+                                                1 day ago</p>
                                         </div>
                                     </div>
                                 </a>
@@ -280,104 +246,6 @@
                                 </a>
                             @endif
                         </li>
-
-
-
-                        {{-- <li><a href="calendar.html" class=" waves-effect"><i
-                                    class="bx bx-calendar"></i><span>Calendar</span></a></li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-cookie"></i><span>UI Elements</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="ui-buttons.html">Buttons</a></li>
-                                <li><a href="ui-cards.html">Cards</a></li>
-                                <li><a href="ui-carousel.html">Carousel</a>
-                                <li><a href="ui-embeds.html">Embeds</a>
-                                <li><a href="ui-general.html">General</a></li>
-                                <li><a href="ui-grid.html">Grid</a></li>
-                                <li><a href="ui-media-objects.html">Media Objects</a></li>
-                                <li><a href="ui-modals.html">Modals</a></li>
-                                <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                <li><a href="ui-tabs.html">Tabs</a></li>
-                                <li><a href="ui-typography.html">Typography</a></li>
-                                <li><a href="ui-toasts.html">Toasts</a></li>
-                                <li><a href="ui-tooltips-popovers.html">Tooltips & Popovers</a></li>
-                                <li><a href="ui-scrollspy.html">Scrollspy</a></li>
-                                <li><a href="ui-spinners.html">Spinners</a></li>
-                                <li><a href="ui-sweetalerts.html">Sweet Alerts</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-table"></i><span>Tables</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="tables-basic.html">Basic Tables</a></li>
-                                <li><a href="tables-datatables.html">Data Tables</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-doughnut-chart"></i><span>Charts</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="charts-morris.html">Morris</a></li>
-                                <li><a href="charts-google.html">Google</a></li>
-                                <li><a href="charts-chartjs.html">Chartjs</a></li>
-                                <li><a href="charts-sparkline.html">Sparkline</a></li>
-                                <li><a href="charts-knob.html">Jquery Knob</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="waves-effect"><i class="bx bxs-eraser"></i><span
-                                    class="badge badge-pill badge-danger float-right">6</span><span>Forms</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="forms-elements.html">Elements</a></li>
-                                <li><a href="forms-plugins.html">Plugins</a></li>
-                                <li><a href="forms-validation.html">Validation</a></li>
-                                <li><a href="forms-mask.html">Masks</a></li>
-                                <li><a href="forms-quilljs.html">Quilljs</a></li>
-                                <li><a href="forms-uploads.html">File Uploads</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-aperture"></i><span>Icons</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="icons-boxicons.html">Boxicons</a></li>
-                                <li><a href="icons-materialdesign.html">Material Design</a></li>
-                                <li><a href="icons-fontawesome.html">Font awesome 5</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="menu-title">More</li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-map-alt"></i><span>Maps</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="maps-google.html">Google Maps</a></li>
-                                <li><a href="maps-vector.html">Vector Maps</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-share-alt"></i><span>Multi Level</span></a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">Level 1.1</a></li>
-                                <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                                    <ul class="sub-menu" aria-expanded="true">
-                                        <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                        <li><a href="javascript: void(0);">Level 2.2</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li> --}}
-
                     </ul>
                 </div>
                 <!-- Sidebar -->

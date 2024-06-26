@@ -10,7 +10,7 @@
     <td> <img
             src='{{ $category->image ? asset('category') . '/' . $category->image : asset('assets/images/media/default.webp') }}'
             style='width: 50px; height: 50px; object-fit: cover;' /></td>
-    <td style='vertical-align: middle;'><a href="#">{{ $indentation }} {{ $category->name }}</a></td>
+    <td style='vertical-align: middle;'><a href="{{route('admin.editCategoriesPage', ['id' => $category->id])}}">{{ $indentation }} {{ $category->name }}</a></td>
     <td style='vertical-align: middle;'>{{ $category->description }}</td>
     <td style='vertical-align: middle;'><a href="{{ '/' . $category->slug }}">{{ $category->slug }}</a></td>
     <td style="vertical-align: middle;">

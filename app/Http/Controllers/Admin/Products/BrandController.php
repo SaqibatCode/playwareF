@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Products;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -70,5 +71,20 @@ class BrandController extends Controller
         Brands::find($id)->delete();
 
         return back()->with(['Delete' => 'Deleted Successfully']);
+    }
+
+
+
+    public function editBrandsPage($id)
+    {   
+        $brand = Brands::where('id', $id)->first();
+        $categories = Categories::all();
+        $brands = Brands::all();
+        return view('admin.pages.products.Brands.EditBrands', [
+            'title' => $brand->name,
+            'brand' => $brand,
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
     }
 }
