@@ -7,12 +7,12 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-flex align-items-center justify-content-between">
-                        <h4 class="mb-0 font-size-18">All Products</h4>
+                        <h4 class="mb-0 font-size-18">All Packages</h4>
 
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                                <li class="breadcrumb-item active">All Products</li>
+                                <li class="breadcrumb-item active">All Packges</li>
                             </ol>
                         </div>
 
@@ -24,19 +24,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">All Products</h4>
-                            <table id="basic-datatable" class="table dt-responsive nowrap">
+                        <div class="card-body table-responsive">
+                            <h4 class="card-title">All Packages</h4>
+                            <table id="basic-datatable" class="table table-centered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th># of Products</th>
-                                        <th>Date Created</th>
-                                        <th>Status</th>
-                                        <th></th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Product Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col"># of Products</th>
+                                        <th scope="col">Date Created</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col"></th>
                                     </tr>
                                 </thead>
 
@@ -44,17 +44,17 @@
                                 <tbody>
 
                                     @foreach ($packages as $package)
-                                    
+
                                         <tr>
-                                            <td><img src='{{ asset('user_folders/Package_images/') . '/' . $package->mainImage }}'
+                                            <td  scope="row"><img src='{{ asset('user_folders/Package_images/') . '/' . $package->mainImage }}'
                                                     style='width: 100px;'></td>
-                                            <td style="vertical-align: middle">{{ $package->title }}</td>
-                                            <td style="vertical-align: middle">{{ $package->quantity }}</td>
-                                            <td style="vertical-align: middle">
+                                            <td  scope="row" style="vertical-align: middle">{{ $package->title }}</td>
+                                            <td  scope="row" style="vertical-align: middle">{{ $package->quantity }}</td>
+                                            <td  scope="row" style="vertical-align: middle">
                                                ${{ $package->SellPrice ?? $package->originalPrice }}</td>
-                                            <td style="vertical-align: middle">{{$package->packageProducts->count()}} Products</td>
-                                            <td style="vertical-align: middle">{{ $package->created_at }}</td>
-                                            <td style="vertical-align: middle">
+                                            <td  scope="row" style="vertical-align: middle">{{$package->packageProducts->count()}} Products</td>
+                                            <td  scope="row" style="vertical-align: middle">{{ $package->created_at }}</td>
+                                            <td  scope="row" style="vertical-align: middle">
                                                 {{ $package->approved == true ? 'Approved' : 'Un-Approved' }}</td>
                                         </tr>
                                     @endforeach

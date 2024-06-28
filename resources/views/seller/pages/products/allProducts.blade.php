@@ -24,9 +24,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">All Products</h4>
-                            <table id="basic-datatable" class="table dt-responsive nowrap">
+                        <div class="card-body table-responsive">
+                            <h4 class="card-title ">All Products</h4>
+                            <table id="basic-datatable" class="table table-centered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Image</th>

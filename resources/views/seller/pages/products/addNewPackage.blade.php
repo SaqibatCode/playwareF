@@ -105,6 +105,18 @@
                                     </div>
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
+                                            <label for="productBrand1">Product Brand</label>
+                                            <select id="productBrand1" name="productBrand1"
+                                                class="form-control productBrand">
+                                                <option value="0">Please Select</option>
+                                                @foreach ($categories as $category)
+                                                    <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md col-sm-12">
+                                        <div class="form-group">
                                             <label for="packageProductUsedOrNew1">Used Or New?</label>
                                             <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
                                                 class="form-control packageProductUsedOrNew">
@@ -141,7 +153,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="mainImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -155,7 +167,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="firstImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -170,7 +182,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="secondImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -185,7 +197,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="thirdImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -200,7 +212,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="fourthImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -215,7 +227,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="fifthImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -299,6 +311,19 @@
             </div>
             <div class="col-md col-sm-12">
                 <div class="form-group">
+                    <label for="productBrand${packageProducts}">Product Brand</label>
+                    <select id="productBrand${packageProducts}" name="productBrand${packageProducts}"
+                        class="form-control productBrand">
+                        <option value="0">Please Select</option>
+                        <!-- Replace with your categories -->
+                        @foreach ($categories as $category)
+                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md col-sm-12 d-flex">
+                <div class="form-group w-100">
                     <label for="packageProductUsedOrNew${packageProducts}">Used Or New?</label>
                     <select id="packageProductUsedOrNew${packageProducts}" name="packageProductUsedOrNew${packageProducts}"
                         class="form-control packageProductUsedOrNew">
@@ -307,9 +332,9 @@
                         <option value="2">New</option>
                     </select>
                 </div>
-            </div>
-            <div class="d-flex align-items-center">
-                <button type="button" class="btn btn-danger" id="removeProduct${packageProducts}" onclick="removeProduct(${packageProducts})" style="margin-top: 10px;">X</button>
+                <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-danger" id="removeProduct${packageProducts}" onclick="removeProduct(${packageProducts})" style="margin-top: 10px; margin-left: 10px;">X</button>
+                </div>
             </div>
         `;
 
@@ -338,9 +363,9 @@
                 heading.innerText = `Product ${i+1}`;
 
 
-                let label = e.querySelectorAll('.col-3 .form-group label');
-                let input = e.querySelector('.col-3 .form-group input');
-                let select = e.querySelectorAll('.col-3 .form-group select');
+                let label = e.querySelectorAll('.col-md .form-group label');
+                let input = e.querySelector('.col-md .form-group input');
+                let select = e.querySelectorAll('.col-md .form-group select');
                 let button = e.querySelector('.align-items-center button');
 
                 if (i > 0) {
@@ -359,8 +384,11 @@
                 allSelects[0].id = `packageProductCategory${i+1}`
                 allSelects[0].name = `packageProductCategory${i+1}`
 
-                allSelects[1].id = `packageProductUsedOrNew${i+1}`
-                allSelects[1].name = `packageProductUsedOrNew${i+1}`
+                allSelects[1].id = `productBrand${i+1}`
+                allSelects[1].name = `productBrand${i+1}`
+
+                allSelects[2].id = `packageProductUsedOrNew${i+1}`
+                allSelects[2].name = `packageProductUsedOrNew${i+1}`
 
 
 
@@ -376,6 +404,9 @@
                         labelElement.setAttribute('for', `packageProductCategory${i+1}`);
                     }
                     if (labelIndex == 2) {
+                        labelElement.setAttribute('for', `productBrand${i+1}`);
+                    }
+                    if (labelIndex == 3) {
                         labelElement.setAttribute('for', `packageProductUsedOrNew${i+1}`);
                     }
 

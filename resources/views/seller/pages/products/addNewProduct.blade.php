@@ -43,7 +43,7 @@
                         @csrf
 
                         <div class="row">
-                            <div class="col-6" id="selectProducttype">
+                            <div class="col-md col-sm-12" id="selectProducttype">
                                 <div class="form-group">
                                     <label for="ProductType">Product Type</label>
                                     <select name="ProductType" class="form-control" id="ProductType">
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productTitle">Product Title</label>
                                     <input type="text" value="{{ old('productTitle') }}" id="productTitle"
@@ -82,7 +82,7 @@
 
 
                         <div class="row" id="productTypeData">
-                            <div id="productCategoryDiv" class="col">
+                            <div id="productCategoryDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -97,7 +97,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col">
+                            <div id="brandNameDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -144,7 +144,7 @@
                         </div>
 
                         <div class="row" id="productReasonAndWarrantyDiv">
-                            <div class="col" id="warrantyDiv">
+                            <div class="col-md col-sm-12" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -157,16 +157,16 @@
                                 </div>
                             </div>
 
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
 
-                            <div class="col d-none" id="repairedProductDiv"></div>
+                            <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
 
-                            <div class="col d-none" id="laptopUsedOrNotDiv"></div>
+                            <div class="col-md col-sm-12 d-none" id="laptopUsedOrNotDiv"></div>
 
                         </div>
 
@@ -175,7 +175,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productQuantity">Product Quantity</label>
                                     <input type="number" id="productQuantity" value="{{ old('productQuantity') }}"
@@ -185,7 +185,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productSku">Product SKU</label>
                                     <input type="text" id="productSku" value="{{ old('productSku') }}"
@@ -199,7 +199,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="originalPrice">Original Price</label>
                                     <input type="number" id="originalPrice" name="originalPrice" class="form-control"
@@ -210,7 +210,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="sellPrice">Sale Price (Leave Empty If Not On Sale)</label>
                                     <input type="number" id="sellPrice" name="sellPrice" class="form-control"
@@ -227,6 +227,9 @@
                         <div id="additionalPCparts" class="row d-none mt-5"></div>
 
                         <div id="additionalProducts" class="row d-none mt-5"></div>
+
+
+                        <div id="additionalRequirements" class="d-none mt-5"></div>
 
 
 
@@ -272,7 +275,7 @@
 
 
                         <div class="row">
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="mainImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -286,7 +289,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="firstImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -301,7 +304,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="secondImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -316,7 +319,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="thirdImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -331,7 +334,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="fourthImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -346,7 +349,7 @@
                                     @enderror
                                 </label>
                             </div>
-                            <div class="col-2">
+                            <div class="col-md col-sm-6">
                                 <label for="fifthImage"
                                     class="container p-0 bg-white rounded flex-column d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('assets/images/media/default.webp') }}" alt="Error"
@@ -635,6 +638,8 @@
                 $('#explainRepairingDiv').empty();
 
 
+
+
                 if (this.value == '1') {
 
                     countStorage = 2;
@@ -648,7 +653,7 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col">
+                            <div id="productCategoryDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -663,7 +668,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col">
+                            <div id="brandNameDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -688,7 +693,7 @@
                                 </div>
                             </div>
 
-                            <div class="col" id="selectProductYear">
+                            <div class="col-md col-sm-12" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -703,7 +708,7 @@
                             </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
-                        $('#productReasonAndWarrantyDiv').append(`<div class="col" id="warrantyDiv">
+                        $('#productReasonAndWarrantyDiv').append(`<div class="col-md col-sm-12" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -715,13 +720,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col d-none" id="repairedProductDiv"></div>
+                            <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
                     `);
 
                     }
@@ -752,6 +757,126 @@
                                     @enderror
                                 </div>`
                     );
+
+
+                    $('#productCategory').change(function() {
+                        if (this.value == "11") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorPanelType">Panel Type</label>
+                                                <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
+                                                    <option value="0">Please Select Panel Type</option>
+                                                    <option value="1">IPS</option>
+                                                    <option value="2">VA</option>
+                                                    <option value="3">TN</option>
+                                                    <option value="4">Simple LCD</option>
+                                                    <option value="5">Simple LED</option>
+                                                    <option value="6">OLED</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorRefreshRate">Refresh Rate</label>
+                                                <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
+                                                    <option value="0">Please Select Refresh Rate</option>
+                                                    <option value="1">60Hz</option>
+                                                    <option value="2">75Hz</option>
+                                                    <option value="3">100Hz</option>
+                                                    <option value="4">120Hz</option>
+                                                    <option value="5">144Hz</option>
+                                                    <option value="6">165Hz</option>
+                                                    <option value="6">180Hz</option>
+                                                    <option value="6">240Hz</option>
+                                                    <option value="6">360Hz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorSize">Size</label>
+                                                <input type="text" id="monitorSize" name="monitorSize" required
+                                                    class="form-control" placeholder="Eg. 22 inches">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorModelNo">Model No. (optional)</label>
+                                                <input type="text" id="monitorModelNo" name="monitorModelNo"
+                                                    class="form-control" placeholder="Eg. XL2546K">
+                                            </div>
+                                        </div>
+                                    </div>`);
+
+                        } else if (this.value == "5") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramGeneration">RAM Generation</label>
+                                                <select id="ramGeneration" name="ramGeneration" class="form-control" required>
+                                                    <option value="0">Please Select RAM Generation</option>
+                                                    <option value="1">DDR2</option>
+                                                    <option value="2">DDR3</option>
+                                                    <option value="3">DDR4</option>
+                                                    <option value="4">DDR5</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramClockSpeed">Clock Speed</label>
+                                                <input type="text" id="ramClockSpeed" name="ramClockSpeed" required
+                                                    class="form-control" placeholder="Eg. 3200 MHz">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramSize">RAM Size</label>
+                                                <input type="text" id="ramSize" name="ramSize" required
+                                                    class="form-control" placeholder="Eg. 8GB">
+                                            </div>
+                                        </div>
+                                    </div>`);
+
+                        } else if (this.value == "6") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="storageType">Storage Type</label>
+                                                <select id="storageType" name="storageType" class="form-control" required>
+                                                    <option value="0">Please Select Storage Type</option>
+                                                    <option value="1">HDD</option>
+                                                    <option value="2">SSD</option>
+                                                    <option value="3">NVMe</option>
+                                                    <option value="4">M.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="storageSize">Storage Size</label>
+                                                <input type="text" id="storageSize" name="storageSize" required
+                                                    class="form-control" placeholder="Eg. 500GB">
+                                            </div>
+                                        </div>`);
+
+                        } else {
+
+                            $('#additionalRequirements').addClass('d-none');
+                            $('#additionalRequirements').empty();
+                        }
+                    })
 
 
                     $('#repaired').change(function() {
@@ -819,7 +944,7 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col">
+                            <div id="productCategoryDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="productCategory">Product Category</label>
                                     <select name="productCategory" class="form-control" id="productCategory">
@@ -834,7 +959,7 @@
                                 </div>
                             </div>
 
-                            <div id="brandNameDiv" class="col">
+                            <div id="brandNameDiv" class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="brandName">Brand Name</label>
                                     <select name="brandName" class="form-control" id="brandName">
@@ -859,7 +984,7 @@
                                 </div>
                             </div>
 
-                            <div class="col" id="selectProductYear">
+                            <div class="col-md col-sm-12" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -874,7 +999,7 @@
                             </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
-                        $('#productReasonAndWarrantyDiv').append(`<div class="col" id="warrantyDiv">
+                        $('#productReasonAndWarrantyDiv').append(`<div class="col-md col-sm-12" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -886,13 +1011,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col d-none" id="repairedProductDiv"></div>
+                            <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
                     `);
                     }
                     $('#warranty').empty();
@@ -920,6 +1045,128 @@
 
                     $('#additionalProducts').addClass('d-none');
                     $('#additionalProducts').empty();
+
+
+
+                    $('#productCategory').change(function() {
+                        if (this.value == "11") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorPanelType">Panel Type</label>
+                                                <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
+                                                    <option value="0">Please Select Panel Type</option>
+                                                    <option value="1">IPS</option>
+                                                    <option value="2">VA</option>
+                                                    <option value="3">TN</option>
+                                                    <option value="4">Simple LCD</option>
+                                                    <option value="5">Simple LED</option>
+                                                    <option value="6">OLED</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorRefreshRate">Refresh Rate</label>
+                                                <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
+                                                    <option value="0">Please Select Refresh Rate</option>
+                                                    <option value="1">60Hz</option>
+                                                    <option value="2">75Hz</option>
+                                                    <option value="3">100Hz</option>
+                                                    <option value="4">120Hz</option>
+                                                    <option value="5">144Hz</option>
+                                                    <option value="6">165Hz</option>
+                                                    <option value="6">180Hz</option>
+                                                    <option value="6">240Hz</option>
+                                                    <option value="6">360Hz</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorSize">Size</label>
+                                                <input type="text" id="monitorSize" name="monitorSize" required
+                                                    class="form-control" placeholder="Eg. 22 inches">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="monitorModelNo">Model No. (optional)</label>
+                                                <input type="text" id="monitorModelNo" name="monitorModelNo"
+                                                    class="form-control" placeholder="Eg. XL2546K">
+                                            </div>
+                                        </div>
+                                    </div>`);
+
+                        } else if (this.value == "5") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramGeneration">RAM Generation</label>
+                                                <select id="ramGeneration" name="ramGeneration" class="form-control" required>
+                                                    <option value="0">Please Select RAM Generation</option>
+                                                    <option value="1">DDR2</option>
+                                                    <option value="2">DDR3</option>
+                                                    <option value="3">DDR4</option>
+                                                    <option value="4">DDR5</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramClockSpeed">Clock Speed</label>
+                                                <input type="text" id="ramClockSpeed" name="ramClockSpeed" required
+                                                    class="form-control" placeholder="Eg. 3200 MHz">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="ramSize">RAM Size</label>
+                                                <input type="text" id="ramSize" name="ramSize" required
+                                                    class="form-control" placeholder="Eg. 8GB">
+                                            </div>
+                                        </div>
+                                    </div>`);
+
+                        } else if (this.value == "6") {
+                            $('#additionalRequirements').removeClass('d-none');
+                            $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                            <div class='row'>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="storageType">Storage Type</label>
+                                                <select id="storageType" name="storageType" class="form-control" required>
+                                                    <option value="0">Please Select Storage Type</option>
+                                                    <option value="1">HDD</option>
+                                                    <option value="2">SSD</option>
+                                                    <option value="3">NVMe</option>
+                                                    <option value="4">M.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="storageSize">Storage Size</label>
+                                                <input type="text" id="storageSize" name="storageSize" required
+                                                    class="form-control" placeholder="Eg. 500GB">
+                                            </div>
+                                        </div>`);
+
+                        } else {
+
+                            $('#additionalRequirements').addClass('d-none');
+                            $('#additionalRequirements').empty();
+                        }
+                    })
+
 
 
                     $('#aboutThisItemContainer').empty();
@@ -953,11 +1200,11 @@
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col d-none" id="repairedProductDiv"></div>`
+                        `<div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>`
 
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col" id="warrantyDiv">
+                    <div class="col-md col-sm-12" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -969,13 +1216,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col" id="selectProductYear">
+                            <div class="col-md col-sm-12" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -1021,6 +1268,11 @@
                     );
                     $('#yearOfProduct').append(years);
 
+
+                    $('#additionalRequirements').addClass('d-none');
+                    $('#additionalRequirements').empty();
+
+
                 }
 
                 if (this.value == '5') {
@@ -1031,8 +1283,8 @@
 
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
-                        `<div class="col d-none" id="repairedProductDiv"></div>
-                        <div class="col d-none" id="laptopUsedOrNotDiv"></div>`
+                        `<div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
+                        <div class="col-md col-sm-12 d-none" id="laptopUsedOrNotDiv"></div>`
 
                     $('#laptopUsedOrNotDiv').removeClass('d-none');
                     $('#laptopUsedOrNotDiv').empty();
@@ -1049,7 +1301,7 @@
                                         `);
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col" id="warrantyDiv">
+                    <div class="col-md col-sm-12" id="warrantyDiv">
                                 <div class="form-group">
                                     <label for="warranty">Check warranty</label>
                                     <select name="warranty" id="warranty" class="form-control">
@@ -1061,13 +1313,13 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col" id="reasonForSellingDiv">
+                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
                                 <div class="form-group">
                                     <label for="reason">Reason for Selling (Optional)</label>
                                     <input type="text" class="form-control" name="reason" id="reasonForSelling">
                                 </div>
                             </div>
-                            <div class="col" id="selectProductYear">
+                            <div class="col-md col-sm-12" id="selectProductYear">
                                 <div class="form-group">
                                     <label for="yearOfProduct">Year-Make of Product</label>
 
@@ -1139,6 +1391,11 @@
                     $('#aboutThisItemContainer').empty();
 
 
+                    $('#additionalRequirements').addClass('d-none');
+                    $('#additionalRequirements').empty();
+
+
+
                 }
             });
 
@@ -1159,14 +1416,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorName">Enter Name</label>
                                                 <input type="text" id="processorName" name="processorName"
                                                     class="form-control" placeholder="Eg. Core i7 10th Gen">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorBrand">Brand</label>
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
@@ -1179,7 +1436,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="processorUsedOrNew">Used Or New?</label>
                                                 <select id="processorUsedOrNew" name="processorUsedOrNew"
@@ -1200,14 +1457,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardName">Enter Name</label>
                                                 <input type="text" id="graphicCardName" name="graphicCardName"
                                                     class="form-control" placeholder="Eg. Gigabyte GTX 1050">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardBrand">Brand</label>
                                                 <select id="graphicCardBrand" name="graphicCardBrand"
@@ -1220,7 +1477,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardMemory">Memory</label>
                                                 <select id="graphicCardMemory" name="graphicCardMemory"
@@ -1237,7 +1494,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardUsedOrNew">Used Or New?</label>
                                                 <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew0"
@@ -1258,14 +1515,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardName">Enter Name</label>
                                                 <input type="text" id="motherboardName" name="motherboardName"
                                                     class="form-control" placeholder="Eg. MSI B450 TOMAHAWK MAX ATX AM4 ">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardBrand">Brand</label>
                                                 <select id="motherboardBrand" name="motherboardBrand"
@@ -1279,7 +1536,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="motherboardUsedOrNew">Used Or New?</label>
                                                 <select id="motherboardUsedOrNew" name="motherboardUsedOrNew"
@@ -1300,14 +1557,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
                                                     placeholder="Eg. GSkill 16GB DDR4 ">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramBrand">Brand</label>
                                                 <select id="ramBrand" name="ramBrand" class="form-control">
@@ -1319,7 +1576,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramMemory">Memory</label>
                                                 <select id="ramMemory" name="ramMemory" class="form-control">
@@ -1334,7 +1591,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramUsedOrNew">Used Or New?</label>
                                                 <select id="ramUsedOrNew" name="ramUsedOrNew" class="form-control">
@@ -1344,7 +1601,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramQuantity">Quantity</label>
                                                 <input type="number" id="ramQuantity" name="ramQuantity"
@@ -1365,7 +1622,7 @@
                                         <div class="col-12">
                                          <h5>storage 1</h5>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
                                                 <input type="text" id="storageName1" name="storageName1"
@@ -1373,7 +1630,7 @@
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
                                                 <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
@@ -1385,7 +1642,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
                                                 <select id="storageType1" name="storageType1" class="form-control storageType">
@@ -1397,7 +1654,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
                                                 <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
@@ -1416,7 +1673,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageUsedOrNew1">Used Or New?</label>
                                                 <select id="storageUsedOrNew1" name="storageUsedOrNew1"
@@ -1430,7 +1687,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12 col-lg mb-3">
+                                <div class="col-sm-12 col-md mb-3">
                                     <button type="button" class="btn btn-primary" id="addMoreStorageBtn">Add More Storage</button>
                                 </div>
                             </div>
@@ -1441,14 +1698,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuName">Enter Name</label>
                                                 <input type="text" id="psuName" name="psuName" class="form-control"
                                                     placeholder="Eg. Corsair CX550 550Watt 80+ Bronze ">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuBrand">Brand</label>
                                                 <select id="psuBrand" name="psuBrand" class="form-control">
@@ -1461,7 +1718,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuWatts">Watts</label>
                                                 <select id="psuWatts" name="psuWatts" class="form-control">
@@ -1484,7 +1741,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="psuUsedOrNew">Used Or New?</label>
                                                 <select id="psuUsedOrNew" name="psuUsedOrNew" class="form-control">
@@ -1504,14 +1761,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseName">Enter Name</label>
                                                 <input type="text" id="caseName" name="caseName"
                                                     class="form-control" placeholder="Eg. NZXT H9 Flow Dual-Chamber Mid-Tower Airflow Case">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseBrand">Brand</label>
                                                 <select id="caseBrand" name="caseBrand"
@@ -1524,7 +1781,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="caseUsedOrNew">Used Or New?</label>
                                                 <select id="caseUsedOrNew" name="caseUsedOrNew"
@@ -1545,14 +1802,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerName">Enter Name</label>
                                                 <input type="text" id="coolerName" name="coolerName"
                                                     class="form-control" placeholder="Eg. XPG VENTO 120 ARGB FAN Case Fan">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerBrand">Brand</label>
                                                 <select id="coolerBrand" name="coolerBrand"
@@ -1565,7 +1822,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="coolerUsedOrNew">Used Or New?</label>
                                                 <select id="coolerUsedOrNew" name="coolerUsedOrNew"
@@ -1595,7 +1852,7 @@
                                         <div class="col-12">
                                          <h5>storage ${countStorage}</h5>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageName${countStorage}">Enter Name</label>
                                                 <input type="text" id="storageName${countStorage}" name="storageName${countStorage}"
@@ -1603,7 +1860,7 @@
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageBrand${countStorage}">Brand</label>
                                                 <select id="storageBrand${countStorage}" name="storageBrand${countStorage}" class="form-control storageBrand">
@@ -1615,7 +1872,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageType${countStorage}">Type</label>
                                                 <select id="storageType${countStorage}" name="storageType${countStorage}" class="form-control storageType">
@@ -1627,7 +1884,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageMemory${countStorage}">Memory</label>
                                                 <select id="storageMemory${countStorage}" name="storageMemory${countStorage}" class="form-control storageMemory">
@@ -1646,7 +1903,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg w-100 d-flex align-items-center" style="gap:20px;">
+                                        <div class="col-sm-12 col-md w-100 d-flex align-items-center" style="gap:20px;">
                                             <div class="form-group w-100">
                                                 <label for="storageUsedOrNew${countStorage}">Used Or New?</label>
                                                 <select id="storageUsedOrNew${countStorage}" name="storageUsedOrNew${countStorage}"
@@ -1687,7 +1944,7 @@
                                     <div class="col-12">
                                         <h5>Additional Part 1</h5>
                                     </div>
-                                    <div class="col-sm-12 col-lg">
+                                    <div class="col-sm-12 col-md">
                                         <div class="form-group">
                                             <label for="additionalPCpartName1">Enter Name</label>
                                             <input type="text" id="additionalPCpartName1" name="additionalPCpartName1"
@@ -1695,7 +1952,7 @@
                                                 placeholder="Eg. Case Fans">
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 col-lg">
+                                    <div class="col-sm-12 col-md">
                                         <div class="form-group">
                                             <label for="additionalPCpartUsedOrNew1">Used Or New?</label>
                                             <select id="additionalPCpartUsedOrNew1" name="additionalPCpartUsedOrNew1" class="form-control additionalPCpartUsedOrNew">
@@ -1734,7 +1991,7 @@
                                             <div class="col-12">
                                                 <h5>Additional Part ${countAdditionalPCParts}</h5>
                                             </div>
-                                            <div class="col-sm-12 col-lg">
+                                            <div class="col-sm-12 col-md">
                                                 <div class="form-group">
                                                 <label for="additionalPCpartName${countAdditionalPCParts}">Enter Name</label>
                                                 <input type="text" id="additionalPCpartName${countAdditionalPCParts}" name="additionalPCpartName${countAdditionalPCParts}"
@@ -1788,7 +2045,7 @@
                          <div class="col-12">
                              <h5>Additional Product 1</h5>
                          </div>
-                         <div class="col-sm-12 col-lg">
+                         <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductName1">Enter Name</label>
                                  <input type="text" id="additionalProductName1" name="additionalProductName1"
@@ -1796,7 +2053,7 @@
                                      placeholder="Product Title">
                              </div>
                          </div>
-                         <div class="col-sm-12 col-lg">
+                         <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductCategory1">Product Category</label>
                                  <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control additionalProductCategory">
@@ -1807,7 +2064,7 @@
                                  </select>
                              </div>
                          </div>
-                         <div class="col-sm-12 col-lg">
+                         <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductBrand1">Product Brand</label>
                                  <select id="additionalProductBrand1" name="additionalProductBrand1" class="form-control additionalProductBrand">
@@ -1818,7 +2075,7 @@
                                  </select>
                              </div>
                          </div>
-                         <div class="col-sm-12 col-lg">
+                         <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductUsedOrNew1">Used Or New?</label>
                                  <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
@@ -1831,7 +2088,7 @@
                      </div>
                  </div>
 
-                 <div class="col-sm-12 col-lg mb-3">
+                 <div class="col-sm-12 col-md mb-3">
                      <button type="button" class="btn btn-primary" id="addMoreadditionalProductsBtn">Add More
                          Products</button>
                  </div>`
@@ -1850,7 +2107,7 @@
                 newDiv.innerHTML = `<div class="col-12">
                                 <h5>Additional Product ${countAdditionalProducts}</h5>
                             </div>
-                            <div class="col-sm-12 col-lg">
+                            <div class="col-sm-12 col-md">
                                 <div class="form-group">
                                     <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
                                     <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
@@ -1858,7 +2115,7 @@
                                         placeholder="Product Title">
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg">
+                            <div class="col-sm-12 col-md">
                                 <div class="form-group">
                                     <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
                                     <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
@@ -1869,7 +2126,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-lg w-100 d-flex align-items-center" style="gap:20px;">
+                            <div class="col-sm-12 col-md w-100 d-flex align-items-center" style="gap:20px;">
                                 <div class="form-group w-100">
                                     <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
                                     <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
@@ -1906,14 +2163,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="processorName">Enter Name</label>
                                                 <input type="text" id="processorName" name="processorName"
                                                     class="form-control" placeholder="Eg. Core i7 10th Gen">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="processorBrand">Brand</label>
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
@@ -1935,14 +2192,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="graphicCardName">Enter Name</label>
                                                 <input type="text" id="graphicCardName" name="graphicCardName"
                                                     class="form-control" placeholder="Eg. Gigabyte GTX 1050">
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="graphicCardBrand">Brand</label>
                                                 <select id="graphicCardBrand" name="graphicCardBrand"
@@ -1955,7 +2212,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-lg">
+                                        <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="graphicCardMemory">Memory</label>
                                                 <select id="graphicCardMemory" name="graphicCardMemory"
@@ -1983,14 +2240,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class='row'>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
                                                     placeholder="Eg. Kingston 8GB DDR4 ">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramBrand">Brand</label>
                                                 <select id="ramBrand" name="ramBrand" class="form-control">
@@ -2001,7 +2258,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramMemory">Memory</label>
                                                 <select id="ramMemory" name="ramMemory" class="form-control">
@@ -2016,7 +2273,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramQuantity">Quantity</label>
                                                 <input type="number" id="ramQuantity" name="ramQuantity"
@@ -2037,7 +2294,7 @@
                                         <div class="col-12">
                                          <h5>storage 1</h5>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
                                                 <input type="text" id="storageName1" name="storageName1"
@@ -2045,7 +2302,7 @@
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
                                                 <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
@@ -2057,7 +2314,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
                                                 <select id="storageType1" name="storageType1" class="form-control storageType">
@@ -2069,7 +2326,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
                                                 <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
@@ -2113,7 +2370,7 @@
                 newDiv.innerHTML = `  <div class="col-12">
                                          <h5>storage ${countLaptopStorage}</h5>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName${countLaptopStorage}">Enter Name</label>
                                                 <input type="text" id="storageName${countLaptopStorage}" name="storageName${countLaptopStorage}"
@@ -2121,7 +2378,7 @@
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand${countLaptopStorage}">Brand</label>
                                                 <select id="storageBrand${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control storageBrand">
@@ -2133,7 +2390,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12">
+                                        <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType${countLaptopStorage}">Type</label>
                                                 <select id="storageType${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control storageType">
@@ -2145,7 +2402,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg col-sm-12 w-100 d-flex align-items-center" style="gap:20px;">
+                                        <div class="col-md col-sm-12 w-100 d-flex align-items-center" style="gap:20px;">
                                             <div class="form-group w-100">
                                                 <label for="storageMemory${countLaptopStorage}">Memory</label>
                                                 <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control storageMemory">
@@ -2203,9 +2460,9 @@
                     e.id = `row${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `storage ${i+1}`;
-                    let label = e.querySelectorAll('.col-lg .form-group label');
-                    let input = e.querySelector('.col-lg .form-group input');
-                    let select = e.querySelectorAll('.col-lg .form-group select');
+                    let label = e.querySelectorAll('.col-md .form-group label');
+                    let input = e.querySelector('.col-md .form-group input');
+                    let select = e.querySelectorAll('.col-md .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {
@@ -2296,9 +2553,9 @@
                     e.id = `additionalPCpartsrow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `Additional Part ${i+1}`;
-                    let label = e.querySelectorAll('.col-lg .form-group label');
-                    let input = e.querySelector('.col-lg .form-group input');
-                    let select = e.querySelectorAll('.col-lg .form-group select');
+                    let label = e.querySelectorAll('.col-md .form-group label');
+                    let input = e.querySelector('.col-md .form-group input');
+                    let select = e.querySelectorAll('.col-md .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {
@@ -2429,9 +2686,9 @@
                     e.id = `additionalProductrow${i + 1}`;
 
                     let heading = e.querySelector('.col-12 h5').innerText = `Additional Product ${i+1}`;
-                    let label = e.querySelectorAll('.col-lg .form-group label');
-                    let input = e.querySelector('.col-lg .form-group input');
-                    let select = e.querySelectorAll('.col-lg .form-group select');
+                    let label = e.querySelectorAll('.col-md .form-group label');
+                    let input = e.querySelector('.col-md .form-group input');
+                    let select = e.querySelectorAll('.col-md .form-group select');
                     let button = e.querySelector('.align-items-center button');
 
                     if (i > 0) {

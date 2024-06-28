@@ -39,7 +39,7 @@
 
 
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-md col-sm-12">
                         <div class="card">
                             <div class="card-body">
 
@@ -174,7 +174,7 @@
                             </div> <!-- end card-body-->
                         </div>
                     </div> <!-- end card-->
-                    <div class="col-6">
+                    <div class="col-md col-sm-12">
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Instruction</h4>
