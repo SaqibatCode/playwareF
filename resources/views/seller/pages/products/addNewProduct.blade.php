@@ -1277,6 +1277,8 @@
 
                 if (this.value == '5') {
 
+                    conosle.log('selected');
+
                     countStorage = 2
                     countAdditionalPCParts = 2;
                     countAdditionalProducts = 2;
@@ -2780,7 +2782,88 @@
                     `;
                 $('#warranty').append(usedProducts);
 
+            } else if ({{ old('ProductType') == '4' ? 'true' : 'false' }}) {
+
+
+                countLaptopStorage = 2
+
+                let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
+                productReasonAndWarrantyDiv.innerHTML =
+                    `<div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>`
+
+
+                document.getElementById("productTypeData").innerHTML = `
+<div class="col-md col-sm-12" id="warrantyDiv">
+            <div class="form-group">
+                <label for="warranty">Check warranty</label>
+                <select name="warranty" id="warranty" class="form-control">
+                    <option value="" selected>Please Select Warranty</option>
+                    
+                </select>
+                @error('warranty')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-md col-sm-12" id="reasonForSellingDiv">
+            <div class="form-group">
+                <label for="reason">Reason for Selling (Optional)</label>
+                <input type="text" class="form-control" name="reason" id="reasonForSelling">
+            </div>
+        </div>
+        <div class="col-md col-sm-12" id="selectProductYear">
+            <div class="form-group">
+                <label for="yearOfProduct">Year-Make of Product</label>
+
+                <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                    <option value="0" selected>Select Year/Make of Your Product</option>
+
+                </select>
+            </div>
+        </div>
+        `
+
+
+
+                appendPCParts(); // FUNCTION TO SHOW ALL PC PARTS ON SCREEN
+                addMoreStorageInPcParts(); //FOR ADD MORE STORAGE BUTTON IN PC PARTS
+
+
+                appendAdditionalPcParts(); // FUNCTION TO SHOW ADDITIONAL PC PARTS SECTION ON SCREEN
+                addMoreAdditionalPcParts(); //FOR ADD MORE ADDITIONAL PC PARTS BUTTON
+
+
+                appendAdditionalProducts(); // FUNCTION TO SHOW ADDITIONAL PRODUCTS SECTION ON SCREEN
+                addMoreAdditionalProducts(); //FOR ADD MORE ADDITIONAL PRODCUTS BUTTON
+
+
+
+
+
+
+
+                // $('#manufacturerAndCountryOfOriginDiv').empty();
+                // $('#getVariations').empty();
+                $('#aboutThisItemContainer').empty();
+
+                $('#warranty').empty();
+                $('#warranty').html(
+                    '<option value="" selected>Please Select Warranty</option>');
+                $('#warranty').append(newProduct);
+
+                $('#yearOfProduct').empty();
+                $('#yearOfProduct').html(
+                    '<option value="" selected>Please Select Year/Make of Product</option>'
+                );
+                $('#yearOfProduct').append(years);
+
+
+                $('#additionalRequirements').addClass('d-none');
+                $('#additionalRequirements').empty();
+
+
             }
+
 
 
 
@@ -2888,6 +2971,39 @@
 
             uploadProductForm.addEventListener('submit', gatherLaptopStorage);
 
+
+
+            // Get Brand By Categories
+            $('#productCategory').on('change', function() {
+                let categoryID = $(this).val();
+                $.ajax({
+                    url: "{{ route('seller.getBrandsByCategory') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        categoryID: categoryID
+                    },
+                    success: function(res) {
+                        $("#brandName").empty(); // Clear the dropdown first
+                        $('#brandName').append('<option selected>Select Brand</option>');
+                        if (res.length > 0) {
+                            res.forEach(function(brand) {
+
+                                $('#brandName').append('<option value="' + brand.id +
+                                    '">' + brand.name + '</option>');
+                            });
+                        } else {
+                            $('#brandName').append(
+                                '<option value="">No brands available</option>');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            })
         })
     </script>
 @endsection
