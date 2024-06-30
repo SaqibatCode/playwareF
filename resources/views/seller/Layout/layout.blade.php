@@ -198,7 +198,7 @@
 
                 <div class="navbar-brand-box">
                     <a href="index.html" class="logo">
-                        <img src="{{ asset('assets/images/logo.svg') }}" />
+                        <img src="{{ asset('assets/images/logo/logo.svg') }}" />
                     </a>
                 </div>
 

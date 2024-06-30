@@ -2886,8 +2886,41 @@
                 document.getElementById('laptopStorage').value = JSON.stringify(LaptopStorageData);
             }
 
+
             uploadProductForm.addEventListener('submit', gatherLaptopStorage);
 
+        })
+
+        // Get Brand By Categories
+        $('#productCategory').on('change', function() {
+            let categoryID = $(this).val();
+            $.ajax({
+                url: "{{ route('seller.getBrandsByCategory') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    categoryID: categoryID
+                },
+                success: function(res) {
+                    $("#brandName").empty(); // Clear the dropdown first
+                    $('#brandName').append('<option selected>Select Brand</option>');
+                    if (res.length > 0) {
+                        res.forEach(function(brand) {
+
+                            $('#brandName').append('<option value="' + brand.id +
+                                '">' + brand.name + '</option>');
+                        });
+                    } else {
+                        $('#brandName').append(
+                            '<option value="">No brands available</option>');
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            })
         })
     </script>
 @endsection
