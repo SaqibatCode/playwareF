@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexPageController::class, 'getIndexPage'])->name('indexPage');
 
-Route::get('/shop/{slug}', [ShopController::class, 'getShop'])->name('shop');
+// Route::get('/shop/{slug}', [ShopController::class, 'getShop'])->name('shop');
 
 // Secure Routes for registration and verification (All Post Requests);
 Route::prefix('api/v1')->group(function () {
@@ -174,3 +174,20 @@ Route::middleware('isLogin')->group(function () {
 });
 
 
+
+
+
+// Front-end Routes
+
+
+Route::get('shop', [IndexPageController::class, 'getShopPage'])->name('shop');
+Route::get('shop-single', [IndexPageController::class, 'getShopSinglePage'])->name('shop-single');
+Route::get('cart', [IndexPageController::class, 'getCartPage'])->name('cart');
+Route::get('faqs', [IndexPageController::class, 'getFaqsPage'])->name('faqs');
+Route::get('contact', [IndexPageController::class, 'getContactPage'])->name('contact');
+Route::get('success', [IndexPageController::class, 'getSuccessPage'])->name('success');
+Route::get('seller-portfolio', [IndexPageController::class, 'getSellerPortfolioPage'])->name('seller-porfolio');
+Route::get('register-user', [IndexPageController::class, 'getRegisterPage'])->name('register-user');
+Route::get('404', [IndexPageController::class, 'get404Page'])->name('404');
+Route::get('terms-conditions', [IndexPageController::class, 'getTermsConditionsPage'])->name('terms-conditions');
+Route::get('about', [IndexPageController::class, 'getAboutPage'])->name('about');
