@@ -1277,7 +1277,7 @@
 
                 if (this.value == '5') {
 
-                    conosle.log('selected');
+                    console.log('selected');
 
                     countStorage = 2
                     countAdditionalPCParts = 2;
