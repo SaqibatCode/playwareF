@@ -130,7 +130,7 @@
 
                                     <select name="yearOfProduct" class="form-control" id="yearOfProduct">
                                         <option value="0" selected>Select Year/Make of Your Product</option>
-                                       
+
                                     </select>
 
                                     @error('yearOfProduct')
@@ -1679,16 +1679,16 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
-                                                <input type="text" id="storageName1" name="storageName1"
+                                                <input type="text" data-id="1" id="storageName1" name="storageName1"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
-                                                    
+
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
+                                                <select id="storageBrand1" data-id="1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -1700,7 +1700,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
-                                                <select id="storageType1" name="storageType1" class="form-control storageType">
+                                                <select id="storageType1" data-id="1" name="storageType1" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1712,7 +1712,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
-                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
+                                                <select id="storageMemory1" data-id="1" name="storageMemory1" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1731,7 +1731,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageUsedOrNew1">Used Or New?</label>
-                                                <select id="storageUsedOrNew1" name="storageUsedOrNew1"
+                                                <select id="storageUsedOrNew1" data-id="1" name="storageUsedOrNew1"
                                                     class="form-control storageUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
@@ -1940,7 +1940,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageName${countStorage}">Enter Name</label>
-                                                <input type="text" id="storageName${countStorage}" name="storageName${countStorage}"
+                                                <input type="text" id="storageName${countStorage}" data-id="${countStorage}" name="storageName${countStorage}"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
@@ -1948,7 +1948,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageBrand${countStorage}">Brand</label>
-                                                <select id="storageBrand${countStorage}" name="storageBrand${countStorage}" class="form-control storageBrand">
+                                                <select id="storageBrand${countStorage}" data-id="${countStorage}" name="storageBrand${countStorage}" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -1960,7 +1960,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageType${countStorage}">Type</label>
-                                                <select id="storageType${countStorage}" name="storageType${countStorage}" class="form-control storageType">
+                                                <select id="storageType${countStorage}" data-id="${countStorage}" name="storageType${countStorage}" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -1972,7 +1972,7 @@
                                         <div class="col-sm-12 col-md">
                                             <div class="form-group">
                                                 <label for="storageMemory${countStorage}">Memory</label>
-                                                <select id="storageMemory${countStorage}" name="storageMemory${countStorage}" class="form-control storageMemory">
+                                                <select id="storageMemory${countStorage}" data-id="${countStorage}" name="storageMemory${countStorage}" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -1991,7 +1991,7 @@
                                         <div class="col-sm-12 col-md w-100 d-flex align-items-center" style="gap:20px;">
                                             <div class="form-group w-100">
                                                 <label for="storageUsedOrNew${countStorage}">Used Or New?</label>
-                                                <select id="storageUsedOrNew${countStorage}" name="storageUsedOrNew${countStorage}"
+                                                <select id="storageUsedOrNew${countStorage}" data-id="${countStorage}" name="storageUsedOrNew${countStorage}"
                                                     class="form-control storageUsedOrNew">
                                                     <option value="0">Please Select</option>
                                                     <option value="1">Used</option>
@@ -2133,7 +2133,7 @@
                          <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductName1">Enter Name</label>
-                                 <input type="text" id="additionalProductName1" name="additionalProductName1"
+                                 <input type="text" data-id="1" id="additionalProductName1" name="additionalProductName1"
                                      class="form-control additionalProductName"
                                      placeholder="Product Title">
                              </div>
@@ -2141,7 +2141,7 @@
                          <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductCategory1">Product Category</label>
-                                 <select id="additionalProductCategory1" name="additionalProductCategory1" class="form-control additionalProductCategory">
+                                 <select id="additionalProductCategory1" data-id="1" name="additionalProductCategory1" class="form-control additionalProductCategory">
                                      <option value="0">Please Select</option>
                                      @foreach ($categories as $category)
                                          <x-categories-select :category="$category" />
@@ -2152,7 +2152,7 @@
                          <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductBrand1">Product Brand</label>
-                                 <select id="additionalProductBrand1" name="additionalProductBrand1" class="form-control additionalProductBrand">
+                                 <select id="additionalProductBrand1" data-id="1" name="additionalProductBrand1" class="form-control additionalProductBrand">
                                      <option value="0">Please Select</option>
                                      @foreach ($brands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -2163,7 +2163,7 @@
                          <div class="col-sm-12 col-md">
                              <div class="form-group">
                                  <label for="additionalProductUsedOrNew1">Used Or New?</label>
-                                 <select id="additionalProductUsedOrNew1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
+                                 <select id="additionalProductUsedOrNew1" data-id="1" name="additionalProductUsedOrNew1" class="form-control additionalProductUsedOrNew">
                                      <option value="0">Please Select</option>
                                      <option value="1">Used</option>
                                      <option value="2">New</option>
@@ -2195,7 +2195,7 @@
                             <div class="col-sm-12 col-md">
                                 <div class="form-group">
                                     <label for="additionalProductName${countAdditionalProducts}">Enter Name</label>
-                                    <input type="text" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
+                                    <input type="text" data-id="${countAdditionalProducts}" id="additionalProductName${countAdditionalProducts}" name="additionalProductName${countAdditionalProducts}"
                                         class="form-control additionalProductName"
                                         placeholder="Product Title">
                                 </div>
@@ -2203,7 +2203,7 @@
                             <div class="col-sm-12 col-md">
                                 <div class="form-group">
                                     <label for="additionalProductCategory${countAdditionalProducts}">Product Category</label>
-                                    <select id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
+                                    <select data-id="${countAdditionalProducts}" id="additionalProductCategory${countAdditionalProducts}" name="additionalProductCategory${countAdditionalProducts}" class="form-control additionalProductCategory">
                                         <option value="0">Please Select</option>
                                         @foreach ($categories as $category)
                                             <x-categories-select :category="$category" />
@@ -2211,10 +2211,21 @@
                                     </select>
                                 </div>
                             </div>
+                             <div class="col-sm-12 col-md">
+                             <div class="form-group">
+                                 <label for="additionalProductBrand${countAdditionalProducts}">Product Brand</label>
+                                 <select id="additionalProductBrand${countAdditionalProducts}" data-id="${countAdditionalProducts}" name="additionalProductBrand${countAdditionalProducts}" class="form-control additionalProductBrand">
+                                     <option value="0">Please Select</option>
+                                     @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                 </select>
+                             </div>
+                         </div>
                             <div class="col-sm-12 col-md w-100 d-flex align-items-center" style="gap:20px;">
                                 <div class="form-group w-100">
                                     <label for="additionalProductUsedOrNew${countAdditionalProducts}">Used Or New?</label>
-                                    <select id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
+                                    <select data-id="${countAdditionalProducts}" id="additionalProductUsedOrNew${countAdditionalProducts}" name="additionalProductUsedOrNew${countAdditionalProducts}" class="form-control additionalProductUsedOrNew">
                                         <option value="0">Please Select</option>
                                         <option value="1">Used</option>
                                         <option value="2">New</option>
@@ -2382,7 +2393,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName1">Enter Name</label>
-                                                <input type="text" id="storageName1" name="storageName1"
+                                                <input type="text" data-id="1" id="storageName1" name="storageName1"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
@@ -2390,7 +2401,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1" name="storageBrand1" class="form-control storageBrand">
+                                                <select id="storageBrand1 data-id="1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -2402,7 +2413,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType1">Type</label>
-                                                <select id="storageType1" name="storageType1" class="form-control storageType">
+                                                <select id="storageType1" data-id="1" name="storageType1" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -2414,7 +2425,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageMemory1">Memory</label>
-                                                <select id="storageMemory1" name="storageMemory1" class="form-control storageMemory">
+                                                <select id="storageMemory1" data-id="1" name="storageMemory1" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -2458,7 +2469,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageName${countLaptopStorage}">Enter Name</label>
-                                                <input type="text" id="storageName${countLaptopStorage}" name="storageName${countLaptopStorage}"
+                                                <input type="text" id="storageName${countLaptopStorage}" data-id="${countLaptopStorage}" name="storageName${countLaptopStorage}"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
                                             </div>
@@ -2466,7 +2477,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand${countLaptopStorage}">Brand</label>
-                                                <select id="storageBrand${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control storageBrand">
+                                                <select id="storageBrand${countLaptopStorage}" data-id="${countLaptopStorage}" name="storageBrand${countLaptopStorage}" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -2478,7 +2489,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageType${countLaptopStorage}">Type</label>
-                                                <select id="storageType${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control storageType">
+                                                <select id="storageType${countLaptopStorage}" data-id="${countLaptopStorage}" name="storageType${countLaptopStorage}" class="form-control storageType">
                                                     <option value="0">Please Select Type</option>
                                                     <option value="1">HDD</option>
                                                     <option value="2">SSD</option>
@@ -2490,7 +2501,7 @@
                                         <div class="col-md col-sm-12 w-100 d-flex align-items-center" style="gap:20px;">
                                             <div class="form-group w-100">
                                                 <label for="storageMemory${countLaptopStorage}">Memory</label>
-                                                <select id="storageMemory${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control storageMemory">
+                                                <select id="storageMemory${countLaptopStorage}" data-id="${countLaptopStorage}" name="storageMemory${countLaptopStorage}" class="form-control storageMemory">
                                                     <option value="0">Please Select Memory</option>
                                                     <option value="1">120 GB</option>
                                                     <option value="2">240 GB</option>
@@ -2556,11 +2567,10 @@
                         button.setAttribute('onclick', `removeStorage(${i+1})`)
                     }
 
-                    console.log(input, 'error here ============');
 
                     input.id = `storageName${i+1}`
                     input.name = `storageName${i+1}`
-
+                    input.setAttribute('data-id', i + 1)
 
                     allLabels = Array.from(label);
                     allSelects = Array.from(select);
@@ -2568,15 +2578,19 @@
 
                     allSelects[0].id = `storageBrand${i+1}`
                     allSelects[0].name = `storageBrand${i+1}`
+                    allSelects[0].setAttribute('data-id', i + 1)
 
                     allSelects[1].id = `storageType${i+1}`
                     allSelects[1].name = `storageType${i+1}`
+                    allSelects[1].setAttribute('data-id', i + 1)
 
                     allSelects[2].id = `storageMemory${i+1}`
                     allSelects[2].name = `storageMemory${i+1}`
+                    allSelects[2].setAttribute('data-id', i + 1)
 
                     allSelects[3].id = `storageUsedOrNew${i+1}`
                     allSelects[3].name = `storageUsedOrNew${i+1}`
+                    allSelects[3].setAttribute('data-id', i + 1)
 
                     allLabels.forEach((labelElement, labelIndex) => {
 
@@ -2718,6 +2732,7 @@
                     let input = e.querySelector('.col-sm-12 .form-group input');
                     input.id = `storageName${i+1}`
                     input.name = `storageName${i+1}`
+                    input.setAttribute('data-id', i + 1)
 
                     allLabels.forEach((label, labelIndex) => {
 
@@ -2726,16 +2741,19 @@
                             label.setAttribute('for', `storageName${i+1}`);
                             allSelects[labelIndex].id = `storageBrand${i+1}`
                             allSelects[labelIndex].name = `storageBrand${i+1}`
+                            allSelects[labelIndex].setAttribute('data-id', i + 1)
                         }
                         if (labelIndex == 1) {
                             label.setAttribute('for', `storageBrand${i+1}`);
                             allSelects[labelIndex].id = `storageType${i+1}`
                             allSelects[labelIndex].name = `storageType${i+1}`
+                            allSelects[labelIndex].setAttribute('data-id', i + 1)
                         }
                         if (labelIndex == 2) {
                             label.setAttribute('for', `storageType${i+1}`);
                             allSelects[labelIndex].id = `storageMemory${i+1}`
                             allSelects[labelIndex].name = `storageMemory${i+1}`
+                            allSelects[labelIndex].setAttribute('data-id', i + 1)
                         }
                         if (labelIndex == 3) {
                             label.setAttribute('for', `storageMemory${i+1}`);
@@ -2784,6 +2802,8 @@
 
                     input.id = `additionalProductName${i+1}`
                     input.name = `additionalProductName${i+1}`
+                    input.setAttribute('data-id', i + 1)
+
 
                     allLabels = Array.from(label);
                     allSelects = Array.from(select);
@@ -2791,9 +2811,15 @@
 
                     allSelects[0].id = `additionalProductCategory${i+1}`
                     allSelects[0].name = `additionalProductCategory${i+1}`
+                    allSelects[0].setAttribute('data-id', i + 1)
 
-                    allSelects[1].id = `additionalProductUsedOrNew${i+1}`
-                    allSelects[1].name = `additionalProductUsedOrNew${i+1}`
+                    allSelects[1].id = `additionalProductBrand${i+1}`
+                    allSelects[1].name = `additionalProductBrand${i+1}`
+                    allSelects[1].setAttribute('data-id', i + 1)
+
+                    allSelects[2].id = `additionalProductUsedOrNew${i+1}`
+                    allSelects[2].name = `additionalProductUsedOrNew${i+1}`
+                    allSelects[2].setAttribute('data-id', i + 1)
 
 
 
@@ -2809,6 +2835,9 @@
                             labelElement.setAttribute('for', `additionalProductCategory${i+1}`);
                         }
                         if (labelIndex == 2) {
+                            labelElement.setAttribute('for', `additionalProductBrand${i+1}`);
+                        }
+                        if (labelIndex == 3) {
                             labelElement.setAttribute('for', `additionalProductUsedOrNew${i+1}`);
                         }
 
@@ -3437,5 +3466,42 @@
                 }
             @endif
         })
+
+
+        $(document).ready(function() {
+            $(document).on('change', '.additionalProductCategory', function() {
+                let categoryID = $(this).val();
+                let dataID = $(this).data('id');
+                let brandNameSelectBox = $('#additionalProductBrand' + dataID);
+
+                $.ajax({
+                    url: "{{ route('seller.getBrandsByCategory') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        categoryID: categoryID
+                    },
+                    success: function(res) {
+                        brandNameSelectBox.empty(); // Clear the dropdown first
+                        brandNameSelectBox.append(
+                            '<option value="" selected>Select Brand</option>');
+                        if (res.length > 0) {
+                            res.forEach(function(brand) {
+                                brandNameSelectBox.append('<option value="' + brand.id +
+                                    '">' + brand.name + '</option>');
+                            });
+                        } else {
+                            brandNameSelectBox.append(
+                                '<option value="">No brands available</option>');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
     </script>
 @endsection

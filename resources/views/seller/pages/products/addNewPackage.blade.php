@@ -87,15 +87,16 @@
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
                                             <label for="packageProductName1">Enter Name</label>
-                                            <input type="text" id="packageProductName1" name="packageProductName1"
-                                                class="form-control packageProductName" placeholder="Product Title">
+                                            <input type="text" data-id="1" id="packageProductName1"
+                                                name="packageProductName1" class="form-control packageProductName"
+                                                placeholder="Product Title">
                                         </div>
                                     </div>
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
                                             <label for="packageProductCategory1">Product Category</label>
-                                            <select id="packageProductCategory1" name="packageProductCategory1"
-                                                class="form-control packageProductCategory">
+                                            <select data-id="1" id="packageProductCategory1"
+                                                name="packageProductCategory1" class="form-control packageProductCategory">
                                                 <option value="0">Please Select</option>
                                                 @foreach ($categories as $category)
                                                     <x-categories-select :category="$category" :oldValue="old('productCategory')" />
@@ -106,7 +107,7 @@
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
                                             <label for="productBrand1">Product Brand</label>
-                                            <select id="productBrand1" name="productBrand1"
+                                            <select data-id="1" id="productBrand1" name="productBrand1"
                                                 class="form-control packageProductBrandName">
                                                 <option value="0">Please Select</option>
                                                 @foreach ($categories as $category)
@@ -118,7 +119,8 @@
                                     <div class="col-md col-sm-12">
                                         <div class="form-group">
                                             <label for="packageProductUsedOrNew1">Used Or New?</label>
-                                            <select id="packageProductUsedOrNew1" name="packageProductUsedOrNew1"
+                                            <select data-id="1" id="packageProductUsedOrNew1"
+                                                name="packageProductUsedOrNew1"
                                                 class="form-control packageProductUsedOrNew">
                                                 <option value="0">Please Select</option>
                                                 <option value="1">Used</option>
@@ -292,14 +294,14 @@
             <div class="col-md col-sm-12">
                 <div class="form-group">
                     <label for="packageProductName${packageProducts}">Enter Name</label>
-                    <input type="text" id="packageProductName${packageProducts}" name="packageProductName${packageProducts}"
+                    <input type="text" data-id="${packageProducts}" id="packageProductName${packageProducts}" name="packageProductName${packageProducts}"
                         class="form-control packageProductName" placeholder="Product Title">
                 </div>
             </div>
             <div class="col-md col-sm-12">
                 <div class="form-group">
                     <label for="packageProductCategory${packageProducts}">Product Category</label>
-                    <select id="packageProductCategory${packageProducts}" name="packageProductCategory${packageProducts}"
+                    <select data-id="${packageProducts}" id="packageProductCategory${packageProducts}" name="packageProductCategory${packageProducts}"
                         class="form-control packageProductCategory">
                         <option value="0">Please Select</option>
                         <!-- Replace with your categories -->
@@ -312,7 +314,7 @@
             <div class="col-md col-sm-12">
                 <div class="form-group">
                     <label for="productBrand${packageProducts}">Product Brand</label>
-                    <select id="productBrand${packageProducts}" name="productBrand${packageProducts}"
+                    <select data-id="${packageProducts}" id="productBrand${packageProducts}" name="productBrand${packageProducts}"
                         class="form-control packageProductBrandName">
                         <option value="0">Please Select</option>
                         <!-- Replace with your categories -->
@@ -325,7 +327,7 @@
             <div class="col-md col-sm-12 d-flex">
                 <div class="form-group w-100">
                     <label for="packageProductUsedOrNew${packageProducts}">Used Or New?</label>
-                    <select id="packageProductUsedOrNew${packageProducts}" name="packageProductUsedOrNew${packageProducts}"
+                    <select data-id="${packageProducts}" id="packageProductUsedOrNew${packageProducts}" name="packageProductUsedOrNew${packageProducts}"
                         class="form-control packageProductUsedOrNew">
                         <option value="0">Please Select</option>
                         <option value="1">Used</option>
@@ -376,6 +378,7 @@
 
                 input.id = `packageProductName${i+1}`
                 input.name = `packageProductName${i+1}`
+                input.setAttribute('data-id', i + 1)
 
                 allLabels = Array.from(label);
                 allSelects = Array.from(select);
@@ -383,12 +386,15 @@
 
                 allSelects[0].id = `packageProductCategory${i+1}`
                 allSelects[0].name = `packageProductCategory${i+1}`
+                allSelects[0].setAttribute('data-id', i + 1)
 
                 allSelects[1].id = `productBrand${i+1}`
                 allSelects[1].name = `productBrand${i+1}`
+                allSelects[1].setAttribute('data-id', i + 1)
 
                 allSelects[2].id = `packageProductUsedOrNew${i+1}`
                 allSelects[2].name = `packageProductUsedOrNew${i+1}`
+                allSelects[2].setAttribute('data-id', i + 1)
 
 
 
@@ -473,17 +479,19 @@
                         categoryID: categoryID
                     },
                     success: function(res) {
-                        $("#productBrand"+productid).empty(); // Clear the dropdown first
-                        $("#productBrand"+productid).append('<option selected>Select Brand</option>');
+                        $("#productBrand" + productid).empty(); // Clear the dropdown first
+                        $("#productBrand" + productid).append(
+                            '<option selected>Select Brand</option>');
                         if (res.length > 0) {
                             res.forEach(function(brand) {
 
-                                $("#productBrand"+productid).append('<option value="' + brand.id +
+                                $("#productBrand" + productid).append(
+                                    '<option value="' + brand.id +
                                     '">' + brand.name + '</option>');
                             });
                             productid++;
                         } else {
-                            $("#productBrand"+productid).append(
+                            $("#productBrand" + productid).append(
                                 '<option value="">No brands available</option>');
                         }
                     },
@@ -492,6 +500,43 @@
                     }
                 })
             })
+
+
+            // TO DYNAMICALLY SET BRANDS OF EACH PRODUCT ACCORDING TO CATEGORY
+
+            $(document).on('change', '.packageProductCategory', function() {
+                let categoryID = $(this).val();
+                let dataID = $(this).data('id');
+                let brandNameSelectBox = $('#productBrand' + dataID);
+
+                $.ajax({
+                    url: "{{ route('seller.getBrandsByCategory') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        categoryID: categoryID
+                    },
+                    success: function(res) {
+                        brandNameSelectBox.empty(); // Clear the dropdown first
+                        brandNameSelectBox.append(
+                            '<option value="" selected>Select Brand</option>');
+                        if (res.length > 0) {
+                            res.forEach(function(brand) {
+                                brandNameSelectBox.append('<option value="' + brand.id +
+                                    '">' + brand.name + '</option>');
+                            });
+                        } else {
+                            brandNameSelectBox.append(
+                                '<option value="">No brands available</option>');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
         })
     </script>
 @endsection
