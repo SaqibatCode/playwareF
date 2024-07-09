@@ -24,14 +24,14 @@
             <div class="card">
                 <div class="card-body">
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('auth.uploadPackage') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
@@ -107,7 +107,7 @@
                                         <div class="form-group">
                                             <label for="productBrand1">Product Brand</label>
                                             <select id="productBrand1" name="productBrand1"
-                                                class="form-control productBrand">
+                                                class="form-control packageProductBrandName">
                                                 <option value="0">Please Select</option>
                                                 @foreach ($categories as $category)
                                                     <x-categories-select :category="$category" :oldValue="old('productCategory')" />
@@ -147,8 +147,8 @@
                             @error('packageDescription')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                            <textarea name="packageDescription" value="{{ old('packageDescription') }}" id="packageDescription" class="form-control"
-                                style="height: 400px;" placeholder="Enter Your Product Description">{{ old('packageDescription') }}</textarea>
+                            <textarea name="packageDescription" value="{{ old('packageDescription') }}" id="packageDescription"
+                                class="form-control" style="height: 400px;" placeholder="Enter Your Product Description">{{ old('packageDescription') }}</textarea>
 
                         </div>
 
@@ -313,7 +313,7 @@
                 <div class="form-group">
                     <label for="productBrand${packageProducts}">Product Brand</label>
                     <select id="productBrand${packageProducts}" name="productBrand${packageProducts}"
-                        class="form-control productBrand">
+                        class="form-control packageProductBrandName">
                         <option value="0">Please Select</option>
                         <!-- Replace with your categories -->
                         @foreach ($categories as $category)
@@ -430,9 +430,11 @@
                     const PackProductName = row.querySelector('.packageProductName').value;
                     const PackProductCategory = row.querySelector('.packageProductCategory').value;
                     const PackProductUsedOrNew = row.querySelector('.packageProductUsedOrNew').value;
+                    const PackProductBrandName = row.querySelector('.packageProductBrandName').value;
 
                     const PackageProducts = {
                         name: PackProductName,
+                        brand: PackProductBrandName,
                         category: PackProductCategory,
                         usedornew: PackProductUsedOrNew,
                     };
@@ -454,5 +456,42 @@
                 console.error("Form not found.");
             }
         });
+
+
+
+        $(document).ready(function() {
+            let productid = 1;
+            $('#packageProductCategory' + productid).on('change', function() {
+                let categoryID = $(this).val();
+                $.ajax({
+                    url: "{{ route('seller.getBrandsByCategory') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        categoryID: categoryID
+                    },
+                    success: function(res) {
+                        $("#productBrand"+productid).empty(); // Clear the dropdown first
+                        $("#productBrand"+productid).append('<option selected>Select Brand</option>');
+                        if (res.length > 0) {
+                            res.forEach(function(brand) {
+
+                                $("#productBrand"+productid).append('<option value="' + brand.id +
+                                    '">' + brand.name + '</option>');
+                            });
+                            productid++;
+                        } else {
+                            $("#productBrand"+productid).append(
+                                '<option value="">No brands available</option>');
+                        }
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                })
+            })
+        })
     </script>
 @endsection

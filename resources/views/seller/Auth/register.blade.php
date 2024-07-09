@@ -135,7 +135,7 @@
                                     <div class="row mt-4">
                                         <div class="col-sm-12 text-center">
                                             <p class="text-white-50 mb-0">Already have an account? <a
-                                                    href="#" class="text-white-50 ml-1"><b>Sign
+                                                    href="{{route('seller.login')}}" class="text-white-50 ml-1"><b>Sign
                                                         In</b></a></p>
                                         </div>
                                     </div>

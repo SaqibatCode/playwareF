@@ -103,7 +103,9 @@
                                     <select name="brandName" class="form-control" id="brandName">
                                         <option value="" selected>Select Brand</option>
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            <option value="{{ $brand->id }}"
+                                                {{ old('brandName') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                            </option>
                                         @endforeach
                                     </select>
 
@@ -128,7 +130,7 @@
 
                                     <select name="yearOfProduct" class="form-control" id="yearOfProduct">
                                         <option value="0" selected>Select Year/Make of Your Product</option>
-
+                                       
                                     </select>
 
                                     @error('yearOfProduct')
@@ -474,61 +476,61 @@
             $('#VariationCheckBox').on('change', function() {
                 if ($(this).prop('checked') == true) {
                     var getVariations = `
-                    <div class='container-fluid row'>
-                    <div class="col-2">
-                                <div class="form-group">
-                                    <label for="ColorVariation">Enter Color</label>
-                                    <input type="text" id="ColorVariation" name="ColorVariation0" class="form-control"
-                                        placeholder="Eg. Red, Blue, Green">
-                                </div>
+              <div class='container-fluid row'>
+              <div class="col-2">
+                          <div class="form-group">
+                              <label for="ColorVariation">Enter Color</label>
+                              <input type="text" id="ColorVariation" name="ColorVariation0" class="form-control"
+                                  placeholder="Eg. Red, Blue, Green">
+                          </div>
 
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="SizeVariation">Enter Size</label>
-                                    <input type="text" id="SizeVariation" name="SizeVariation0" class="form-control"
-                                        placeholder="Eg. Small, Medium, Large">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="MaterialVariation">Material</label>
-                                    <input type="text" id="MaterialVariation" name="MaterialVariation0" class="form-control"
-                                        placeholder="Eg. Plastic, Silicone, Metal">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Style">Style</label>
-                                    <input type="text" id="Style" name="Style0" class="form-control"
-                                        placeholder="Eg. Red, Blue, Green">
-                                </div>
-                            </div>
-                            <div class="col-1 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Quanatity">Quanatity</label>
-                                    <input type="text" id="Quanatity" name="Quanatity0" class="form-control"
-                                        placeholder="Eg. 10, 20, 30">
-                                </div>
-                            </div>
-                            <div class="col-1 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Price">Price</label>
-                                    <input type="text" id="Price" name="Price0" class="form-control"
-                                        placeholder="Eg. 10, 20, 30">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                            <label>Choose Image</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name='variationImage0' id="customFile">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                            </div>
-                        </div>
-                            `
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="SizeVariation">Enter Size</label>
+                              <input type="text" id="SizeVariation" name="SizeVariation0" class="form-control"
+                                  placeholder="Eg. Small, Medium, Large">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="MaterialVariation">Material</label>
+                              <input type="text" id="MaterialVariation" name="MaterialVariation0" class="form-control"
+                                  placeholder="Eg. Plastic, Silicone, Metal">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Style">Style</label>
+                              <input type="text" id="Style" name="Style0" class="form-control"
+                                  placeholder="Eg. Red, Blue, Green">
+                          </div>
+                      </div>
+                      <div class="col-1 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Quanatity">Quanatity</label>
+                              <input type="text" id="Quanatity" name="Quanatity0" class="form-control"
+                                  placeholder="Eg. 10, 20, 30">
+                          </div>
+                      </div>
+                      <div class="col-1 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Price">Price</label>
+                              <input type="text" id="Price" name="Price0" class="form-control"
+                                  placeholder="Eg. 10, 20, 30">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                                      <label>Choose Image</label>
+                                      <div class="custom-file">
+                                          <input type="file" class="custom-file-input" name='variationImage0' id="customFile">
+                                          <label class="custom-file-label" for="customFile">Choose file</label>
+                                      </div>
+                                  </div>
+                      </div>
+                  </div>
+                      `
                     $('#getVariations').html(getVariations);
                     $('#getVariations').append(
                         `<div class='container-fluid mb-4 mt-0' id='addVaritionbtn'><span id='addVarition' class='btn btn-primary'>Add More</span></div>`
@@ -540,84 +542,84 @@
             var count = 1;
             $(document).on('click', '#addVarition', function() {
                 var getVariations = `
-                    <div class='container-fluid row'>
-                    <div class="col-2">
-                                <div class="form-group">
-                                    <label for="ColorVariation">Enter Color</label>
-                                    <input type="text" id="ColorVariation" name="ColorVariation${count}" class="form-control"
-                                        placeholder="Eg. Red, Blue, Green">
-                                </div>
+              <div class='container-fluid row'>
+              <div class="col-2">
+                          <div class="form-group">
+                              <label for="ColorVariation">Enter Color</label>
+                              <input type="text" id="ColorVariation" name="ColorVariation${count}" class="form-control"
+                                  placeholder="Eg. Red, Blue, Green">
+                          </div>
 
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="SizeVariation">Enter Size</label>
-                                    <input type="text" id="SizeVariation" name="SizeVariation${count}" class="form-control"
-                                        placeholder="Eg. Small, Medium, Large">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="MaterialVariation">Material</label>
-                                    <input type="text" id="MaterialVariation" name="MaterialVariation${count}" class="form-control"
-                                        placeholder="Eg. Plastic, Silicone, Metal">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Style">Style</label>
-                                    <input type="text" id="Style" name="Style${count}" class="form-control"
-                                        placeholder="Eg. Red, Blue, Green">
-                                </div>
-                            </div>
-                            <div class="col-1 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Quanatity">Quanatity</label>
-                                    <input type="text" id="Quanatity" name="Quanatity${count}" class="form-control"
-                                        placeholder="Eg. 10, 20, 30">
-                                </div>
-                            </div>
-                            <div class="col-1 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                    <label for="Price">Price</label>
-                                    <input type="text" id="Price" name="Price${count}" class="form-control"
-                                        placeholder="Eg. 10, 20, 30">
-                                </div>
-                            </div>
-                            <div class="col-2 d-flex flex-column justify-content-end">
-                                <div class="form-group">
-                                            <label>Choose Image</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name='variationImage${count}' id="customFile">
-                                                <label class="custom-file-label" for="customFile">Choose file</label>
-                                            </div>
-                                        </div>
-                            </div>
-                        </div>
-                            `
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="SizeVariation">Enter Size</label>
+                              <input type="text" id="SizeVariation" name="SizeVariation${count}" class="form-control"
+                                  placeholder="Eg. Small, Medium, Large">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="MaterialVariation">Material</label>
+                              <input type="text" id="MaterialVariation" name="MaterialVariation${count}" class="form-control"
+                                  placeholder="Eg. Plastic, Silicone, Metal">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Style">Style</label>
+                              <input type="text" id="Style" name="Style${count}" class="form-control"
+                                  placeholder="Eg. Red, Blue, Green">
+                          </div>
+                      </div>
+                      <div class="col-1 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Quanatity">Quanatity</label>
+                              <input type="text" id="Quanatity" name="Quanatity${count}" class="form-control"
+                                  placeholder="Eg. 10, 20, 30">
+                          </div>
+                      </div>
+                      <div class="col-1 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                              <label for="Price">Price</label>
+                              <input type="text" id="Price" name="Price${count}" class="form-control"
+                                  placeholder="Eg. 10, 20, 30">
+                          </div>
+                      </div>
+                      <div class="col-2 d-flex flex-column justify-content-end">
+                          <div class="form-group">
+                                      <label>Choose Image</label>
+                                      <div class="custom-file">
+                                          <input type="file" class="custom-file-input" name='variationImage${count}' id="customFile">
+                                          <label class="custom-file-label" for="customFile">Choose file</label>
+                                      </div>
+                                  </div>
+                      </div>
+                  </div>
+                      `
                 $('#addVaritionbtn').before(getVariations);
                 count++;
             })
 
             $('#ProductType').change(function() {
                 var usedProducts = `
-                        <option value='1 Week'>1 Week</option>
-                        <option value='1 Month'>1 Month</option>
-                        <option value='3 Months'>3 Months</option>
-                    `;
+                  <option value='1 Week'>1 Week</option>
+                  <option value='1 Month'>1 Month</option>
+                  <option value='3 Months'>3 Months</option>
+              `;
                 var newProduct = `
-                        <option value='6 Months'>6 Months</option>
-                        <option value='1 Year'>1 Year</option>
-                        <option value='2 Years'>2 Years</option>
-                        <option value='3 Years'>3 Years</option>
-                    `;
+                  <option value='6 Months'>6 Months</option>
+                  <option value='1 Year'>1 Year</option>
+                  <option value='2 Years'>2 Years</option>
+                  <option value='3 Years'>3 Years</option>
+              `;
                 var laptop = `
-                        <option value='1 Week'>1 Week</option>
-                        <option value='1 Month'>1 Month</option>
-                        <option value='3 Months'>3 Months</option>
-                        <option value='6 Months'>6 Months</option>
-                        <option value='1 Year'> 1 Year</option>
-                    `;
+                  <option value='1 Week'>1 Week</option>
+                  <option value='1 Month'>1 Month</option>
+                  <option value='3 Months'>3 Months</option>
+                  <option value='6 Months'>6 Months</option>
+                  <option value='1 Year'> 1 Year</option>
+              `;
 
                 var productTypeData = ``;
 
@@ -653,81 +655,81 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col-md col-sm-12">
-                                <div class="form-group">
-                                    <label for="productCategory">Product Category</label>
-                                    <select name="productCategory" class="form-control" id="productCategory">
-                                        <option value="" selected>Select Category</option>
-                                        @foreach ($categories as $category)
-                                            <x-categories-select :category="$category" />
-                                        @endforeach
-                                    </select>
-                                    @error('productCategory')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+                      <div id="productCategoryDiv" class="col-md col-sm-12">
+                          <div class="form-group">
+                              <label for="productCategory">Product Category</label>
+                              <select name="productCategory" class="form-control" id="productCategory">
+                                  <option value="" selected>Select Category</option>
+                                  @foreach ($categories as $category)
+                                      <x-categories-select :category="$category" />
+                                  @endforeach
+                              </select>
+                              @error('productCategory')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
 
-                            <div id="brandNameDiv" class="col-md col-sm-12">
-                                <div class="form-group">
-                                    <label for="brandName">Brand Name</label>
-                                    <select name="brandName" class="form-control" id="brandName">
-                                        <option value="" selected>Select Brand</option>
-                                        @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                        @endforeach
-                                    </select>
+                      <div id="brandNameDiv" class="col-md col-sm-12">
+                          <div class="form-group">
+                              <label for="brandName">Brand Name</label>
+                              <select name="brandName" class="form-control" id="brandName">
+                                  <option value="" selected>Select Brand</option>
+                                  @foreach ($brands as $brand)
+                                      <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                  @endforeach
+                              </select>
 
-                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox" name="thisBrandDoesNotHaveProduct"
-                                            class="custom-control-input"
-                                            {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : '' }}
-                                            id="checkbox-signin">
-                                        <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
-                                            Brand
-                                            Name.</label>
-                                        @error('brandName')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                              <div class="custom-control mt-2 custom-checkbox checkbox-primary">
+                                  <input type="checkbox" name="thisBrandDoesNotHaveProduct"
+                                      class="custom-control-input"
+                                      {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : '' }}
+                                      id="checkbox-signin">
+                                  <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
+                                      Brand
+                                      Name.</label>
+                                  @error('brandName')
+                                      <span class="text-danger">{{ $message }}</span>
+                                  @enderror
+                              </div>
+                          </div>
+                      </div>
 
-                            <div class="col-md col-sm-12" id="selectProductYear">
-                                <div class="form-group">
-                                    <label for="yearOfProduct">Year-Make of Product</label>
+                      <div class="col-md col-sm-12" id="selectProductYear">
+                          <div class="form-group">
+                              <label for="yearOfProduct">Year-Make of Product</label>
 
-                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
-                                        <option value="0" selected>Select Year/Make of Your Product</option>
+                              <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                  <option value="0" selected>Select Year/Make of Your Product</option>
 
-                                    </select>
-                                </div>
+                              </select>
+                          </div>
 
 
 
-                            </div>`)
+                      </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
                         $('#productReasonAndWarrantyDiv').append(`<div class="col-md col-sm-12" id="warrantyDiv">
-                                <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
+                          <div class="form-group">
+                              <label for="warranty">Check warranty</label>
+                              <select name="warranty" id="warranty" class="form-control">
+                                  <option value="" selected>Please Select Warranty</option>
 
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
-                                <div class="form-group">
-                                    <label for="reason">Reason for Selling (Optional)</label>
-                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
-                    `);
+                              </select>
+                              @error('warranty')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="reasonForSellingDiv">
+                          <div class="form-group">
+                              <label for="reason">Reason for Selling (Optional)</label>
+                              <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
+              `);
 
                     }
 
@@ -746,130 +748,132 @@
                     $('#repairedProductDiv').empty();
                     $('#repairedProductDiv').html(
                         `<div class="form-group">
-                                    <label for="repaired">Is Product Repaired/Opened?</label>
-                                    <select name="repaired" id="repaired" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
-                                    </select>
-                                    @error('repaired')
-                                        <span class='text-danger'>{{ $message }}</span>
-                                    @enderror
-                                </div>`
+                              <label for="repaired">Is Product Repaired/Opened?</label>
+                              <select name="repaired" id="repaired" class="form-control">
+                                  <option value="">Please Select</option>
+                                  <option value="1">Yes</option>
+                                  <option value="2">No</option>
+                              </select>
+                              @error('repaired')
+                                  <span class='text-danger'>{{ $message }}</span>
+                              @enderror
+                          </div>`
                     );
 
 
                     $('#productCategory').change(function() {
+
                         if (this.value == "11") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorPanelType">Panel Type</label>
-                                                <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
-                                                    <option value="0">Please Select Panel Type</option>
-                                                    <option value="1">IPS</option>
-                                                    <option value="2">VA</option>
-                                                    <option value="3">TN</option>
-                                                    <option value="4">Simple LCD</option>
-                                                    <option value="5">Simple LED</option>
-                                                    <option value="6">OLED</option>
-                                                </select>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorPanelType">Panel Type</label>
+                                          <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
+                                              <option value="0">Please Select Panel Type</option>
+                                              <option value="1">IPS</option>
+                                              <option value="2">VA</option>
+                                              <option value="3">TN</option>
+                                              <option value="4">Simple LCD</option>
+                                              <option value="5">Simple LED</option>
+                                              <option value="6">OLED</option>
+                                          </select>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorRefreshRate">Refresh Rate</label>
-                                                <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
-                                                    <option value="0">Please Select Refresh Rate</option>
-                                                    <option value="1">60Hz</option>
-                                                    <option value="2">75Hz</option>
-                                                    <option value="3">100Hz</option>
-                                                    <option value="4">120Hz</option>
-                                                    <option value="5">144Hz</option>
-                                                    <option value="6">165Hz</option>
-                                                    <option value="6">180Hz</option>
-                                                    <option value="6">240Hz</option>
-                                                    <option value="6">360Hz</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorSize">Size</label>
-                                                <input type="text" id="monitorSize" name="monitorSize" required
-                                                    class="form-control" placeholder="Eg. 22 inches">
-                                            </div>
-                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorRefreshRate">Refresh Rate</label>
+                                          <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
+                                              <option value="0">Please Select Refresh Rate</option>
+                                              <option value="1">60Hz</option>
+                                              <option value="2">75Hz</option>
+                                              <option value="3">100Hz</option>
+                                              <option value="4">120Hz</option>
+                                              <option value="5">144Hz</option>
+                                              <option value="6">165Hz</option>
+                                              <option value="7">180Hz</option>
+                                              <option value="8">240Hz</option>
+                                              <option value="9">360Hz</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorSize">Size</label>
+                                          <input type="text" id="monitorSize" name="monitorSize" required
+                                              class="form-control" placeholder="Eg. 22 inches">
+                                      </div>
+                                  </div>
 
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorModelNo">Model No. (optional)</label>
-                                                <input type="text" id="monitorModelNo" name="monitorModelNo"
-                                                    class="form-control" placeholder="Eg. XL2546K">
-                                            </div>
-                                        </div>
-                                    </div>`);
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorModelNo">Model No. (optional)</label>
+                                          <input type="text" id="monitorModelNo" name="monitorModelNo"
+                                              class="form-control" placeholder="Eg. XL2546K">
+                                      </div>
+                                  </div>
+                              </div>`);
 
                         } else if (this.value == "5") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramGeneration">RAM Generation</label>
-                                                <select id="ramGeneration" name="ramGeneration" class="form-control" required>
-                                                    <option value="0">Please Select RAM Generation</option>
-                                                    <option value="1">DDR2</option>
-                                                    <option value="2">DDR3</option>
-                                                    <option value="3">DDR4</option>
-                                                    <option value="4">DDR5</option>
-                                                </select>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramGeneration">RAM Generation</label>
+                                          <h2>Hello {{ old('ramGeneration') }}</h2>
+                                          <select id="ramGeneration"  name="ramGeneration" class="form-control" required>
+                                              <option value="0" @if (old('ramGeneration') == 0) Selected @endif>Please Select RAM Generation</option>
+                                              <option value="1" @if (old('ramGeneration') == 1) Selected @endif>DDR2</option>
+                                              <option value="2" @if (old('ramGeneration') == 2) Selected @endif>DDR3</option>
+                                              <option value="3" @if (old('ramGeneration') == 3) Selected @endif>DDR4</option>
+                                              <option value="4" @if (old('ramGeneration') == 4) Selected @endif>DDR5</option>
+                                          </select>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramClockSpeed">Clock Speed</label>
-                                                <input type="text" id="ramClockSpeed" name="ramClockSpeed" required
-                                                    class="form-control" placeholder="Eg. 3200 MHz">
-                                            </div>
-                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramClockSpeed">Clock Speed</label>
+                                          <input type="text" value="{{ old('ramClockSpeed') }}" id="ramClockSpeed" name="ramClockSpeed" required
+                                              class="form-control" placeholder="Eg. 3200 MHz">
+                                      </div>
+                                  </div>
 
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramSize">RAM Size</label>
-                                                <input type="text" id="ramSize" name="ramSize" required
-                                                    class="form-control" placeholder="Eg. 8GB">
-                                            </div>
-                                        </div>
-                                    </div>`);
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramSize">RAM Size</label>
+                                          <input type="text" value="{{ old('ramSize') }}" id="ramSize" name="ramSize" required
+                                              class="form-control" placeholder="Eg. 8GB">
+                                      </div>
+                                  </div>
+                              </div>`);
 
                         } else if (this.value == "6") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="storageType">Storage Type</label>
-                                                <select id="storageType" name="storageType" class="form-control" required>
-                                                    <option value="0">Please Select Storage Type</option>
-                                                    <option value="1">HDD</option>
-                                                    <option value="2">SSD</option>
-                                                    <option value="3">NVMe</option>
-                                                    <option value="4">M.2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="storageSize">Storage Size</label>
-                                                <input type="text" id="storageSize" name="storageSize" required
-                                                    class="form-control" placeholder="Eg. 500GB">
-                                            </div>
-                                        </div>`);
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageType">Storage Type</label>
+                                          <select id="storageType" value="{{ old('storageType') }}" name="storageType" class="form-control" required>
+                                              <option value="0">Please Select Storage Type</option>
+                                              <option value="1">HDD</option>
+                                              <option value="2">SSD</option>
+                                              <option value="3">NVMe</option>
+                                              <option value="4">M.2</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageSize">Storage Size</label>
+                                          <input type="text" id="storageSize" value="{{ old('storageSize') }}" name="storageSize" required
+                                              class="form-control" placeholder="Eg. 500GB">
+                                      </div>
+                                  </div>`);
 
                         } else {
 
@@ -885,9 +889,9 @@
                             $('#explainRepairingDiv').removeClass('d-none');
                             $('#explainRepairingDiv').html(
                                 `<div class="form-group">
-                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
-                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
-                            </div>`
+                              <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                              <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
+                      </div>`
                             );
 
                         } else {
@@ -909,25 +913,26 @@
 
                     $('#aboutThisItemContainer').empty();
                     $('#aboutThisItemContainer').append(`
-                    <label for="AboutThisItem">About this item</label>
-                            <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
-                                placeholder="About This Item">
-                            <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
-                            <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
-                            @error('AboutThisitem')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            @if (old('AboutThisitem'))
-                                @php
-                                    $AboutThisItem = json_decode(old('AboutThisitem'));
-                                @endphp
+              <label for="AboutThisItem">About this item</label>
+                      <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
+                          placeholder="About This Item">
+                      <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
+                      <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
+                      @error('AboutThisitem')
+                          <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                      @if (old('AboutThisitem'))
+                          @php
+                              $AboutThisItem = json_decode(old('AboutThisitem'));
+                              //
+                          @endphp
 
-                                @foreach ($AboutThisItem as $data)
-                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
-                                        placeholder="About This Item" value="{{ $data }}">
-                                @endforeach
-                            @endif
-                    `);
+                          @foreach ($AboutThisItem as $data)
+                              <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
+                                  placeholder="About This Item" value="{{ $data }}">
+                          @endforeach
+                      @endif
+              `);
 
                 }
 
@@ -944,81 +949,81 @@
                     if (!brandNameDiv && !productCategoryDiv) {
                         $('#productTypeData').empty()
                         $('#productTypeData').append(`
-                            <div id="productCategoryDiv" class="col-md col-sm-12">
-                                <div class="form-group">
-                                    <label for="productCategory">Product Category</label>
-                                    <select name="productCategory" class="form-control" id="productCategory">
-                                        <option value="" selected>Select Category</option>
-                                        @foreach ($categories as $category)
-                                            <x-categories-select :category="$category" />
-                                        @endforeach
-                                    </select>
-                                    @error('productCategory')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
+                      <div id="productCategoryDiv" class="col-md col-sm-12">
+                          <div class="form-group">
+                              <label for="productCategory">Product Category</label>
+                              <select name="productCategory" class="form-control" id="productCategory">
+                                  <option value="" selected>Select Category</option>
+                                  @foreach ($categories as $category)
+                                      <x-categories-select :category="$category" />
+                                  @endforeach
+                              </select>
+                              @error('productCategory')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
 
-                            <div id="brandNameDiv" class="col-md col-sm-12">
-                                <div class="form-group">
-                                    <label for="brandName">Brand Name</label>
-                                    <select name="brandName" class="form-control" id="brandName">
-                                        <option value="" selected>Select Brand</option>
-                                        @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                        @endforeach
-                                    </select>
+                      <div id="brandNameDiv" class="col-md col-sm-12">
+                          <div class="form-group">
+                              <label for="brandName">Brand Name</label>
+                              <select name="brandName" class="form-control" id="brandName">
+                                  <option value="" selected>Select Brand</option>
+                                  @foreach ($brands as $brand)
+                                      <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                  @endforeach
+                              </select>
 
-                                    <div class="custom-control mt-2 custom-checkbox checkbox-primary">
-                                        <input type="checkbox" name="thisBrandDoesNotHaveProduct"
-                                            class="custom-control-input"
-                                            {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : '' }}
-                                            id="checkbox-signin">
-                                        <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
-                                            Brand
-                                            Name.</label>
-                                        @error('brandName')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
+                              <div class="custom-control mt-2 custom-checkbox checkbox-primary">
+                                  <input type="checkbox" name="thisBrandDoesNotHaveProduct"
+                                      class="custom-control-input"
+                                      {{ old('thisBrandDoesNotHaveProduct') == 'on' ? 'checked' : '' }}
+                                      id="checkbox-signin">
+                                  <label class="custom-control-label" for="checkbox-signin">This Product Does Not Have
+                                      Brand
+                                      Name.</label>
+                                  @error('brandName')
+                                      <span class="text-danger">{{ $message }}</span>
+                                  @enderror
+                              </div>
+                          </div>
+                      </div>
 
-                            <div class="col-md col-sm-12" id="selectProductYear">
-                                <div class="form-group">
-                                    <label for="yearOfProduct">Year-Make of Product</label>
+                      <div class="col-md col-sm-12" id="selectProductYear">
+                          <div class="form-group">
+                              <label for="yearOfProduct">Year-Make of Product</label>
 
-                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
-                                        <option value="0" selected>Select Year/Make of Your Product</option>
+                              <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                  <option value="0" selected>Select Year/Make of Your Product</option>
 
-                                    </select>
-                                </div>
+                              </select>
+                          </div>
 
 
 
-                            </div>`)
+                      </div>`)
 
                         $('#productReasonAndWarrantyDiv').empty();
                         $('#productReasonAndWarrantyDiv').append(`<div class="col-md col-sm-12" id="warrantyDiv">
-                                <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
+                          <div class="form-group">
+                              <label for="warranty">Check warranty</label>
+                              <select name="warranty" id="warranty" class="form-control">
+                                  <option value="" selected>Please Select Warranty</option>
 
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
-                                <div class="form-group">
-                                    <label for="reason">Reason for Selling (Optional)</label>
-                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
-                    `);
+                              </select>
+                              @error('warranty')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="reasonForSellingDiv">
+                          <div class="form-group">
+                              <label for="reason">Reason for Selling (Optional)</label>
+                              <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
+              `);
                     }
                     $('#warranty').empty();
                     $('#warranty').html(
@@ -1052,113 +1057,113 @@
                         if (this.value == "11") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorPanelType">Panel Type</label>
-                                                <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
-                                                    <option value="0">Please Select Panel Type</option>
-                                                    <option value="1">IPS</option>
-                                                    <option value="2">VA</option>
-                                                    <option value="3">TN</option>
-                                                    <option value="4">Simple LCD</option>
-                                                    <option value="5">Simple LED</option>
-                                                    <option value="6">OLED</option>
-                                                </select>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorPanelType">Panel Type</label>
+                                          <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
+                                              <option value="0">Please Select Panel Type</option>
+                                              <option value="1">IPS</option>
+                                              <option value="2">VA</option>
+                                              <option value="3">TN</option>
+                                              <option value="4">Simple LCD</option>
+                                              <option value="5">Simple LED</option>
+                                              <option value="6">OLED</option>
+                                          </select>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorRefreshRate">Refresh Rate</label>
-                                                <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
-                                                    <option value="0">Please Select Refresh Rate</option>
-                                                    <option value="1">60Hz</option>
-                                                    <option value="2">75Hz</option>
-                                                    <option value="3">100Hz</option>
-                                                    <option value="4">120Hz</option>
-                                                    <option value="5">144Hz</option>
-                                                    <option value="6">165Hz</option>
-                                                    <option value="6">180Hz</option>
-                                                    <option value="6">240Hz</option>
-                                                    <option value="6">360Hz</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorSize">Size</label>
-                                                <input type="text" id="monitorSize" name="monitorSize" required
-                                                    class="form-control" placeholder="Eg. 22 inches">
-                                            </div>
-                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorRefreshRate">Refresh Rate</label>
+                                          <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
+                                              <option value="0">Please Select Refresh Rate</option>
+                                              <option value="1">60Hz</option>
+                                              <option value="2">75Hz</option>
+                                              <option value="3">100Hz</option>
+                                              <option value="4">120Hz</option>
+                                              <option value="5">144Hz</option>
+                                              <option value="6">165Hz</option>
+                                              <option value="6">180Hz</option>
+                                              <option value="6">240Hz</option>
+                                              <option value="6">360Hz</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorSize">Size</label>
+                                          <input type="text" id="monitorSize" name="monitorSize" required
+                                              class="form-control" placeholder="Eg. 22 inches">
+                                      </div>
+                                  </div>
 
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="monitorModelNo">Model No. (optional)</label>
-                                                <input type="text" id="monitorModelNo" name="monitorModelNo"
-                                                    class="form-control" placeholder="Eg. XL2546K">
-                                            </div>
-                                        </div>
-                                    </div>`);
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorModelNo">Model No. (optional)</label>
+                                          <input type="text" id="monitorModelNo" name="monitorModelNo"
+                                              class="form-control" placeholder="Eg. XL2546K">
+                                      </div>
+                                  </div>
+                              </div>`);
 
                         } else if (this.value == "5") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramGeneration">RAM Generation</label>
-                                                <select id="ramGeneration" name="ramGeneration" class="form-control" required>
-                                                    <option value="0">Please Select RAM Generation</option>
-                                                    <option value="1">DDR2</option>
-                                                    <option value="2">DDR3</option>
-                                                    <option value="3">DDR4</option>
-                                                    <option value="4">DDR5</option>
-                                                </select>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramGeneration">RAM Generation</label>
+                                          <select id="ramGeneration" name="ramGeneration" class="form-control" required>
+                                              <option value="0">Please Select RAM Generation</option>
+                                              <option value="1">DDR2</option>
+                                              <option value="2">DDR3</option>
+                                              <option value="3">DDR4</option>
+                                              <option value="4">DDR5</option>
+                                          </select>
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramClockSpeed">Clock Speed</label>
-                                                <input type="text" id="ramClockSpeed" name="ramClockSpeed" required
-                                                    class="form-control" placeholder="Eg. 3200 MHz">
-                                            </div>
-                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramClockSpeed">Clock Speed</label>
+                                          <input type="text" id="ramClockSpeed" name="ramClockSpeed" required
+                                              class="form-control" placeholder="Eg. 3200 MHz">
+                                      </div>
+                                  </div>
 
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="ramSize">RAM Size</label>
-                                                <input type="text" id="ramSize" name="ramSize" required
-                                                    class="form-control" placeholder="Eg. 8GB">
-                                            </div>
-                                        </div>
-                                    </div>`);
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramSize">RAM Size</label>
+                                          <input type="text" id="ramSize" name="ramSize" required
+                                              class="form-control" placeholder="Eg. 8GB">
+                                      </div>
+                                  </div>
+                              </div>`);
 
                         } else if (this.value == "6") {
                             $('#additionalRequirements').removeClass('d-none');
                             $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
-                            <div class='row'>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="storageType">Storage Type</label>
-                                                <select id="storageType" name="storageType" class="form-control" required>
-                                                    <option value="0">Please Select Storage Type</option>
-                                                    <option value="1">HDD</option>
-                                                    <option value="2">SSD</option>
-                                                    <option value="3">NVMe</option>
-                                                    <option value="4">M.2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md col-sm-12">
-                                            <div class="form-group">
-                                                <label for="storageSize">Storage Size</label>
-                                                <input type="text" id="storageSize" name="storageSize" required
-                                                    class="form-control" placeholder="Eg. 500GB">
-                                            </div>
-                                        </div>`);
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageType">Storage Type</label>
+                                          <select id="storageType" name="storageType" class="form-control" required>
+                                              <option value="0">Please Select Storage Type</option>
+                                              <option value="1">HDD</option>
+                                              <option value="2">SSD</option>
+                                              <option value="3">NVMe</option>
+                                              <option value="4">M.2</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageSize">Storage Size</label>
+                                          <input type="text" id="storageSize" name="storageSize" required
+                                              class="form-control" placeholder="Eg. 500GB">
+                                      </div>
+                                  </div>`);
 
                         } else {
 
@@ -1171,25 +1176,26 @@
 
                     $('#aboutThisItemContainer').empty();
                     $('#aboutThisItemContainer').append(`
-                    <label for="AboutThisItem">About this item</label>
-                            <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
-                                placeholder="About This Item">
-                            <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
-                            <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
-                            @error('AboutThisitem')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                            @if (old('AboutThisitem'))
-                                @php
-                                    $AboutThisItem = json_decode(old('AboutThisitem'));
-                                @endphp
+              <label for="AboutThisItem">About this item</label>
+                      <input type="text" id="AboutThisItem" class="form-control AboutThisItem"
+                          placeholder="About This Item">
+                      <button type="button" onclick="addMoreAbout()" class="btn btn-primary mt-2" id="addMoreBtn">Add More</button>
+                      <input type="hidden" id="aboutThisItemhidden" name="AboutThisitem">
+                      @error('AboutThisitem')
+                          <span class="text-danger">{{ $message }}</span>
+                      @enderror
+                      @if (old('AboutThisitem'))
+                          @php
+                              $AboutThisItem = json_decode(old('AboutThisitem'));
+                              //
+                          @endphp
 
-                                @foreach ($AboutThisItem as $data)
-                                    <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
-                                        placeholder="About This Item" value="{{ $data }}">
-                                @endforeach
-                            @endif
-                    `);
+                          @foreach ($AboutThisItem as $data)
+                              <input type="text" id="AboutThisItem" class="form-control mt-2 AboutThisItem"
+                                  placeholder="About This Item" value="{{ $data }}">
+                          @endforeach
+                      @endif
+              `);
 
 
                 }
@@ -1204,35 +1210,35 @@
 
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col-md col-sm-12" id="warrantyDiv">
-                                <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
+              <div class="col-md col-sm-12" id="warrantyDiv">
+                          <div class="form-group">
+                              <label for="warranty">Check warranty</label>
+                              <select name="warranty" id="warranty" class="form-control">
+                                  <option value="" selected>Please Select Warranty</option>
 
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
-                                <div class="form-group">
-                                    <label for="reason">Reason for Selling (Optional)</label>
-                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="selectProductYear">
-                                <div class="form-group">
-                                    <label for="yearOfProduct">Year-Make of Product</label>
+                              </select>
+                              @error('warranty')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="reasonForSellingDiv">
+                          <div class="form-group">
+                              <label for="reason">Reason for Selling (Optional)</label>
+                              <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="selectProductYear">
+                          <div class="form-group">
+                              <label for="yearOfProduct">Year-Make of Product</label>
 
-                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
-                                        <option value="0" selected>Select Year/Make of Your Product</option>
+                              <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                  <option value="0" selected>Select Year/Make of Your Product</option>
 
-                                    </select>
-                                </div>
-                            </div>
-                            `
+                              </select>
+                          </div>
+                      </div>
+                      `
 
 
 
@@ -1253,8 +1259,8 @@
 
 
 
-                    // $('#manufacturerAndCountryOfOriginDiv').empty();
-                    // $('#getVariations').empty();
+                    $('#manufacturerAndCountryOfOriginDiv').empty();
+                    $('#getVariations').empty();
                     $('#aboutThisItemContainer').empty();
 
                     $('#warranty').empty();
@@ -1286,51 +1292,51 @@
                     let productReasonAndWarrantyDiv = document.getElementById('productReasonAndWarrantyDiv')
                     productReasonAndWarrantyDiv.innerHTML =
                         `<div class="col-md col-sm-12 d-none" id="repairedProductDiv"></div>
-                        <div class="col-md col-sm-12 d-none" id="laptopUsedOrNotDiv"></div>`
+                  <div class="col-md col-sm-12 d-none" id="laptopUsedOrNotDiv"></div>`
 
                     $('#laptopUsedOrNotDiv').removeClass('d-none');
                     $('#laptopUsedOrNotDiv').empty();
                     $('#laptopUsedOrNotDiv').append(`
-                                            <div class="form-group">
-                                                <label for="laptopUsedOrNew">Used Or New?</label>
-                                                <select id="laptopUsedOrNew" name="laptopUsedOrNew"
-                                                    class="form-control">
-                                                    <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
-                                                </select>
-                                            </div>
-                                        `);
+                                      <div class="form-group">
+                                          <label for="laptopUsedOrNew">Used Or New?</label>
+                                          <select id="laptopUsedOrNew" name="laptopUsedOrNew"
+                                              class="form-control">
+                                              <option value="0">Please Select</option>
+                                              <option value="1">Used</option>
+                                              <option value="2">New</option>
+                                          </select>
+                                      </div>
+                                  `);
 
                     document.getElementById("productTypeData").innerHTML = `
-                    <div class="col-md col-sm-12" id="warrantyDiv">
-                                <div class="form-group">
-                                    <label for="warranty">Check warranty</label>
-                                    <select name="warranty" id="warranty" class="form-control">
-                                        <option value="" selected>Please Select Warranty</option>
+              <div class="col-md col-sm-12" id="warrantyDiv">
+                          <div class="form-group">
+                              <label for="warranty">Check warranty</label>
+                              <select name="warranty" id="warranty" class="form-control">
+                                  <option value="" selected>Please Select Warranty</option>
 
-                                    </select>
-                                    @error('warranty')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="reasonForSellingDiv">
-                                <div class="form-group">
-                                    <label for="reason">Reason for Selling (Optional)</label>
-                                    <input type="text" class="form-control" name="reason" id="reasonForSelling">
-                                </div>
-                            </div>
-                            <div class="col-md col-sm-12" id="selectProductYear">
-                                <div class="form-group">
-                                    <label for="yearOfProduct">Year-Make of Product</label>
+                              </select>
+                              @error('warranty')
+                                  <span class="text-danger">{{ $message }}</span>
+                              @enderror
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="reasonForSellingDiv">
+                          <div class="form-group">
+                              <label for="reason">Reason for Selling (Optional)</label>
+                              <input type="text" class="form-control" name="reason" id="reasonForSelling">
+                          </div>
+                      </div>
+                      <div class="col-md col-sm-12" id="selectProductYear">
+                          <div class="form-group">
+                              <label for="yearOfProduct">Year-Make of Product</label>
 
-                                    <select name="yearOfProduct" class="form-control" id="yearOfProduct">
-                                        <option value="0" selected>Select Year/Make of Your Product</option>
+                              <select name="yearOfProduct" class="form-control" id="yearOfProduct">
+                                  <option value="0" selected>Select Year/Make of Your Product</option>
 
-                                    </select>
-                                </div>
-                            </div>`
+                              </select>
+                          </div>
+                      </div>`
 
 
 
@@ -1352,16 +1358,16 @@
                     $('#repairedProductDiv').empty();
                     $('#repairedProductDiv').html(
                         `<div class="form-group">
-                                    <label for="repaired">Is Product Repaired/Opened?</label>
-                                    <select name="repaired" id="repaired" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1">Yes</option>
-                                        <option value="2">No</option>
-                                    </select>
-                                    @error('repaired')
-                                        <span class='text-danger'>{{ $message }}</span>
-                                    @enderror
-                                </div>`
+                              <label for="repaired">Is Product Repaired/Opened?</label>
+                              <select name="repaired" id="repaired" class="form-control">
+                                  <option value="">Please Select</option>
+                                  <option value="1">Yes</option>
+                                  <option value="2">No</option>
+                              </select>
+                              @error('repaired')
+                                  <span class='text-danger'>{{ $message }}</span>
+                              @enderror
+                          </div>`
                     );
 
 
@@ -1371,9 +1377,9 @@
                             $('#explainRepairingDiv').removeClass('d-none');
                             $('#explainRepairingDiv').html(
                                 `<div class="form-group">
-                                    <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
-                                    <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
-                            </div>`
+                                <label for="explainAboutRepairing">Explain Why Is The Product Repaired/Opened?</label>
+                                <textarea class="form-control" rows="4" name="explainAboutRepairing" id="explainAboutRepairing" placeholder="Because of dust..." required></textarea>
+                        </div>`
                             );
 
                         } else {
@@ -1423,6 +1429,9 @@
                                                 <label for="processorName">Enter Name</label>
                                                 <input type="text" id="processorName" name="processorName"
                                                     class="form-control" placeholder="Eg. Core i7 10th Gen">
+                                                @error('processorName')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1431,10 +1440,13 @@
                                                 <select id="processorBrand" name="processorBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('processorBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
 
                                                 </select>
+                                                @error('processorBrand')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -1443,10 +1455,13 @@
                                                 <label for="processorUsedOrNew">Used Or New?</label>
                                                 <select id="processorUsedOrNew" name="processorUsedOrNew"
                                                     class="form-control">
-                                                    <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="0" {{ old('processorUsedOrNew') == '0' ? 'selected' : '' }}>Please Select</option>
+                                                    <option value="1" {{ old('processorUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('processorUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('processorUsedOrNew')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1463,7 +1478,10 @@
                                             <div class="form-group">
                                                 <label for="graphicCardName">Enter Name</label>
                                                 <input type="text" id="graphicCardName" name="graphicCardName"
-                                                    class="form-control" placeholder="Eg. Gigabyte GTX 1050">
+                                                    class="form-control" placeholder="Eg. Gigabyte GTX 1050" value="{{ old('graphicCardName') }}">
+                                                @error('graphicCardName')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1473,9 +1491,12 @@
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('graphicCardBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('graphicCardBrand')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -1484,16 +1505,19 @@
                                                 <label for="graphicCardMemory">Memory</label>
                                                 <select id="graphicCardMemory" name="graphicCardMemory"
                                                     class="form-control">
-                                                    <option value="0">Please Select Memory</option>
-                                                    <option value="1">1 GB</option>
-                                                    <option value="2">2 GB</option>
-                                                    <option value="2">3 GB</option>
-                                                    <option value="2">4 GB</option>
-                                                    <option value="2">6 GB</option>
-                                                    <option value="2">8 GB</option>
-                                                    <option value="2">12 GB</option>
-                                                    <option value="2">24 GB</option>
+                                                    <option value="0" selected>Please Select Memory</option>
+                                                    <option value="1" {{ old('graphicCardMemory') == '1' ? 'selected' : '' }}>1 GB</option>
+                                                    <option value="2" {{ old('graphicCardMemory') == '2' ? 'selected' : '' }}>2 GB</option>
+                                                    <option value="3" {{ old('graphicCardMemory') == '3' ? 'selected' : '' }}>3 GB</option>
+                                                    <option value="4" {{ old('graphicCardMemory') == '4' ? 'selected' : '' }}>4 GB</option>
+                                                    <option value="6" {{ old('graphicCardMemory') == '6' ? 'selected' : '' }}>6 GB</option>
+                                                    <option value="7" {{ old('graphicCardMemory') == '7' ? 'selected' : '' }}>8 GB</option>
+                                                    <option value="8" {{ old('graphicCardMemory') == '8' ? 'selected' : '' }}>12 GB</option>
+                                                    <option value="9" {{ old('graphicCardMemory') == '9' ? 'selected' : '' }}>24 GB</option>
                                                 </select>
+                                                @error('graphicCardMemory')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1501,10 +1525,13 @@
                                                 <label for="graphicCardUsedOrNew">Used Or New?</label>
                                                 <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew0"
                                                     class="form-control">
-                                                    <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="0" selected>Please Select</option>
+                                                    <option value="1" {{ old('graphicCardUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('graphicCardUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('graphicCardUsedOrNew')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1521,7 +1548,10 @@
                                             <div class="form-group">
                                                 <label for="motherboardName">Enter Name</label>
                                                 <input type="text" id="motherboardName" name="motherboardName"
-                                                    class="form-control" placeholder="Eg. MSI B450 TOMAHAWK MAX ATX AM4 ">
+                                                    class="form-control" placeholder="Eg. MSI B450 TOMAHAWK MAX ATX AM4 " value="{{ old('motherboardName') }}">
+                                                    @error('motherboardName')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1531,10 +1561,14 @@
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('motherboardBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
 
                                                 </select>
+                                                @error('motherboardBrand')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
+
 
                                             </div>
                                         </div>
@@ -1544,9 +1578,12 @@
                                                 <select id="motherboardUsedOrNew" name="motherboardUsedOrNew"
                                                     class="form-control">
                                                     <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="1" {{ old('motherboardUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('motherboardUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('motherboardUsedOrNew')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1563,7 +1600,10 @@
                                             <div class="form-group">
                                                 <label for="ramName">Enter Name</label>
                                                 <input type="text" id="ramName" name="ramName" class="form-control"
-                                                    placeholder="Eg. GSkill 16GB DDR4 ">
+                                                    placeholder="Eg. GSkill 16GB DDR4 " value="{{ old('ramName') }}">
+                                                    @error('ramName')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1572,8 +1612,11 @@
                                                 <select id="ramBrand" name="ramBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('ramBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
+                                                    @error('ramBrand')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
 
                                                 </select>
                                             </div>
@@ -1583,14 +1626,17 @@
                                                 <label for="ramMemory">Memory</label>
                                                 <select id="ramMemory" name="ramMemory" class="form-control">
                                                     <option value="0">Please Select Memory</option>
-                                                    <option value="1">1 GB</option>
-                                                    <option value="2">2 GB</option>
-                                                    <option value="2">4 GB</option>
-                                                    <option value="2">8 GB</option>
-                                                    <option value="2">16 GB</option>
-                                                    <option value="2">32 GB</option>
-                                                    <option value="2">64 GB</option>
+                                                    <option value="1" {{ old('ramMemory') == '1' ? 'selected' : '' }}>1 GB</option>
+                                                    <option value="2" {{ old('ramMemory') == '2' ? 'selected' : '' }}>2 GB</option>
+                                                    <option value="3" {{ old('ramMemory') == '3' ? 'selected' : '' }}>4 GB</option>
+                                                    <option value="4" {{ old('ramMemory') == '4' ? 'selected' : '' }}>8 GB</option>
+                                                    <option value="5" {{ old('ramMemory') == '5' ? 'selected' : '' }}>16 GB</option>
+                                                    <option value="6" {{ old('ramMemory') == '6' ? 'selected' : '' }}>32 GB</option>
+                                                    <option value="7" {{ old('ramMemory') == '7' ? 'selected' : '' }}>64 GB</option>
                                                 </select>
+                                                @error('ramMemory')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1598,16 +1644,22 @@
                                                 <label for="ramUsedOrNew">Used Or New?</label>
                                                 <select id="ramUsedOrNew" name="ramUsedOrNew" class="form-control">
                                                     <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="1" {{ old('ramUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('ramUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('ramUsedOrNew')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="ramQuantity">Quantity</label>
                                                 <input type="number" id="ramQuantity" name="ramQuantity"
-                                                    class="form-control" placeholder="Eg. 2">
+                                                    class="form-control" placeholder="Eg. 2" value="{{ old('ramQuantity') }}">
+                                                    @error('ramQuantity')
+                                                    <span class='text-danger'>{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1630,6 +1682,7 @@
                                                 <input type="text" id="storageName1" name="storageName1"
                                                     class="form-control storageName"
                                                     placeholder="Eg. Seagate BarraCuda ST1000DM010 1TB SATA Hard Drive">
+                                                    
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md">
@@ -1704,7 +1757,10 @@
                                             <div class="form-group">
                                                 <label for="psuName">Enter Name</label>
                                                 <input type="text" id="psuName" name="psuName" class="form-control"
-                                                    placeholder="Eg. Corsair CX550 550Watt 80+ Bronze ">
+                                                    placeholder="Eg. Corsair CX550 550Watt 80+ Bronze " value="{{ old('psuName') }}">
+                                                @error('psuName')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1713,9 +1769,12 @@
                                                 <select id="psuBrand" name="psuBrand" class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('psuBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('psuBrand')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -1725,22 +1784,25 @@
                                                 <label for="psuWatts">Watts</label>
                                                 <select id="psuWatts" name="psuWatts" class="form-control">
                                                     <option value="0">Please Select Watts</option>
-                                                    <option value="1">300 Watts</option>
-                                                    <option value="2">400 Watts</option>
-                                                    <option value="3">450 Watts</option>
-                                                    <option value="4">500 Watts</option>
-                                                    <option value="5">550 Watts</option>
-                                                    <option value="6">600 Watts</option>
-                                                    <option value="7">650 Watts</option>
-                                                    <option value="8">700 Watts</option>
-                                                    <option value="9">750 Watts</option>
-                                                    <option value="10">800 Watts</option>
-                                                    <option value="11">850 Watts</option>
-                                                    <option value="12">900 Watts</option>
-                                                    <option value="13">1000 Watts</option>
-                                                    <option value="14">1200 Watts</option>
-                                                    <option value="15">1500 Watts</option>
+                                                    <option value="1" {{ old('psuWatts') == '1' ? 'selected' : '' }} >300 Watts</option>
+                                                    <option value="2" {{ old('psuWatts') == '2' ? 'selected' : '' }} >400 Watts</option>
+                                                    <option value="3" {{ old('psuWatts') == '3' ? 'selected' : '' }} >450 Watts</option>
+                                                    <option value="4" {{ old('psuWatts') == '4' ? 'selected' : '' }} >500 Watts</option>
+                                                    <option value="5" {{ old('psuWatts') == '5' ? 'selected' : '' }} >550 Watts</option>
+                                                    <option value="6" {{ old('psuWatts') == '6' ? 'selected' : '' }} >600 Watts</option>
+                                                    <option value="7" {{ old('psuWatts') == '7' ? 'selected' : '' }} >650 Watts</option>
+                                                    <option value="8" {{ old('psuWatts') == '8' ? 'selected' : '' }} >700 Watts</option>
+                                                    <option value="9" {{ old('psuWatts') == '9' ? 'selected' : '' }} >750 Watts</option>
+                                                    <option value="10" {{ old('psuWatts') == '10' ? 'selected' : '' }} >800 Watts</option>
+                                                    <option value="11" {{ old('psuWatts') == '11' ? 'selected' : '' }} >850 Watts</option>
+                                                    <option value="12" {{ old('psuWatts') == '12' ? 'selected' : '' }} >900 Watts</option>
+                                                    <option value="13" {{ old('psuWatts') == '13' ? 'selected' : '' }} >1000 Watts</option>
+                                                    <option value="14" {{ old('psuWatts') == '14' ? 'selected' : '' }} >1200 Watts</option>
+                                                    <option value="15" {{ old('psuWatts') == '15' ? 'selected' : '' }} >1500 Watts</option>
                                                 </select>
+                                                @error('psuWatts')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1748,9 +1810,12 @@
                                                 <label for="psuUsedOrNew">Used Or New?</label>
                                                 <select id="psuUsedOrNew" name="psuUsedOrNew" class="form-control">
                                                     <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="1" {{ old('psuUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('psuUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('psuUsedOrNew')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1767,7 +1832,10 @@
                                             <div class="form-group">
                                                 <label for="caseName">Enter Name</label>
                                                 <input type="text" id="caseName" name="caseName"
-                                                    class="form-control" placeholder="Eg. NZXT H9 Flow Dual-Chamber Mid-Tower Airflow Case">
+                                                    class="form-control" placeholder="Eg. NZXT H9 Flow Dual-Chamber Mid-Tower Airflow Case" value="{{ old('caseName') }}">
+                                                    @error('caseName')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1777,9 +1845,12 @@
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('caseBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('caseBrand')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -1789,9 +1860,12 @@
                                                 <select id="caseUsedOrNew" name="caseUsedOrNew"
                                                     class="form-control">
                                                     <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="1" {{ old('caseUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('caseUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('caseUsedOrNew')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -1808,7 +1882,10 @@
                                             <div class="form-group">
                                                 <label for="coolerName">Enter Name</label>
                                                 <input type="text" id="coolerName" name="coolerName"
-                                                    class="form-control" placeholder="Eg. XPG VENTO 120 ARGB FAN Case Fan">
+                                                    class="form-control" placeholder="Eg. XPG VENTO 120 ARGB FAN Case Fan" value="{{ old('coolerName') }}">
+                                                    @error('coolerName')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md col-sm-12">
@@ -1818,9 +1895,12 @@
                                                     class="form-control">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
-                                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                                        <option value="{{ $brand->id }}" {{ old('coolerBrand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('coolerBrand')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
 
                                             </div>
                                         </div>
@@ -1830,9 +1910,12 @@
                                                 <select id="coolerUsedOrNew" name="coolerUsedOrNew"
                                                     class="form-control">
                                                     <option value="0">Please Select</option>
-                                                    <option value="1">Used</option>
-                                                    <option value="2">New</option>
+                                                    <option value="1" {{ old('coolerUsedOrNew') == '1' ? 'selected' : '' }}>Used</option>
+                                                    <option value="2" {{ old('coolerUsedOrNew') == '2' ? 'selected' : '' }}>New</option>
                                                 </select>
+                                                @error('coolerUsedOrNew')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -2838,7 +2921,12 @@
 
 
 
-
+                var newProduct = `
+                  <option value='6 Months'>6 Months</option>
+                  <option value='1 Year'>1 Year</option>
+                  <option value='2 Years'>2 Years</option>
+                  <option value='3 Years'>3 Years</option>
+              `;
 
 
 
@@ -2926,12 +3014,14 @@
 
                 document.querySelectorAll('#additionalProducts .row').forEach((row, index) => {
                     const AdditionalProductName = row.querySelector('.additionalProductName').value;
+                    const AdditionalProductBrand = row.querySelector('.additionalProductBrand').value;
                     const AdditionalProductCategory = row.querySelector('.additionalProductCategory').value;
                     const AdditionalProductUsedOrNew = row.querySelector('.additionalProductUsedOrNew')
                         .value;
 
                     const AdditionalProduct = {
                         name: AdditionalProductName,
+                        brand: AdditionalProductBrand,
                         category: AdditionalProductCategory,
                         usedOrNew: AdditionalProductUsedOrNew
                     };
@@ -3005,38 +3095,347 @@
                     }
                 })
             })
+
+
+
+
+            $('#ProductType').on('change', function() {
+                if ($(this).val() == '4' || $(this).val() == '5') {
+                    let Processor = 2;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: Processor
+                        },
+                        success: function(res) {
+                            $("#processorBrand").empty(); // Clear the dropdown first
+                            $('#processorBrand').append(
+                                '<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#processorBrand').append('<option value="' +
+                                        brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#processorBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+
+                    let GraphicCard = 4;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: GraphicCard
+                        },
+                        success: function(res) {
+                            $("#graphicCardBrand").empty(); // Clear the dropdown first
+                            $('#graphicCardBrand').append(
+                                '<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#graphicCardBrand').append('<option value="' +
+                                        brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#graphicCardBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                    let Motherboard = 3;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: Motherboard
+                        },
+                        success: function(res) {
+                            $("#motherboardBrand").empty(); // Clear the dropdown first
+                            $('#motherboardBrand').append(
+                                '<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#motherboardBrand').append('<option value="' +
+                                        brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#motherboardBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                    let ram = 5;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: ram
+                        },
+                        success: function(res) {
+                            $("#ramBrand").empty(); // Clear the dropdown first
+                            $('#ramBrand').append('<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#ramBrand').append('<option value="' + brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#ramBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                    let PSU = 8;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: PSU
+                        },
+                        success: function(res) {
+                            $("#psuBrand").empty(); // Clear the dropdown first
+                            $('#psuBrand').append('<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#psuBrand').append('<option value="' + brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#psuBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                    let cases = 12;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: cases
+                        },
+                        success: function(res) {
+                            $("#caseBrand").empty(); // Clear the dropdown first
+                            $('#caseBrand').append('<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#caseBrand').append('<option value="' + brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#caseBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                    let cooler = 7;
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: cooler
+                        },
+                        success: function(res) {
+                            $("#coolerBrand").empty(); // Clear the dropdown first
+                            $('#coolerBrand').append('<option selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+
+                                    $('#coolerBrand').append('<option value="' + brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                $('#coolerBrand').append(
+                                    '<option value="">No brands available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            })
+
+
+
+
+
+            @if (old('productCategory'))
+                if ({{ old('productCategory') == '11' ? 'true' : 'false' }}) {
+                    $('#additionalRequirements').removeClass('d-none');
+                    $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorPanelType">Panel Type</label>
+                                          <select id="monitorPanelType" name="monitorPanelType" class="form-control" required>
+                                              <option value="0">Please Select Panel Type</option>
+                                              <option value="1">IPS</option>
+                                              <option value="2">VA</option>
+                                              <option value="3">TN</option>
+                                              <option value="4">Simple LCD</option>
+                                              <option value="5">Simple LED</option>
+                                              <option value="6">OLED</option>
+                                          </select>
+
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorRefreshRate">Refresh Rate</label>
+                                          <select id="monitorRefreshRate" name="monitorRefreshRate" class="form-control" required>
+                                              <option value="0">Please Select Refresh Rate</option>
+                                              <option value="1">60Hz</option>
+                                              <option value="2">75Hz</option>
+                                              <option value="3">100Hz</option>
+                                              <option value="4">120Hz</option>
+                                              <option value="5">144Hz</option>
+                                              <option value="6">165Hz</option>
+                                              <option value="7">180Hz</option>
+                                              <option value="8">240Hz</option>
+                                              <option value="9">360Hz</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorSize">Size</label>
+                                          <input type="text" id="monitorSize" name="monitorSize" required
+                                              class="form-control" placeholder="Eg. 22 inches">
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="monitorModelNo">Model No. (optional)</label>
+                                          <input type="text" id="monitorModelNo" name="monitorModelNo"
+                                              class="form-control" placeholder="Eg. XL2546K">
+                                      </div>
+                                  </div>
+                              </div>`);
+
+                } else if ({{ old('productCategory') == '5' ? 'true' : 'false' }}) {
+                    $('#additionalRequirements').removeClass('d-none');
+                    $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramGeneration">RAM Generation</label>
+                                          <select id="ramGeneration" name="ramGeneration" class="form-control" required>
+                                              <option value="0">Please Select RAM Generation</option>
+                                              <option value="1">DDR2</option>
+                                              <option value="2">DDR3</option>
+                                              <option value="3">DDR4</option>
+                                              <option value="4">DDR5</option>
+                                          </select>
+
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramClockSpeed">Clock Speed</label>
+                                          <input type="text" value="{{ old('ramClockSpeed') }}" id="ramClockSpeed" name="ramClockSpeed" required
+                                              class="form-control" placeholder="Eg. 3200 MHz">
+                                      </div>
+                                  </div>
+
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="ramSize">RAM Size</label>
+                                          <input type="text" id="ramSize" name="ramSize" required
+                                              class="form-control" placeholder="Eg. 8GB">
+                                      </div>
+                                  </div>
+                              </div>`);
+
+                } else if ({{ old('productCategory') == '6' ? 'true' : 'false' }}) {
+                    $('#additionalRequirements').removeClass('d-none');
+                    $('#additionalRequirements').html(`<h2>Additional Requirements:</h2>
+                      <div class='row'>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageType">Storage Type</label>
+                                          <select id="storageType" name="storageType" class="form-control" required>
+                                              <option value="0">Please Select Storage Type</option>
+                                              <option value="1">HDD</option>
+                                              <option value="2">SSD</option>
+                                              <option value="3">NVMe</option>
+                                              <option value="4">M.2</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="col-md col-sm-12">
+                                      <div class="form-group">
+                                          <label for="storageSize">Storage Size</label>
+                                          <input type="text" id="storageSize" name="storageSize" required
+                                              class="form-control" placeholder="Eg. 500GB">
+                                      </div>
+                                  </div>`);
+
+                } else {
+
+                    $('#additionalRequirements').addClass('d-none');
+                    $('#additionalRequirements').empty();
+                }
+            @endif
         })
-
-        // // Get Brand By Categories
-        // $('#productCategory').on('change', function() {
-        //     let categoryID = $(this).val();
-        //     $.ajax({
-        //         url: "{{ route('seller.getBrandsByCategory') }}",
-        //         method: "POST",
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         data: {
-        //             categoryID: categoryID
-        //         },
-        //         success: function(res) {
-        //             $("#brandName").empty(); // Clear the dropdown first
-        //             $('#brandName').append('<option selected>Select Brand</option>');
-        //             if (res.length > 0) {
-        //                 res.forEach(function(brand) {
-
-        //                     $('#brandName').append('<option value="' + brand.id +
-        //                         '">' + brand.name + '</option>');
-        //                 });
-        //             } else {
-        //                 $('#brandName').append(
-        //                     '<option value="">No brands available</option>');
-        //             }
-        //         },
-        //         error: function(err) {
-        //             console.log(err);
-        //         }
-        //     })
-        // })
     </script>
 @endsection

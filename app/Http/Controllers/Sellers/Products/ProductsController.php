@@ -7,6 +7,7 @@ use App\Models\AdditionalPcPartsData;
 use App\Models\additionalProducts;
 use App\Models\Brands;
 use App\Models\Categories;
+use App\Models\OtherSingleProducts;
 use App\Models\Products;
 use App\Models\ProductVariations;
 use App\Models\StorageData;
@@ -58,12 +59,12 @@ class ProductsController extends Controller
             'sellPrice' => 'nullable|integer',
             'AboutThisitem' => ($request->input('ProductType') == '1' || $request->input('ProductType') == '2') ? 'required|string' : 'nullable|string',
             'productDescription' => 'required|string',
-            'mainImage' => 'required|mimes:png,jpg|max:2050',
-            'firstImage' => 'required|mimes:png,jpg|max:2050',
-            'secondImage' => 'required|mimes:png,jpg|max:2050',
-            'thirdImage' => 'required|mimes:png,jpg|max:2050',
-            'fourthImage' => 'nullable|mimes:png,jpg|max:2050',
-            'fifthImage' => 'nullable|mimes:png,jpg|max:2050',
+            'mainImage' => 'required|mimes:png,jpg,jpeg|max:2050',
+            'firstImage' => 'required|mimes:png,jpg,jpeg|max:2050',
+            'secondImage' => 'required|mimes:png,jpg,jpeg|max:2050',
+            'thirdImage' => 'required|mimes:png,jpg,jpeg|max:2050',
+            'fourthImage' => 'nullable|mimes:png,jpg,jpeg|max:2050',
+            'fifthImage' => 'nullable|mimes:png,jpg,jpeg|max:2050',
             'processorName' => ($request->input('ProductType') == '4' || $request->input('ProductType') == '5') ? 'required|string' : 'nullable|string',
             'processorBrand' => ($request->input('ProductType') == '4' || $request->input('ProductType') == '5') ? 'required|string' : 'nullable|string',
             'processorUsedOrNew' => $request->input('ProductType') == '4' ? 'required|string' : 'nullable|string',
@@ -93,7 +94,15 @@ class ProductsController extends Controller
             'laptopStorage' => $request->input('ProductType') == '5' ? 'required|string' : 'nullable|string',
             'additionalPartsData' => $request->input('ProductType') == '4' ? 'required|string' : 'nullable|string',
             'additionProductData' => $request->input('ProductType') == '4' ? 'required|string' : 'nullable|string',
-
+            'ramGeneration' => $request->input('productCategory') == '5' ? 'required|string' : 'nullable|string',
+            'ramClockSpeed' => $request->input('productCategory') == '5' ? 'required|string' : 'nullable|string',
+            'ramSize' => $request->input('productCategory') == '5' ? 'required|string' : 'nullable|string',
+            'storageType' => $request->input('productCategory') == '6' ? 'required|string' : 'nullable|string',
+            'storageSize' => $request->input('productCategory') == '6' ? 'required|string' : 'nullable|string',
+            'monitorPanelType' => $request->input('productCategory') == '11' ? 'required|string' : 'nullable|string',
+            'monitorRefreshRate' => $request->input('productCategory') == '11' ? 'required|string' : 'nullable|string',
+            'monitorSize' => $request->input('productCategory') == '11' ? 'required|string' : 'nullable|string',
+            'monitorModelNo' => $request->input('productCategory') == '11' ? 'required|string' : 'nullable|string',
         ], [
             'mainImage.required' => 'Image Is Required',
             'firstImage.required' => 'Image Is Required',
@@ -291,13 +300,37 @@ class ProductsController extends Controller
                     $additionsProduct = new additionalProducts;
                     $additionsProduct->productId = $product->id;
                     $additionsProduct->name = $additionProduct->name;
+                    $additionsProduct->brandId = $additionProduct->brand;
                     $additionsProduct->CategoryID = $additionProduct->category;
                     $additionsProduct->UsedOrNew = $additionProduct->usedOrNew;
                     $additionsProduct->save();
                 }
             }
 
+        }
 
+
+        if ($request->input('productCategory') == '5') {
+            $ram = new OtherSingleProducts;
+            $ram->productId = $product->id;
+            $ram->Type = $validate['ramGeneration'];
+            $ram->RRCS = $validate['ramClockSpeed'];
+            $ram->size = $validate['ramSize'];
+            $ram->save();
+        } elseif ($request->input('productCategory') == '6') {
+            $storage = new OtherSingleProducts;
+            $storage->productId = $product->id;
+            $storage->Type = $validate['storageType'];
+            $storage->size = $validate['storageSize'];
+            $storage->save();
+        } elseif ($request->input('productCategory') == '11') {
+            $monitor = new OtherSingleProducts;
+            $monitor->productId = $product->id;
+            $monitor->Type = $validate['monitorPanelType'];
+            $monitor->RRCS = $validate['monitorRefreshRate'];
+            $monitor->size = $validate['monitorSize'];
+            $monitor->modelNo = $validate['monitorModelNo'];
+            $monitor->save();
         }
 
 
@@ -307,13 +340,38 @@ class ProductsController extends Controller
     }
 
 
-    public function getBrandsByCategory(Request $request){
+    public function getBrandsByCategory(Request $request)
+    {
         $categories = Categories::where('id', $request->categoryID)->first();
         return response()->json($categories->brands);
     }
 
 
 
+    // Edit Products
 
+    public function getEditProductsPage($id)
+    {
+
+        $Product = Products::where('id', $id)->with([
+            'completePc.processorBrand',
+            'completePc.GraphicCardBrand',
+            'completePc.MotherBoardBrand',
+            'completePc.RamBrand',
+            'completePc.PSUBrand',
+            'completePc.CaseBrand',
+            'completePc.CoolerBrand',
+        ])->first();
+
+        $categories = Categories::root()->get();
+        $brands = Brands::get();
+
+        return view('seller.pages.products.editProducts', [
+            'title' => 'Edit ' . $Product->productTitle,
+            'product' => $Product,
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
+    }
 
 }

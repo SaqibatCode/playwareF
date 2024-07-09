@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -26,7 +30,7 @@ class AuthController extends Controller
             'phoneNumber' => 'required|string|unique:users,number',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:6',
-            
+
             'confirmTermsAndConditions' => 'required'
         ], [
             'username.required' => 'Please Enter Your Full Name',
@@ -167,6 +171,78 @@ class AuthController extends Controller
         } else {
             return back()->with('error', 'Invalid email or password');
         }
+    }
+
+
+    // Reset Password
+    public function forgotPasswordPost(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users'
+        ]);
+
+        $token = Str::random(64);
+
+        DB::table('password_reset_tokens')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now()
+        ]);
+
+        Mail::send("emails.seller.forgot-password", ['token' => $token], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject("Reset Password | Playware");
+        });
+
+
+        return back();
+    }
+
+    public function getForgotPasswordPage()
+    {
+        return view('seller.Auth.forgot-password', [
+            'title' => 'Forgot Password',
+        ]);
+    }
+
+
+    public function getResetPasswordPage($token)
+    {
+
+        $hasToken = DB::table('password_reset_tokens')->where([
+            'token' => $token,
+        ])->first();
+
+        if (!$hasToken) {
+            return redirect(route('seller.login'));
+        }
+
+        return view('seller.Auth.Reset', [
+            'title' => 'Reset Password',
+            'token' => $token,
+        ]);
+    }
+    public function resetPasswordPost(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $updatePassword = DB::table('password_reset_tokens')->where([
+            'token' => $request->token,
+            'email' => $request->email,
+        ])->first();
+
+        if (!$updatePassword) {
+            return back()->withError('Token Is Invalid, Please Request Reset Again');
+        }
+
+        User::where('email', $request->email)->update([
+            'password' => bcrypt($request->password)
+        ]);
+
+        return redirect(route('seller.login'));
     }
 
     // ADMIN FUNCTIONS

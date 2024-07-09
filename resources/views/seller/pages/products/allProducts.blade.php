@@ -50,11 +50,17 @@
                                             <td style="vertical-align: middle">{{ $product->productTitle }}</td>
                                             <td style="vertical-align: middle">{{ $product->category->name }}</td>
                                             <td style="vertical-align: middle">{{ $product->brand->name }}</td>
-                                            <td style="vertical-align: middle">{{ $product->ProductType == 1 ? 'Used Product' : 'New Product' }}</td>
+                                            <td style="vertical-align: middle">
+                                                {{ $product->ProductType == 1 ? 'Used Product' : 'New Product' }}</td>
                                             <td style="vertical-align: middle">{{ $product->productQuantity }}</td>
                                             <td style="vertical-align: middle">{{ $product->created_at }}</td>
-                                            <td style="vertical-align: middle">{{ $product->approved == 1 ? 'Approved' : 'Un-Approved' }}</td>
-                                            <td style="vertical-align: middle"><button class="btn btn-primary">Edit</button></td>
+                                            <td style="vertical-align: middle">
+                                                {{ $product->approved == 1 ? 'Approved' : 'Un-Approved' }}</td>
+                                            <td style="vertical-align: middle"><a class='btn btn-primary'
+                                                    href="{{ route('seller.editProducts', ['id' => $product->id, 'title' => Str::kebab($product->productTitle)]) }}">
+                                                    Edit Product
+                                                </a>
+                                            </td>
                                         </tr>
                                     @endforeach
 

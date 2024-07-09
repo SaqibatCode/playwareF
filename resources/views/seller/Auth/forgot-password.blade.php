@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Seller Login - Playware</title>
+    <title>{{ $title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="MyraStudio" name="author" />
@@ -33,45 +33,43 @@
                                         <div class="card-body">
                                             <div class="text-center mb-4 mt-3">
                                                 <a href="index.html">
-                                                    <span><img src="{{ asset('assets/images/logo.svg') }}"
+                                                    <span><img src="{{ asset('assets/images/logo-dark.png') }}"
                                                             alt="" height="26"></span>
                                                 </a>
                                             </div>
-                                            <form action="{{ route('login.seller') }}" method="POST" class="p-2">
+                                            <div class="text-center">
+                                                <p class="text-muted w-75 mx-auto"> Enter your email address and we'll
+                                                    send you an email with instructions to reset your password. </p>
+                                            </div>
+                                            <form method="POST" action="{{ route('forgotPasswordPost.seller') }}"
+                                                class="p-2">
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="emailaddress">Email address</label>
-                                                    <input class="form-control" name="email" type="email"
+                                                    <input class="form-control" type="email" name="email"
                                                         id="emailaddress" required="" placeholder="john@deo.com">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="password">Password</label>
-                                                    <input class="form-control" name="password" type="password"
-                                                        required="" id="password" placeholder="Enter your password">
-                                                    <a href="{{route('seller.forgotPassword')}}">Forgot Password?</a>
-                                                </div>
-
-                                                <div class="form-group mb-4 pb-3">
-                                                    <div class="custom-control custom-checkbox checkbox-primary">
-                                                        <input type="checkbox" class="custom-control-input"
-                                                            id="checkbox-signin">
-                                                        <label class="custom-control-label"
-                                                            for="checkbox-signin">Remember me</label>
-                                                    </div>
+                                                    @error('email')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                                 <div class="mb-3 text-center">
-                                                    <button class="btn btn-primary btn-block" type="submit"> Sign In
-                                                    </button>
-                                                </div>
-                                                <div class="mb-3 text-center">
-                                                    <a href="{{ route('register') }}" class="btn btn-success btn-block">
-                                                        Sign Up
-                                                    </a>
+                                                    <button class="btn btn-primary btn-block" type="submit"> Reset
+                                                        Password </button>
                                                 </div>
                                             </form>
                                         </div>
                                         <!-- end card-body -->
                                     </div>
+                                    <!-- end card -->
+
+                                    <div class="row mt-4">
+                                        <div class="col-sm-12 text-center">
+                                            <p class="text-white-50 mb-0">Already have an account? <a
+                                                    href="{{route('seller.login')}}" class="text-white-50 ml-1"><b>Sign
+                                                        In</b></a></p>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <!-- end col -->
                             </div>
@@ -86,14 +84,14 @@
     <!-- end page -->
 
     <!-- jQuery  -->
-    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/metismenu.min.js') }}"></script>
-    <script src="{{ asset('assets/js/waves.js') }}"></script>
-    <script src="{{ asset('assets/js/simplebar.min.js') }}"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/metismenu.min.js"></script>
+    <script src="assets/js/waves.js"></script>
+    <script src="assets/js/simplebar.min.js"></script>
 
     <!-- App js -->
-    <script src="{{ asset('assets/js/theme.js') }}"></script>
+    <script src="assets/js/theme.js"></script>
 
 </body>
 

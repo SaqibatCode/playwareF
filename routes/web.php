@@ -43,6 +43,8 @@ Route::prefix('api/v1')->group(function () {
     Route::post('/logout', [AuthController::class, 'logoutSeller'])->name('auth.logout');
     Route::post('/seller/login', [AuthController::class, 'sellerLogin'])->name('login.seller');
     Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('login.admin');
+    Route::post('/seller/forgotPassword', [AuthController::class, 'forgotPasswordPost'])->name('forgotPasswordPost.seller');
+    Route::post('/seller/reset-password', [AuthController::class, 'resetPasswordPost'])->name('resetPasswordPost.seller');
 
 
     Route::middleware('seller')->prefix('seller')->group(function () {
@@ -108,6 +110,7 @@ Route::middleware('seller')->prefix('seller')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/all-products', [ProductsController::class, 'getAllProducts'])->name('seller.allProducts');
         Route::get('/add-new-product', [ProductsController::class, 'addNewProduct'])->name('seller.addNewProduct');
+        Route::get('/edit-product/{id}/{title}', [ProductsController::class, 'getEditProductsPage'])->name('seller.editProducts');
     });
 
     Route::prefix('packages')->group(function () {
@@ -171,6 +174,8 @@ Route::middleware('isLogin')->group(function () {
     Route::get('admin/login', [AdminDashboardController::class, 'getLoginPage'])->name('admin.Login');
     Route::get('seller/register', [AuthController::class, 'getRegisterPage'])->name('register');
     Route::get('seller/login', [AuthController::class, 'getLoginPage'])->name('seller.login');
+    Route::get('seller/forgot-password', [AuthController::class, 'getForgotPasswordPage'])->name('seller.forgotPassword');
+    Route::get('seller/reset-password/{token}', [AuthController::class, 'getResetPasswordPage'])->name('seller.resetPassword');
 });
 
 

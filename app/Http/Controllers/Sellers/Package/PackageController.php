@@ -118,6 +118,7 @@ class PackageController extends Controller
             $pp = new packageProducts;
             $pp->packageID = $PackageDetails->id;
             $pp->title = $PackageProduct->name;
+            $pp->BrandID = $PackageProduct->brand;
             $pp->CategoryID = $PackageProduct->category;
             $pp->usedOrNew = $PackageProduct->usedornew;
             $pp->save();
