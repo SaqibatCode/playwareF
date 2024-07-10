@@ -3469,7 +3469,7 @@
 
 
         $(document).ready(function() {
-            $(document).on('change', '.additionalProductCategory', function() {
+            $(document).on('change', 'additionalProductCategory', function() {
                 let categoryID = $(this).val();
                 let dataID = $(this).data('id');
                 let brandNameSelectBox = $('#additionalProductBrand' + dataID);
@@ -3502,6 +3502,66 @@
                     }
                 });
             });
+
+
+            $(document).on('change', '#ProductType', function() {
+
+                if (this.value != 4) return
+
+                let categoryID = 6;
+                let brandNameSelectBox = Array.from(document.querySelectorAll('.storageBrand'))
+
+                $.ajax({
+                    url: "{{ route('seller.getBrandsByCategory') }}",
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        categoryID: categoryID
+                    },
+                    success: function(res) {
+
+                        console.log(res, 'this is this is');
+                        console.log(brandNameSelectBox, 'this is this is');
+                        brandNameSelectBox.forEach((element) => {
+                            element.innerHTML = ""; // Clear the dropdown first
+                            let option = document.createElement('option');
+                            option.value = "";
+                            option.text = "Select Brand";
+                            option.setAttribute('selected', 'true');
+                            element.appendChild(option);
+                            // element.append(
+                            //     '<option value="" selected>Select Brand</option>');
+                            if (res.length > 0) {
+                                res.forEach(function(brand) {
+                                    let option = document.createElement('option');
+                                    option.value = brand.id
+                                    option.text = brand.name
+                                    element.appendChild(option)
+                                    // element.append('<option value="' + brand
+                                    //     .id +
+                                    //     '">' + brand.name + '</option>');
+                                });
+                            } else {
+                                let option = document.createElement('option');
+                                option.value = "";
+                                option.text = "No brands available";
+                                element.appendChild(option)
+
+                                // element.append(
+                                //     '<option value="">No brands available</option>');
+                            }
+                        })
+
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+
         });
     </script>
 @endsection
