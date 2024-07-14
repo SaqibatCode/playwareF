@@ -1930,6 +1930,9 @@
 
             document.getElementById('addMoreStorageBtn').addEventListener('click', function() {
 
+
+
+
                 let newDiv = document.createElement('div');
                 newDiv.id = `row${countStorage}`;
                 newDiv.className = 'row';
@@ -2004,6 +2007,9 @@
 
                 document.getElementById('storageSpecsDiv').appendChild(newDiv)
 
+
+
+                getStorageBrands(countStorage);
                 countStorage++
 
             })
@@ -2011,6 +2017,41 @@
 
 
         }
+
+
+        // Get Complete PC Storage Brands.
+        function getStorageBrands(id) {
+            var brandNameSelectBox = $(`#storageBrand${id}`);
+            let categoryID = 6;
+            $.ajax({
+                url: "{{ route('seller.getBrandsByCategory') }}",
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    categoryID: categoryID
+                },
+                success: function(res) {
+                    brandNameSelectBox.empty(); // Clear the dropdown first
+                    brandNameSelectBox.append(
+                        '<option value="" selected>Select Brand</option>');
+                    if (res.length > 0) {
+                        res.forEach(function(brand) {
+                            brandNameSelectBox.append('<option value="' + brand.id +
+                                '">' + brand.name + '</option>');
+                        });
+                    } else {
+                        brandNameSelectBox.append(
+                            '<option value="">No brands available</option>');
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        }
+
 
         // FOR APPENDING ADDITIONAL PC PARTS
         function appendAdditionalPcParts() {
@@ -2401,7 +2442,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="storageBrand1">Brand</label>
-                                                <select id="storageBrand1 data-id="1" name="storageBrand1" class="form-control storageBrand">
+                                                <select id="storageBrand1" data-id="1" name="storageBrand1" class="form-control storageBrand">
                                                     <option value="0">Please Select Brand</option>
                                                     @foreach ($brands as $brand)
                                                         <option value="{{ $brand->id }}">{{ $brand->name }}</option>
@@ -2521,7 +2562,7 @@
 
 
                 document.getElementById('storageSpecsDiv').appendChild(newDiv)
-
+                getStorageBrands(countLaptopStorage);
                 countLaptopStorage++
             })
 
@@ -3469,7 +3510,7 @@
 
 
         $(document).ready(function() {
-            $(document).on('change', 'additionalProductCategory', function() {
+            $(document).on('change', '.additionalProductCategory', function() {
                 let categoryID = $(this).val();
                 let dataID = $(this).data('id');
                 let brandNameSelectBox = $('#additionalProductBrand' + dataID);
@@ -3506,62 +3547,44 @@
 
             $(document).on('change', '#ProductType', function() {
 
-                if (this.value != 4) return
+                if (this.value == 4 || this.value == 5) {
+                    let categoryID = 6;
+                    let brandNameSelectBox = $('#storageBrand1');
 
-                let categoryID = 6;
-                let brandNameSelectBox = Array.from(document.querySelectorAll('.storageBrand'))
-
-                $.ajax({
-                    url: "{{ route('seller.getBrandsByCategory') }}",
-                    method: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        categoryID: categoryID
-                    },
-                    success: function(res) {
-
-                        console.log(res, 'this is this is');
-                        console.log(brandNameSelectBox, 'this is this is');
-                        brandNameSelectBox.forEach((element) => {
-                            element.innerHTML = ""; // Clear the dropdown first
-                            let option = document.createElement('option');
-                            option.value = "";
-                            option.text = "Select Brand";
-                            option.setAttribute('selected', 'true');
-                            element.appendChild(option);
-                            // element.append(
-                            //     '<option value="" selected>Select Brand</option>');
+                    $.ajax({
+                        url: "{{ route('seller.getBrandsByCategory') }}",
+                        method: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            categoryID: categoryID
+                        },
+                        success: function(res) {
+                            brandNameSelectBox.empty(); // Clear the dropdown first
+                            brandNameSelectBox.append(
+                                '<option value="" selected>Select Brand</option>');
                             if (res.length > 0) {
                                 res.forEach(function(brand) {
-                                    let option = document.createElement('option');
-                                    option.value = brand.id
-                                    option.text = brand.name
-                                    element.appendChild(option)
-                                    // element.append('<option value="' + brand
-                                    //     .id +
-                                    //     '">' + brand.name + '</option>');
+                                    brandNameSelectBox.append('<option value="' + brand
+                                        .id +
+                                        '">' + brand.name + '</option>');
                                 });
                             } else {
-                                let option = document.createElement('option');
-                                option.value = "";
-                                option.text = "No brands available";
-                                element.appendChild(option)
-
-                                // element.append(
-                                //     '<option value="">No brands available</option>');
+                                brandNameSelectBox.append(
+                                    '<option value="">No brands available</option>');
                             }
-                        })
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    });
 
-                    },
-                    error: function(err) {
-                        console.log(err);
-                    }
-                });
+
+                } else {
+                    return;
+                }
             });
-
-
         });
     </script>
 @endsection
