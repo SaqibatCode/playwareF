@@ -61,7 +61,8 @@ class SellersController extends Controller
         return view('admin.pages.sellers.details');
     }
 
-    public function ApproveSeller($sellerId){
+    public function ApproveSeller($sellerId)
+    {
         $getUser = User::where('id', $sellerId)->first();
         $getUser->approved = 1;
         $getUser->save();
@@ -69,9 +70,10 @@ class SellersController extends Controller
         return back()->with('success', 'User Approved');
 
     }
-    public function rejectSeller($sellerId){
+    public function rejectSeller($sellerId)
+    {
         $getUser = User::where('id', $sellerId)->first();
-        $getUser->approved = $getUser->approved-1;
+        $getUser->approved = $getUser->approved - 1;
         $getUser->save();
 
         return back()->with('success', 'User Approved');

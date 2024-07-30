@@ -131,6 +131,75 @@
                                 </div>
                             </div>
 
+
+                            @php
+                                $PackageProducts = json_decode(old('packageProductData'));
+                                print_r($PackageProducts);
+
+                            @endphp
+                            @if ($PackageProducts > 0)
+                            @php
+                                $count = 1;
+                            @endphp
+                                @foreach ($PackageProducts as $package)
+                                    @php
+                                        $count++;
+                                    @endphp
+                                    <div id="packageProductsDiv" class="col-12">
+                                        <div id="packageProductrow{{$count}}" class='row'> 
+                                            <div class="col-12">
+                                                <h5>Product {{$count}}</h5>
+                                            </div>
+                                            <div class="col-md col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="packageProductName{{$count}}">Enter Name</label>
+                                                    <input type="text" data-id="{{$count}}" id="packageProductName{{$count}}"
+                                                        name="packageProductName{{$count}}" class="form-control packageProductName"
+                                                        placeholder="Product Title">
+                                                </div>
+                                            </div>
+                                            <div class="col-md col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="packageProductCategory{{$count}}">Product Category</label>
+                                                    <select data-id="{{$count}}" id="packageProductCategory{{$count}}"
+                                                        name="packageProductCategory{{$count}}"
+                                                        class="form-control packageProductCategory">
+                                                        <option value="0">Please Select</option>
+                                                        @foreach ($categories as $category)
+                                                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="productBrand{{$count}}">Product Brand</label>
+                                                    <select data-id="{{$count}}" id="productBrand{{$count}}" name="productBrand{{$count}}"
+                                                        class="form-control packageProductBrandName">
+                                                        <option value="0">Please Select</option>
+                                                        @foreach ($categories as $category)
+                                                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="packageProductUsedOrNew{{$count}}">Used Or New?</label>
+                                                    <select data-id="{{$count}}" id="packageProductUsedOrNew{{$count}}"
+                                                        name="packageProductUsedOrNew{{$count}}"
+                                                        class="form-control packageProductUsedOrNew">
+                                                        <option value="0">Please Select</option>
+                                                        <option value="1">Used</option>
+                                                        <option value="2">New</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
+
                             <div class="col-12 mb-4">
                                 <button type="button" class="btn btn-primary mt-2" id="addMoreBtn">Add More Products
                                 </button>

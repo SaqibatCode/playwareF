@@ -44,6 +44,9 @@
                                 <tbody>
 
                                     @foreach ($allUsers as $user)
+                                        @if ($user->accountType == 'Admin')
+                                            @continue
+                                        @endif
                                         <tr>
                                             <th style="vertical-align: middle">{{ $loop->index + 1 }}</th>
                                             <td style="vertical-align: middle">{{ $user->id }}</td>

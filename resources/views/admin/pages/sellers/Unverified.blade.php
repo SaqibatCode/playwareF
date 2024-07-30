@@ -44,6 +44,9 @@
                                 <tbody>
 
                                     @foreach ($allUsers as $user)
+                                        @if ($user->accountType == 'Admin')
+                                            @continue
+                                        @endif
                                         <tr>
                                             <th style="vertical-align: middle">{{ $loop->index + 1 }}</th>
                                             <td style="vertical-align: middle">{{ $user->id }}</td>
@@ -51,7 +54,7 @@
                                             <td style="vertical-align: middle">{{ $user->Email }}</td>
                                             <td style="vertical-align: middle">{{ $user->number }}</td>
                                             <td style="vertical-align: middle">{{ $user->accountType }}</td>
-                                            <td style="vertical-align: middle">{{ $user->created_at->format('d/m/Y') }}</td>
+                                            <td style="vertical-align: middle">{{ $user->created_at }}</td>
                                             <td><button type="button" class="btn btn-primary waves-effect waves-light"
                                                     data-toggle="modal" data-target=".view-details{{ $loop->index }}">View
                                                     Details</button></td>
@@ -187,7 +190,9 @@
                                                                             <button
                                                                                 class="btn btn-success">Approve</button>
                                                                         </form>
-                                                                        <form action="{{ route('auth.rejectSeller', ['sellerId' => $user->id]) }}" method="POST">
+                                                                        <form
+                                                                            action="{{ route('auth.rejectSeller', ['sellerId' => $user->id]) }}"
+                                                                            method="POST">
                                                                             @csrf
                                                                             <button class="btn btn-warning">Reject</button>
                                                                         </form>
