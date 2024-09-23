@@ -294,10 +294,10 @@
 
                                 <li><a href="javascript: void(0);" class="has-arrow">Packages</a>
                                     <ul class="sub-menu" aria-expanded="true">
-                                        <li><a href="{{route('admin.ApprovedPackages')}}">Approval
+                                        <li><a href="{{ route('admin.ApprovedPackages') }}">Approval
                                                 Required</a></li>
-                                        <li><a href="{{route('admin.RejectedPackages')}}">Rejected</a></li>
-                                        <li><a href="{{route('admin.ApprovedPackage')}}">Approved</a></li>
+                                        <li><a href="{{ route('admin.RejectedPackages') }}">Rejected</a></li>
+                                        <li><a href="{{ route('admin.ApprovedPackage') }}">Approved</a></li>
                                     </ul>
 
                                 <li><a href="javascript: void(0);" class="has-arrow">Attributes</a>
@@ -311,6 +311,14 @@
                         </li>
 
 
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
+                                    class="bx bx-badge"></i><span>Badge</span></a>
+                            <ul class="sub-menu" aria-expanded="false">
+                                <li><a href="{{ route('admin.HomePageEdit') }}">All Badges</a></li>
+                                <li><a href="{{ route('admin.HomePageEdit') }}">Manage Seller Badges</a></li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-file"></i><span>Pages</span></a>
@@ -327,113 +335,13 @@
                                     class='bx bx-support'></i><span>Support Ticket</span></a>
 
                         </li>
+
                         <li>
-
-
-                            <a href="{{ route('admin.reports') }}" class="waves-effect"><i
-                                    class='bx bxs-no-entry'></i><span>Reports</span>
-                                <span class="badge badge-pill badge-danger float-right">0</span>
+                            <a href="{{ route('admin.orders') }}" class="waves-effects">
+                                <i class="bx bxs-report"></i>
+                                <span>Orders</span>
                             </a>
-
                         </li>
-
-
-
-
-                        {{-- <li><a href="calendar.html" class=" waves-effect"><i
-                                    class="bx bx-calendar"></i><span>Calendar</span></a></li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-cookie"></i><span>UI Elements</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="ui-buttons.html">Buttons</a></li>
-                                <li><a href="ui-cards.html">Cards</a></li>
-                                <li><a href="ui-carousel.html">Carousel</a>
-                                <li><a href="ui-embeds.html">Embeds</a>
-                                <li><a href="ui-general.html">General</a></li>
-                                <li><a href="ui-grid.html">Grid</a></li>
-                                <li><a href="ui-media-objects.html">Media Objects</a></li>
-                                <li><a href="ui-modals.html">Modals</a></li>
-                                <li><a href="ui-progressbars.html">Progress Bars</a></li>
-                                <li><a href="ui-tabs.html">Tabs</a></li>
-                                <li><a href="ui-typography.html">Typography</a></li>
-                                <li><a href="ui-toasts.html">Toasts</a></li>
-                                <li><a href="ui-tooltips-popovers.html">Tooltips & Popovers</a></li>
-                                <li><a href="ui-scrollspy.html">Scrollspy</a></li>
-                                <li><a href="ui-spinners.html">Spinners</a></li>
-                                <li><a href="ui-sweetalerts.html">Sweet Alerts</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-table"></i><span>Tables</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="tables-basic.html">Basic Tables</a></li>
-                                <li><a href="tables-datatables.html">Data Tables</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-doughnut-chart"></i><span>Charts</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="charts-morris.html">Morris</a></li>
-                                <li><a href="charts-google.html">Google</a></li>
-                                <li><a href="charts-chartjs.html">Chartjs</a></li>
-                                <li><a href="charts-sparkline.html">Sparkline</a></li>
-                                <li><a href="charts-knob.html">Jquery Knob</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="waves-effect"><i class="bx bxs-eraser"></i><span
-                                    class="badge badge-pill badge-danger float-right">6</span><span>Forms</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="forms-elements.html">Elements</a></li>
-                                <li><a href="forms-plugins.html">Plugins</a></li>
-                                <li><a href="forms-validation.html">Validation</a></li>
-                                <li><a href="forms-mask.html">Masks</a></li>
-                                <li><a href="forms-quilljs.html">Quilljs</a></li>
-                                <li><a href="forms-uploads.html">File Uploads</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-aperture"></i><span>Icons</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="icons-boxicons.html">Boxicons</a></li>
-                                <li><a href="icons-materialdesign.html">Material Design</a></li>
-                                <li><a href="icons-fontawesome.html">Font awesome 5</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="menu-title">More</li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-map-alt"></i><span>Maps</span></a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="maps-google.html">Google Maps</a></li>
-                                <li><a href="maps-vector.html">Vector Maps</a></li>
-                            </ul>
-                        </li>
-
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow waves-effect"><i
-                                    class="bx bx-share-alt"></i><span>Multi Level</span></a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="javascript: void(0);">Level 1.1</a></li>
-                                <li><a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
-                                    <ul class="sub-menu" aria-expanded="true">
-                                        <li><a href="javascript: void(0);">Level 2.1</a></li>
-                                        <li><a href="javascript: void(0);">Level 2.2</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li> --}}
 
                     </ul>
                 </div>

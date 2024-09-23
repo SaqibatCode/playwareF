@@ -33,8 +33,8 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="text-center mb-4 mt-3">
-                                                <a href="{{route('indexPage')}}">
-                                                    <span><img src="{{ asset('assets/images/logo.svg') }}"
+                                                <a href="{{ route('indexPage') }}">
+                                                    <span><img src="{{ asset('assets/images/logo/logo.svg') }}"
                                                             alt="" height="26"></span>
                                                 </a>
                                             </div>
@@ -44,15 +44,17 @@
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="username">Full Name</label>
-                                                    <input class="form-control" type="text" value="{{old('username')}}" name="username"
-                                                        id="username" required="" placeholder="Ahmed Bashir">
+                                                    <input class="form-control" type="text"
+                                                        value="{{ old('username') }}" name="username" id="username"
+                                                        required="" placeholder="Ahmed Bashir">
                                                     @error('username')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="FatherName">Father Name</label>
-                                                    <input class="form-control" type="text"  value="{{old('FatherName')}}" name="FatherName"
+                                                    <input class="form-control" type="text"
+                                                        value="{{ old('FatherName') }}" name="FatherName"
                                                         id="FatherName" required="" placeholder="Bashir Ahmed">
                                                     @error('FatherName')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -60,7 +62,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="emailaddress">Email address</label>
-                                                    <input class="form-control" type="email" value="{{old('EmailAddress')}}"  name="EmailAddress"
+                                                    <input class="form-control" type="email"
+                                                        value="{{ old('EmailAddress') }}" name="EmailAddress"
                                                         id="emailaddress" required="" placeholder="john@deo.com">
                                                     @error('EmailAddress')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -69,7 +72,8 @@
                                                 <div class="form-group">
                                                     <label for="DateOfBirth">Date Of birth (According to your
                                                         CNIC)</label>
-                                                    <input class="form-control" type="date" value="{{old('DateOfBirth')}}" name="DateOfBirth"
+                                                    <input class="form-control" type="date"
+                                                        value="{{ old('DateOfBirth') }}" name="DateOfBirth"
                                                         id="DateOfBirth" required="" placeholder="11-Nov-2006">
                                                     @error('DateOfBirth')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -77,8 +81,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Address">Address</label>
-                                                    <input class="form-control" type="text" value="{{old('Address')}}" name="Address"
-                                                        id="Address" required=""
+                                                    <input class="form-control" type="text"
+                                                        value="{{ old('Address') }}" name="Address" id="Address"
+                                                        required=""
                                                         placeholder="123 Main Street, Karachi, Pakistan 12345">
                                                     @error('Address')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -86,7 +91,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="phoneNUmber">Phone Number</label>
-                                                    <input class="form-control" type="tel"  value="{{old('phoneNumber')}}" name="phoneNumber"
+                                                    <input class="form-control" type="tel"
+                                                        value="{{ old('phoneNumber') }}" name="phoneNumber"
                                                         id="phoneNUmber" required="" placeholder="+92 123 456789">
                                                     @error('phoneNumber')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -94,16 +100,17 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password">Password</label>
-                                                    <input class="form-control" type="password" value="{{old('password')}}" name="password"
-                                                        required="" id="password"
-                                                        placeholder="Enter your password">
+                                                    <input class="form-control" type="password"
+                                                        value="{{ old('password') }}" name="password" required=""
+                                                        id="password" placeholder="Enter your password">
                                                     @error('password')
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="ConfirmPassword">Confirm Password</label>
-                                                    <input class="form-control" type="password"  value="{{old('password_confirmation')}}" required=""
+                                                    <input class="form-control" type="password"
+                                                        value="{{ old('password_confirmation') }}" required=""
                                                         id="ConfirmPassword" name="password_confirmation"
                                                         placeholder="Enter your ConfirmPassword">
                                                     @error('password')
@@ -116,7 +123,8 @@
                                                         <input type="checkbox" name="confirmTermsAndConditions"
                                                             class="custom-control-input" id="checkbox-signin">
                                                         <label class="custom-control-label" for="checkbox-signin">I
-                                                            accept <a href="/seller/terms-and-conditions">Terms and Conditions</a></label>
+                                                            accept <a href="/seller/terms-and-conditions">Terms and
+                                                                Conditions</a></label>
                                                         @error('confirmTermsAndConditions')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -135,7 +143,7 @@
                                     <div class="row mt-4">
                                         <div class="col-sm-12 text-center">
                                             <p class="text-white mb-0">Already have an account? <a
-                                                    href="{{route('seller.login')}}" class="text-dark ml-1"><b>Sign
+                                                    href="{{ route('seller.login') }}" class="text-dark ml-1"><b>Sign
                                                         In</b></a></p>
                                         </div>
                                     </div>

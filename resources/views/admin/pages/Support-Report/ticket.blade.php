@@ -33,28 +33,22 @@
                                         <th>Ticket Number</th>
                                         <th>Customer</th>
                                         <th>Category</th>
-                                        <th>Priority</th>
                                         <th>Status</th>
-                                        <th></th>
-                                        <th></th>
+                                        <th>View Details</th>
                                     </tr>
                                 </thead>
 
 
                                 <tbody>
-                                    {{-- @foreach ($Products as $product)
-                                        <tr>
-                                            <td><img src='{{ asset('user_folders/Product_Images/') . '/' . $product->mainImage }}'
-                                                    style='width: 100px;'></td>
-                                            <td style="vertical-align: middle">{{ $product->productTitle }}</td>
-                                            <td style="vertical-align: middle">{{ $product->brandName }}</td>
-                                            <td style="vertical-align: middle">{{ $product->created_at }}</td>
-                                            <td style="vertical-align: middle">{{ $product->productQuantity }}</td>
-                                            <td style="vertical-align: middle"><button class="btn btn-primary">Edit</button>
-                                            <td style="vertical-align: middle"><button class="btn btn-primary">View</button>
-                                            </td>
-                                        </tr>
-                                    @endforeach --}}
+                                    <tr>
+                                        <td>1</td>
+                                        <td>PW-000000001</td>
+                                        <td>Ahmed</td>
+                                        <td>General Inquiry</td>
+                                        <td>Pending</td>
+                                        <td><a href="{{ route('admin.ticket.detail') }}" class="btn btn-primary">View
+                                                Details</a></td>
+                                    </tr>
 
                                 </tbody>
                             </table>

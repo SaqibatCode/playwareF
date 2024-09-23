@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\Sellers\SellersController;
 use App\Http\Controllers\Admin\Support\SupportTicketController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexPageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboardController;
 use App\Http\Controllers\Sellers\Products\ProductsController;
 use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
@@ -179,20 +180,30 @@ Route::middleware('isLogin')->group(function () {
 });
 
 
+// Routes For Admin Order & Sales
 
-
+Route::get('admin/orders', [OrderController::class, 'getOrders'])->name('admin.orders');
+Route::get('ticket-detail',
+function(){ return view('admin.pages.Support-Report.report');
+})->name('admin.ticket.detail');
 
 // Front-end Routes
 
 
 Route::get('shop', [IndexPageController::class, 'getShopPage'])->name('shop');
-Route::get('shop-single', [IndexPageController::class, 'getShopSinglePage'])->name('shop-single');
+
+Route::get('product/{id}', [IndexPageController::class, 'getShopSinglePage'])->name('shop-single');
+Route::get('pricing', function(){
+    return view('user.pages.pricing');
+});
+
 Route::get('cart', [IndexPageController::class, 'getCartPage'])->name('cart');
 Route::get('faqs', [IndexPageController::class, 'getFaqsPage'])->name('faqs');
 Route::get('contact', [IndexPageController::class, 'getContactPage'])->name('contact');
 Route::get('success', [IndexPageController::class, 'getSuccessPage'])->name('success');
 Route::get('seller-portfolio', [IndexPageController::class, 'getSellerPortfolioPage'])->name('seller-porfolio');
 Route::get('register-user', [IndexPageController::class, 'getRegisterPage'])->name('register-user');
+Route::get('login-user', [IndexPageController::class, 'getLoginPage'])->name('login-user');
 Route::get('404', [IndexPageController::class, 'get404Page'])->name('404');
 Route::get('terms-conditions', [IndexPageController::class, 'getTermsConditionsPage'])->name('terms-conditions');
-Route::get('about', [IndexPageController::class, 'getAboutPage'])->name('about');
+Route::get('about', action: [IndexPageController::class, 'getAboutPage'])->name('about');

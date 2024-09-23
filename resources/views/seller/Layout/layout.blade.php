@@ -38,8 +38,9 @@
                     </button>
 
                     <div class="dropdown d-none d-sm-inline-block">
-                        <button type="button" class="btn header-item waves-effect d-none" id="page-header-user-dropdown"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn header-item waves-effect d-none"
+                            id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
                             <i class="mdi mdi-plus"></i> Create New
                             <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
                         </button>
@@ -234,7 +235,18 @@
 
                             </ul>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.supportTicket') }}" class="waves-effect"><i
+                                    class='bx bx-support'></i><span>Support Ticket</span></a>
 
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.orders') }}" class="waves-effects">
+                                <i class="bx bxs-report"></i>
+                                <span>Orders</span>
+                            </a>
+                        </li>
                         <li>
                             @php
                                 $verified = Auth::user()->approved == 0 ? true : false;
