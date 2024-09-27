@@ -47,6 +47,73 @@
                                 </thead>
 
                                 <tbody>
+                                    @if (session('cart'))
+                                        @foreach (session('cart') as $id => $details)
+                                            <tr class="bg-skin-fill border-b hover:bg-skin-fill-unique duration-300">
+                                                <td class="p-4 min-w-32 max-w-36">
+                                                    <img src='{{ asset('user_folders/Product_Images/' . $details['image']) }}'
+                                                        class="cart-img" alt="Apple Watch" />
+                                                </td>
+                                                <td class="px-6 min-w-44 py-4 font-semibold text-skin-inverted">
+                                                    {{ $details['name'] }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex items-center ">
+                                                        <button
+                                                            class="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-skin-inverted bg-skin-fill border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
+                                                            type="button">
+                                                            <span class="sr-only">Quantity button</span>
+                                                            <svg class="w-3 h-3 text-skin-inverted" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 18 2">
+                                                                <path stroke="currentColor" stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                                                            </svg>
+                                                        </button>
+                                                        <div>
+                                                            <input type="number" id="first_product"
+                                                                class="text-center bg-skin-fill-unique w-14 border border-gray-300 text-skin-inverted text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 remove-number-arrows"
+                                                                placeholder="1" value="{{ $details['quantity'] }}"
+                                                                required />
+                                                        </div>
+                                                        <button
+                                                            class="inline-flex items-center justify-center p-1 ms-3 text-sm font-medium h-6 w-6 text-skin-inverted bg-skin-fill border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
+                                                            type="button">
+                                                            <span class="sr-only">Quantity button</span>
+                                                            <svg class="w-3 h-3 text-skin-inverted" aria-hidden="true"
+                                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                                viewBox="0 0 18 18">
+                                                                <path stroke="currentColor" stroke-linecap="round"
+                                                                    stroke-linejoin="round" stroke-width="2"
+                                                                    d="M9 1v16M1 9h16" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 font-semibold text-skin-inverted">
+                                                    Rs.{{ $details['price'] }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <span
+                                                        class="text-red-600 flex items-center justify-center cursor-pointer text-xl font-bold">
+                                                        <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                            viewBox="0 0 24 24" height="1em" width="1em"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M4 8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8ZM6 10V20H18V10H6ZM9 12H11V18H9V12ZM13 12H15V18H13V12ZM7 5V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V5H22V7H2V5H7ZM9 4V5H15V4H9Z">
+                                                            </path>
+                                                        </svg> </span>
+
+                                                        <form action="{{ route('cart.add', $details['id']) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submits" class="btn-1 px-12">Add To Cart</button>
+                                                        </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <p>Your cart is empty.</p>
+                                    @endif
 
                                     <tr class="bg-skin-fill border-b hover:bg-skin-fill-unique duration-300">
                                         <td class="p-4 min-w-32 max-w-36">

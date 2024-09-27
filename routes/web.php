@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\Reports\ReportsController;
 use App\Http\Controllers\Admin\Sellers\SellersController;
 use App\Http\Controllers\Admin\Support\SupportTicketController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\IndexPageController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboardController;
@@ -217,3 +218,11 @@ Route::get('about', action: [IndexPageController::class, 'getAboutPage'])->name(
 
 Route::get('support', [SupportController::class, 'getSupportPage'])->name('user.support');
 Route::post('support', [SupportController::class, 'postSupport'])->name('user.support.post');
+
+
+// Cart Routes
+
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::get('/clear-cart', [CartController::class, 'clearCart'])->name('cart.clear');
+

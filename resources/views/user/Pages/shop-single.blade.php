@@ -147,9 +147,31 @@
                             </div>
 
                             <div class="flex gap-6 items-center">
-                                <button class="btn-1 px-12">Add To Cart</button>
 
-
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submits" class="btn-1 px-12">Add To Cart</button>
+                                </form>
+                                @if(session('cart'))
+                                <table>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    @foreach(session('cart') as $id => $details)
+                                        <tr>
+                                            <td>{{ $details['name'] }}</td>
+                                            <td>{{ $details['quantity'] }}</td>
+                                            <td>Rs.{{ $details['price'] }}</td>
+                                            <td>Rs.{{ $details['quantity'] * $details['price'] }}</td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            @else
+                                <p>Your cart is empty.</p>
+                            @endif
                             </div>
                         </div>
                         <div class="py-6 flex flex-col gap-1">
