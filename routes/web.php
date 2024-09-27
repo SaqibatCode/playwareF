@@ -18,6 +18,7 @@ use App\Http\Controllers\Sellers\Products\ProductsController;
 use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
 use App\Http\Controllers\Sellers\Shop\ShopController;
 use App\Http\Controllers\Sellers\Package\PackageController;
+use App\Http\Controllers\SupportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -207,3 +208,12 @@ Route::get('login-user', [IndexPageController::class, 'getLoginPage'])->name('lo
 Route::get('404', [IndexPageController::class, 'get404Page'])->name('404');
 Route::get('terms-conditions', [IndexPageController::class, 'getTermsConditionsPage'])->name('terms-conditions');
 Route::get('about', action: [IndexPageController::class, 'getAboutPage'])->name('about');
+
+
+
+
+
+// Support Ticket ROutes
+
+Route::get('support', [SupportController::class, 'getSupportPage'])->name('user.support');
+Route::post('support', [SupportController::class, 'postSupport'])->name('user.support.post');

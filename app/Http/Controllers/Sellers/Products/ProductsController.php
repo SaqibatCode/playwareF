@@ -194,15 +194,15 @@ class ProductsController extends Controller
             $product->AboutThisitem = $validate['AboutThisitem'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
         }
         if (Auth::user()->approved != 0) {
             $product->approved = 1;

@@ -102,7 +102,7 @@ class AuthController extends Controller
         ]);
 
 
-        $folderPath = 'user_folders/verification/' . Auth::user()->id . '_' . Auth::user()->fullName;
+        $folderPath = 'user_folders/verification/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
 
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
@@ -121,8 +121,8 @@ class AuthController extends Controller
         $user = User::findOrfail(Auth::user()->id);
         $user->accountType = $validate['AccountType'];
         $user->CNIC = $validate['cnicNumber'];
-        $user->CNICFrontPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $cnicFrontPictureName;
-        $user->CNICBackPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $CNICBackPictureName;
+        $user->CNICFrontPicture = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $cnicFrontPictureName;
+        $user->CNICBackPicture = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $CNICBackPictureName;
 
         if ($request->input('AccountType') == 'Shopkeepr') {
             $user->ShopAddress = $validate['shopAddress'];
@@ -136,8 +136,8 @@ class AuthController extends Controller
             $ShopPictureName = time() . '_' . 'shop_picture.png';
             $ShopPicture->move(public_path($folderPath), $ShopPictureName);
 
-            $user->ShopPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $BusinessCardPicture;
-            $user->ShopBusinessCardPicture = Auth::user()->id . '_' . Auth::user()->fullName . '/' . $ShopPictureName;
+            $user->ShopPicture = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $BusinessCardPicture;
+            $user->ShopBusinessCardPicture = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $ShopPictureName;
         }
 
         $user->save();
