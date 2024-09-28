@@ -19,7 +19,7 @@
     <title>Playware</title>
 </head>
 
-<body onload="addHeaderAndFooter()">
+<body>
 
     <header id="header" class="bg-skin-gray/90 w-full backdrop-blur-sm z-50 fixed top-0 left-0"
         onmouseleave="toggleOutSubcategoryMegaMenu()">
@@ -84,7 +84,7 @@
             <ul class="w-full flex items-center justify-between gap-6 lg:gap-8 min-[992px]:hidden">
                 <li class="nav-link">
                     <a href="/">
-                        <img class="w-40 h-auto" src="./assets/images/logo/circuit.svg">
+                        {{-- <img class="w-40 h-auto" src="./assets/images/logo/circuit.svg"> --}}
 
                     </a>
                 </li>

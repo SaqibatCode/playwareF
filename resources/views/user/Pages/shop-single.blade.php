@@ -137,41 +137,42 @@
                             </ul>
                         </div>
                         <div class="py-6 border-b flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-6">
-                            <div class="">
+                            {{-- <div class="">
                                 <span class="text-gray-600 text-sm">Quantity:</span>
                                 <div class="flex rounded-md border gap-4 items-center text-base p-1 w-max">
-                                    <button class="px-2">-</button>
-                                    <div>1</div>
-                                    <button class="px-2">+</button>
+                                    <button class="px-2" id="dq">-</button>
+                                    <div id="quantity_display">1</div>
+                                    <button class="px-2" id="iq">+</button>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="flex gap-6 items-center">
 
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                     @csrf
+                                    {{-- <input type="hidden" name="quantity" id="quantity"> --}}
                                     <button type="submits" class="btn-1 px-12">Add To Cart</button>
                                 </form>
-                                @if(session('cart'))
-                                <table>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Total</th>
-                                    </tr>
-                                    @foreach(session('cart') as $id => $details)
+                                @if (session('cart'))
+                                    <table>
                                         <tr>
-                                            <td>{{ $details['name'] }}</td>
-                                            <td>{{ $details['quantity'] }}</td>
-                                            <td>Rs.{{ $details['price'] }}</td>
-                                            <td>Rs.{{ $details['quantity'] * $details['price'] }}</td>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
                                         </tr>
-                                    @endforeach
-                                </table>
-                            @else
-                                <p>Your cart is empty.</p>
-                            @endif
+                                        @foreach (session('cart') as $id => $details)
+                                            <tr>
+                                                <td>{{ $details['name'] }}</td>
+                                                <td>{{ $details['quantity'] }}</td>
+                                                <td>Rs.{{ $details['price'] }}</td>
+                                                <td>Rs.{{ $details['quantity'] * $details['price'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+                                @else
+                                    <p>Your cart is empty.</p>
+                                @endif
                             </div>
                         </div>
                         <div class="py-6 flex flex-col gap-1">
@@ -710,5 +711,38 @@
                 target.classList.add('active');
             });
         });
+
+
+
+
+        // $(document).ready(function() {
+        //     let quantityDisplay = $('#quantity_display');
+        //     let quantity = $('#quantity').val() || 1; // Initialize quantity from the display
+
+        //     // Use 'iq' and 'dq' selectors correctly
+        //     let iq = $('#iq');
+        //     let dq = $('#dq'); // Corrected the selector to '.dq'
+
+        //     // Update the display function
+        //     function updateDisplay() {
+        //         quantityDisplay.text(quantity); // Update the displayed quantity
+        //     }
+
+        //     // Increment quantity
+        //     iq.on('click', function() {
+        //         quantity += 1; // Correctly increment the quantity
+        //         updateDisplay(); // Update the display
+        //     });
+
+        //     // Decrement quantity
+        //     dq.on('click', function() {
+        //         if (quantity !== 1) {
+        //             quantity -= 1;
+        //         } // Correctly decrement the quantity
+        //         updateDisplay(); // Update the display
+        //     });
+
+        //     updateDisplay(); // Initial display update
+        // });
     </script>
 @endsection

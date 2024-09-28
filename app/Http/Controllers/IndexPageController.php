@@ -60,7 +60,7 @@ class IndexPageController extends Controller
     }
 
     public function getLoginPage(){
-        return 0;
+        return view ('user.Pages.Login');
     }
     public function get404Page()
     {

@@ -113,7 +113,7 @@
                                     class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                                     <a href="{{ route('shop-single', $product->id) }}">
                                         <img src="user_folders/Product_Images/{{ $product->mainImage }}" alt="Product"
-                                            class="h-80 w-72 object-cover rounded-t-xl" />
+                                            class="product_image" />
                                         <div class="px-4 py-3 w-72">
                                             <span
                                                 class="text-gray-400 mr-3 uppercase text-xs">{{ $product->brand->name }}</span>
@@ -155,4 +155,12 @@
 
 
     </main>
+
+    <style>
+        .product_image {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+        }
+    </style>
 @endsection

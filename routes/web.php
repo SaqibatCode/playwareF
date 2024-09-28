@@ -199,7 +199,7 @@ Route::get('pricing', function(){
     return view('user.pages.pricing');
 });
 
-Route::get('cart', [IndexPageController::class, 'getCartPage'])->name('cart');
+
 Route::get('faqs', [IndexPageController::class, 'getFaqsPage'])->name('faqs');
 Route::get('contact', [IndexPageController::class, 'getContactPage'])->name('contact');
 Route::get('success', [IndexPageController::class, 'getSuccessPage'])->name('success');
@@ -221,8 +221,11 @@ Route::post('support', [SupportController::class, 'postSupport'])->name('user.su
 
 
 // Cart Routes
-
+Route::get('cart', [CartController::class, 'getCartPage'])->name('cart');
 Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::get('/clear-cart', [CartController::class, 'clearCart'])->name('cart.clear');
 
+// Checkout
+
+Route::get('checkout', [CartController::class, 'getCheckoutPage'])->name('checkout');

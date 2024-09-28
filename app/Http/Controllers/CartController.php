@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use App\Models\Shipping;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -25,6 +26,7 @@ class CartController extends Controller
         } else {
 
             $cart[$id] = [
+                'id' => $product->id,
                 'name' => $product->productTitle,
                 'quantity' => 1,
                 'price' => $productPrice,
@@ -61,5 +63,19 @@ class CartController extends Controller
 
         // Optionally, you can add a success message and redirect the user
         return redirect()->back()->with('success', 'Cart has been cleared!');
+    }
+
+    public function getCartPage(){
+        $subTotal = 0;
+        $shipping = Shipping::get();
+        if(session('cart')){
+            foreach(session('cart') as $id => $details){
+                $subTotal += $details['price'];
+            }
+        }
+        return view('user.Pages.cart', compact('subTotal', 'shipping'));
+    }
+    public function getCheckoutPage(){
+        return view('user.Pages.checkout');
     }
 }
