@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -31,6 +32,7 @@ class CartController extends Controller
                 'quantity' => 1,
                 'price' => $productPrice,
                 'total' => $productPrice,
+                'vendor_id' => $product->user_id,
                 'image' => $product->mainImage
             ];
         }
@@ -65,22 +67,30 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Cart has been cleared!');
     }
 
-    public function getCartPage(){
+    public function getCartPage()
+    {
         $subTotal = 0;
         $shipping = Shipping::get();
-        if(session('cart')){
-            foreach(session('cart') as $id => $details){
+        if (session(key: 'cart')) {
+            foreach (session('cart') as $id => $details) {
                 $subTotal += $details['total'];
             }
         }
+        // dd(session('cart'));
         return view('user.Pages.cart', compact('subTotal', 'shipping'));
     }
-    public function getCheckoutPage(){
-        return view('user.Pages.checkout');
+    public function getCheckoutPage()
+    {
+        $user = '';
+        if (Auth::check()) {
+            $user = Auth::user();
+        }
+        return view('user.Pages.checkout', compact('user'));
     }
 
 
-    public function updateCartQuantity(Request $req) {
+    public function updateCartQuantity(Request $req)
+    {
         $cart = session('cart');
         foreach ($cart as &$session) {
             if ($session['id'] == $req->id) {
@@ -91,5 +101,4 @@ class CartController extends Controller
         session(['cart' => $cart]);
         return response()->json($cart[$req->id]);
     }
-
 }

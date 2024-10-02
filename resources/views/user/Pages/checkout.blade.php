@@ -17,11 +17,12 @@
             <h1 class="text-6xl font-bold">Checkout</h1>
         </section>
         @if (auth()->check())
-            @if (session('cart') == '')
+            @if (!empty(session('cart')))
                 <section class="px-4 py-12">
                     <div class="container mx-auto">
 
-                        <form action="">
+                        <form action="{{ route('createOrder') }}" method="POST">
+                            @csrf
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-y-8 md:gap-y-0 bg-skin-fill rounded-xl">
                                 <div class="col-span-2 sm:rounded-md md:pr-4">
                                     <div class="flex flex-col gap-4 col-span-2 sm:rounded-lg md:pl-4 md:pr-6">
@@ -29,34 +30,30 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div>
                                                 <label for="firstName"
-                                                    class="block mb-2 text-sm font-medium text-skin-primary">First Name
+                                                    class="block mb-2 text-sm font-medium text-skin-primary">Full Name
                                                     *</label>
-                                                <input type="text" id="firstName" name="First Name"
-                                                    class="product-form-inp w-full" required>
-                                            </div>
-                                            <div>
-                                                <label for="lastName"
-                                                    class="block mb-2 text-sm font-medium text-skin-primary">Last
-                                                    Name
-                                                    *</label>
-                                                <input type="text" id="lastName" name="Last Name"
-                                                    class="product-form-inp w-full" required>
+                                                <input type="text" id="fullName" name="fullName"
+                                                    class="product-form-inp w-full" required value="{{ $user->fullName }}">
+                                                <small style="color:red;">
+                                                    @error('fullName')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </small>
                                             </div>
                                         </div>
-                                        <div>
-                                            <label for="companyName"
-                                                class="block mb-2 text-sm font-medium text-skin-primary">Company Name
-                                                (optional)</label>
-                                            <input type="text" id="companyName" name="Company Name"
-                                                class="product-form-inp w-full">
-                                        </div>
+
                                         <div>
                                             <label for="address"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">Full
                                                 Address
                                                 *</label>
-                                            <input type="text" id="address" name="Address"
-                                                class="product-form-inp w-full" required>
+                                            <input type="text" id="address" name="address"
+                                                class="product-form-inp w-full" required value="{{ old('address') }}">
+                                            <small style="color:red;">
+                                                @error('address')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="townCity"
@@ -64,45 +61,76 @@
                                                 /
                                                 City
                                                 *</label>
-                                            <input type="text" id="townCity" name="City"
-                                                class="product-form-inp w-full" required>
+                                            <input type="text" id="city" name="city"
+                                                class="product-form-inp w-full" required value="{{ old('city') }}">
+                                            <small style="color:red;">
+                                                @error('city')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="state"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">State
                                                 *</label>
-                                            <input type="text" id="state" name="State"
-                                                class="product-form-inp w-full" required>
+                                            <input type="text" id="state" name="state"
+                                                class="product-form-inp w-full" required value="{{ old('state') }}">
+                                            <small style="color:red;">
+                                                @error('state')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="zip"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">Zip
                                                 Code
                                                 *</label>
-                                            <input type="number" id="zip" name="Post Code"
-                                                class="product-form-inp w-full remove-arrow" required>
+                                            <input type="number" id="zip" name="zip"
+                                                class="product-form-inp w-full remove-arrow" required
+                                                value="{{ old('zip') }}">
+                                            <small style="color:red;">
+                                                @error('zip')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="number"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">Phone
                                                 *</label>
-                                            <input type="number" id="number" name="Phone Number"
+                                            <input type="number" id="number" name="number" value="{{ $user->number }}"
                                                 class="product-form-inp w-full remove-arrow" required>
+                                            <small style="color:red;">
+                                                @error('number')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="email"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">Email
                                                 Address
                                                 *</label>
-                                            <input type="email" id="email" name="Email"
-                                                class="product-form-inp w-full" required>
+                                            <input type="email" id="email" name="email"
+                                                class="product-form-inp w-full" required value="{{ $user->Email }}">
+                                            <small style="color:red;">
+                                                @error('email')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                         <div>
                                             <label for="orderNote"
                                                 class="block mb-2 text-sm font-medium text-skin-primary">Order
                                                 Notes
                                                 (optional)</label>
-                                            <textarea class="product-form-inp w-full" name="Additional Notes" id="orderNote" cols="30" rows="5"></textarea>
+                                            <textarea class="product-form-inp w-full" name="orderNote" id="orderNote" cols="30" rows="5">{{ old('orderNote') }}</textarea>
+                                            <small style="color:red;">
+                                                @error('orderNote')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +212,8 @@
                                                 <label for="paymentMethod"
                                                     class="flex items-center gap-2 text-sm text-skin-parimary mb-2 bg-skin-inverted p-2">
                                                     <input class="focus:ring-0 focus:outline-none focus:border-none"
-                                                        type="radio" id="paymentMethod" name="Payment Method">Direct
+                                                        type="radio" id="paymentMethod" value="Direct Bank Transfer"
+                                                        name="paymentMethod">Direct
                                                     Bank
                                                     Transfer</label>
                                                 <p class="pl-7 text-sm text-skin-parimary">Make your payment directly into
@@ -193,12 +222,18 @@
                                                     reference. Your order will not be shipped until the funds have cleared
                                                     in
                                                     our account.</p>
+                                                <small style="color:red;">
+                                                    @error('paymentMethod')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </small>
                                             </div>
 
                                             <label for=" paymentMethod"
                                                 class="flex items-center gap-2 text-sm text-skin-parimary mb-2 bg-skin-inverted p-2"><input
                                                     class="focus:ring-0 focus:outline-none focus:border-none"
-                                                    type="radio" id="paymentMethod" name="Payment Method">Cash On
+                                                    type="radio" id="paymentMethod" value="Cash On Delivery"
+                                                    name="paymentMethod">Cash On
                                                 Delivery</label>
 
                                             <p class="text-skin-parimary bg-skin-inverted p-2">Your personal data will be

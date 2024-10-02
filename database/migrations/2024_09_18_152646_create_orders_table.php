@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('billing_address')->nullable();
             $table->foreign('customer_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('paymentCheck')->nullable()->default('Not Paid');
+            $table->string('paymentType')->nullable();
             $table->timestamps();
         });
     }

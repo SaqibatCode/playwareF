@@ -9,8 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserAuthController extends Controller
 {
-    public function signUp(){
-        return view('user.Pages.sign-up');
+    public function signUp()
+    {
+
+        if (!Auth::check()) {
+            return view('user.Pages.sign-up');
+        } else {
+            return redirect('/'); // or wherever you want authenticated users to go
+        }
     }
     public function signUpUser(Request $req)
     {
@@ -43,4 +49,15 @@ class UserAuthController extends Controller
         }
     }
 
+
+    public function getLoginPage()
+    {
+        if (!Auth::check()) {
+            return view('user.Pages.login');
+        } else {
+            return redirect('/'); // or wherever you want authenticated users to go
+        }
+    }
+
+    public function loginUser() {}
 }

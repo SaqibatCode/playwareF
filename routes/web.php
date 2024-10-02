@@ -59,8 +59,8 @@ Route::prefix('api/v1')->group(function () {
 
         Route::post('upload-package', [PackageController::class, 'uploadPackage'])->name('auth.uploadPackage');
 
-        Route::prefix('upload')->group(function(){
-            Route::prefix('product')->controller(ProductsController::class)->group(function(){
+        Route::prefix('upload')->group(function () {
+            Route::prefix('product')->controller(ProductsController::class)->group(function () {
                 Route::post('used', 'UploadUsedProducts')->name('auth.UploadUsedProduct');
             });
         });
@@ -184,7 +184,6 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/support-ticket', [SupportTicketController::class, 'getSupportTicketPage'])->name('admin.supportTicket');
         Route::get('/reports', [ReportsController::class, 'getReportsPage'])->name('admin.reports');
     });
-
 });
 
 
@@ -201,9 +200,12 @@ Route::middleware('isLogin')->group(function () {
 // Routes For Admin Order & Sales
 
 Route::get('admin/orders', [OrderController::class, 'getOrders'])->name('admin.orders');
-Route::get('ticket-detail',
-function(){ return view('admin.pages.Support-Report.report');
-})->name('admin.ticket.detail');
+Route::get(
+    'ticket-detail',
+    function () {
+        return view('admin.pages.Support-Report.report');
+    }
+)->name('admin.ticket.detail');
 
 // Front-end Routes
 
@@ -211,7 +213,7 @@ function(){ return view('admin.pages.Support-Report.report');
 Route::get('shop', [IndexPageController::class, 'getShopPage'])->name('shop');
 
 Route::get('product/{id}', [IndexPageController::class, 'getShopSinglePage'])->name('shop-single');
-Route::get('pricing', function(){
+Route::get('pricing', function () {
     return view('user.pages.pricing');
 });
 
@@ -221,7 +223,7 @@ Route::get('contact', [IndexPageController::class, 'getContactPage'])->name('con
 Route::get('success', [IndexPageController::class, 'getSuccessPage'])->name('success');
 Route::get('seller-portfolio', [IndexPageController::class, 'getSellerPortfolioPage'])->name('seller-porfolio');
 Route::get('register-user', [IndexPageController::class, 'getRegisterPage'])->name('register-user');
-Route::get('login-user', [IndexPageController::class, 'getLoginPage'])->name('login-user');
+
 Route::get('404', [IndexPageController::class, 'get404Page'])->name('404');
 Route::get('terms-conditions', [IndexPageController::class, 'getTermsConditionsPage'])->name('terms-conditions');
 Route::get('about', action: [IndexPageController::class, 'getAboutPage'])->name('about');
@@ -253,3 +255,5 @@ Route::get('my-account', [IndexPageController::class, 'getAccountPage'])->name('
 
 Route::get('sign-up', [UserAuthController::class, 'signUp'])->name('signUp');
 Route::post('sign-up', [UserAuthController::class, 'signUpUser'])->name('user.signup');
+Route::get('login-user', [UserAuthController::class, 'getLoginPage'])->name('login-user');
+Route::post('checkout', [OrderController::class, 'createOrder'])->name('createOrder');
