@@ -374,4 +374,63 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function getTypes()
+    {
+        return view('seller.pages.products.types.parent', [
+            'title' => 'Select Product Type'
+        ]);
+    }
+
+    public function getNewProduct()
+    {
+        $categories = Categories::root()->get();
+        $brands = Brands::get();
+        return view('seller.pages.products.types.new', [
+            'title' => 'New Product',
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
+    }
+
+    public function getUsedProduct()
+    {
+        $categories = Categories::root()->get();
+        $brands = Brands::get();
+        return view('seller.pages.products.types.used', [
+            'title' => 'Used Product',
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
+    }
+
+    public function UploadUsedProducts(Request $req){
+        return response()->json($req->all());
+    }
+
+    public function getCompletePc()
+    {
+
+        $categories = Categories::root()->get();
+        $brands = Brands::get();
+        $storageBrands = Categories::where('id', 6)->first();
+        return view('seller.pages.products.types.completePc', [
+            'title' => 'Complete PC',
+            'brands' => $storageBrands->brands,
+            'allBrands' => $brands,
+            'categories' => $categories
+        ]);
+    }
+
+    public function getLaptop(){
+        $categories = Categories::root()->get();
+        $brands = Brands::get();
+        $storageBrands = Categories::where('id', 6)->first();
+        return view('seller.pages.products.types.laptop', [
+            'title' => 'Laptop',
+            'brands' => $storageBrands->brands,
+            'allBrands' => $brands,
+            'categories' => $categories
+        ]);
+    }
+
 }

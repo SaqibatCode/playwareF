@@ -15,7 +15,7 @@ class IndexPageController extends Controller
     public function getShopPage()
     {
         $products = Products::where('approved', 1)
-            ->with(['brand', 'category']) // Eager load brand and category
+            ->with(['brand', 'category', 'users']) // Eager load brand and category
             ->get();
         return view('user.Pages.shop', compact('products'));
     }
@@ -75,5 +75,10 @@ class IndexPageController extends Controller
     public function getAboutPage()
     {
         return view('user.Pages.about');
+    }
+
+
+    public function getAccountPage(){
+        return view('user.Pages.account');
     }
 }

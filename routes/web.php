@@ -1,26 +1,27 @@
 <?php
 
-use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\Pages\HomePageController;
-use App\Http\Controllers\Admin\Products\ApprovedProductsController;
-use App\Http\Controllers\Admin\Products\BrandController;
-use App\Http\Controllers\Admin\Products\CategoriesController;
-use App\Http\Controllers\Admin\Products\ProductApprovalRequiredController;
-use App\Http\Controllers\Admin\Products\RejectProductsController;
-use App\Http\Controllers\Admin\Reports\ReportsController;
-use App\Http\Controllers\Admin\Sellers\SellersController;
-use App\Http\Controllers\Admin\Support\SupportTicketController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\IndexPageController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboardController;
-use App\Http\Controllers\Sellers\Products\ProductsController;
-use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
-use App\Http\Controllers\Sellers\Shop\ShopController;
-use App\Http\Controllers\Sellers\Package\PackageController;
 use App\Http\Controllers\SupportController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\IndexPageController;
+use App\Http\Controllers\Sellers\Shop\ShopController;
+use App\Http\Controllers\Admin\Pages\HomePageController;
+use App\Http\Controllers\Admin\Products\BrandController;
+use App\Http\Controllers\Admin\Reports\ReportsController;
+use App\Http\Controllers\Admin\Sellers\SellersController;
+use App\Http\Controllers\Sellers\Package\PackageController;
+use App\Http\Controllers\Admin\Products\CategoriesController;
+use App\Http\Controllers\Sellers\Products\ProductsController;
+use App\Http\Controllers\Admin\Support\SupportTicketController;
+use App\Http\Controllers\Admin\Products\RejectProductsController;
+use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
+use App\Http\Controllers\Admin\Products\ApprovedProductsController;
+use App\Http\Controllers\Admin\Products\ProductApprovalRequiredController;
+use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,12 @@ Route::prefix('api/v1')->group(function () {
         Route::post('upload-product', [ProductsController::class, 'uploadProduct'])->name('auth.uploadProduct');
 
         Route::post('upload-package', [PackageController::class, 'uploadPackage'])->name('auth.uploadPackage');
+
+        Route::prefix('upload')->group(function(){
+            Route::prefix('product')->controller(ProductsController::class)->group(function(){
+                Route::post('used', 'UploadUsedProducts')->name('auth.UploadUsedProduct');
+            });
+        });
 
         Route::prefix('ajax')->group(function () {
             Route::post('/get-brands-by-category', [ProductsController::class, 'getBrandsByCategory'])->name('seller.getBrandsByCategory');
@@ -111,6 +118,15 @@ Route::middleware('seller')->prefix('seller')->group(function () {
     Route::get('/dashboard', [SellerDashboardController::class, 'getDashboardPage'])->name('seller.dashboard');
 
     Route::prefix('products')->group(function () {
+
+        Route::controller(ProductsController::class)->prefix('type')->group(function () {
+            Route::get('/', 'getTypes')->name('seller.ProductTypes');
+            Route::get('new-product', 'getNewProduct')->name('seller.NewProduct');
+            Route::get('used-product', 'getUsedProduct')->name('seller.UsedProduct');
+            Route::get('complete-pc', 'getCompletePc')->name('seller.CompletedPC');
+            Route::get('laptop', 'getLaptop')->name('seller.Laptop');
+        });
+
         Route::get('/all-products', [ProductsController::class, 'getAllProducts'])->name('seller.allProducts');
         Route::get('/add-new-product', [ProductsController::class, 'addNewProduct'])->name('seller.addNewProduct');
         Route::get('/edit-product/{id}/{title}', [ProductsController::class, 'getEditProductsPage'])->name('seller.editProducts');
@@ -225,7 +241,15 @@ Route::get('cart', [CartController::class, 'getCartPage'])->name('cart');
 Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 Route::get('/clear-cart', [CartController::class, 'clearCart'])->name('cart.clear');
+Route::post('update-quantity', [CartController::class, 'updateCartQuantity'])->name('Update.Cart.Quantity');
 
 // Checkout
 
 Route::get('checkout', [CartController::class, 'getCheckoutPage'])->name('checkout');
+
+
+Route::get('my-account', [IndexPageController::class, 'getAccountPage'])->name('myAccount');
+
+
+Route::get('sign-up', [UserAuthController::class, 'signUp'])->name('signUp');
+Route::post('sign-up', [UserAuthController::class, 'signUpUser'])->name('user.signup');

@@ -75,7 +75,7 @@
                                         @endif
 
                                     </div>
-                                    <div class="main-slider slider-nav">
+                                    <div class="main-slider slider-nav" style="margin-top:40px;">
                                         @if ($product->mainImage)
                                             <img src="{{ asset('user_folders/Product_Images/' . $product->mainImage) }}"
                                                 alt="Product" class="h-50 w-72 object-cover rounded-t-xl" />
@@ -151,28 +151,8 @@
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST">
                                     @csrf
                                     {{-- <input type="hidden" name="quantity" id="quantity"> --}}
-                                    <button type="submits" class="btn-1 px-12">Add To Cart</button>
+                                    <button type="submit" class="btn-1 px-12">Add To Cart</button>
                                 </form>
-                                @if (session('cart'))
-                                    <table>
-                                        <tr>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        @foreach (session('cart') as $id => $details)
-                                            <tr>
-                                                <td>{{ $details['name'] }}</td>
-                                                <td>{{ $details['quantity'] }}</td>
-                                                <td>Rs.{{ $details['price'] }}</td>
-                                                <td>Rs.{{ $details['quantity'] * $details['price'] }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
-                                @else
-                                    <p>Your cart is empty.</p>
-                                @endif
                             </div>
                         </div>
                         <div class="py-6 flex flex-col gap-1">

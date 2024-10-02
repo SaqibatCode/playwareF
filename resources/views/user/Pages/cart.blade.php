@@ -49,7 +49,8 @@
                                 <tbody>
                                     @if (session('cart'))
                                         @foreach (session('cart') as $id => $details)
-                                            <tr class="bg-skin-fill border-b hover:bg-skin-fill-unique duration-300">
+                                            <tr class="bg-skin-fill border-b hover:bg-skin-fill-unique duration-300"
+                                                id="product-{{ $details['id'] }}">
                                                 <td class="p-4 min-w-32 max-w-36">
                                                     <img src='{{ asset('user_folders/Product_Images/' . $details['image']) }}'
                                                         class="cart-img" alt="Apple Watch" />
@@ -61,14 +62,15 @@
                                                     <div class="flex items-center ">
                                                         <div>
                                                             <input type="number" id="first_product"
-                                                                class="text-center bg-skin-fill-unique w-14 border border-gray-300 text-skin-inverted text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 remove-number-arrows"
-                                                                value="{{ $details['quantity'] }}" disabled required />
+                                                                class="quantity text-center bg-skin-fill-unique w-14 border border-gray-300  text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 remove-number-arrows"
+                                                                value="{{ $details['quantity'] }}"
+                                                                data-id='{{ $details['id'] }}' required />
                                                         </div>
 
                                                     </div>
                                                 </td>
-                                                <td class="px-6 py-4 font-semibold text-skin-inverted">
-                                                    Rs.{{ $details['price'] }}
+                                                <td class="px-6 py-4 font-semibold text-skin-inverted price">
+                                                    Rs.{{ $details['total'] }}
                                                 </td>
                                                 <td class="px-6 py-4">
 
@@ -119,8 +121,8 @@
                             </div>
                         </div>
                         <div class="flex justify-between items-center pb-4 mb-4 border-b">
-                            <span class="text-2xl font-semibold">Subtotal</span> <span
-                                class="text-skin-muted font-semibold">Rs.{{ $subTotal }}</span>
+                            <span class="text-2xl font-semibold">Subtotal</span> <span class="text-skin-muted font-semibold"
+                                id="SubTotal">Rs.{{ $subTotal }}</span>
                         </div>
                         {{-- <div class="pb-4 mb-4 border-b">
                             <div class="flex justify-between items-center mb-4">
@@ -149,7 +151,7 @@
                         <form action="">
 
                         </form>
-                        <a href="{{ route('success') }}"> <button class="btn-1 w-full">Proceed to
+                        <a href="{{ route('checkout') }}"> <button class="btn-1 w-full">Proceed to
                                 Checkout</button></a>
                     </div>
 
@@ -183,6 +185,47 @@
                 // Update the new div with the selected fees
                 $('#selected-fee').text(`Rs.${selectedFees}`);
             });
+
+
+            $('.quantity').on('change', function() {
+                let Quantity = $(this).val();
+                let id = $(this).data('id');
+
+                $.ajax({
+                    url: "{{ route('Update.Cart.Quantity') }}",
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        quantity: Quantity,
+                        id: id
+                    },
+                    success: function(res) {
+                        if (res) {
+                            // Update product's total price
+                            let product = $('#product-' + res.id);
+                            product.find('.price').html('Rs.' + res.total);
+
+                            // Update the overall cart total
+                            let total = 0;
+                            $('.price').each(function() {
+                                let priceText = $(this).text().replace('Rs.', '')
+                                    .trim();
+                                total += parseInt(priceText);
+                            });
+
+                            // Set the new total
+                            $("#total").html('Rs.' + total);
+                            $("#SubTotal").html('Rs.' + total);
+                        }
+                    },
+                    error: function(err) {
+                        alert(
+                            'We are facing some errors, please email us at support@playware.com.pk'
+                        );
+                    }
+                });
+            });
+
         });
     </script>
 @endsection

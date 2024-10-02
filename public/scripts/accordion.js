@@ -34,7 +34,7 @@ event.stopPropagation();
         document.getElementById(`minusSign${id}`).classList.remove("translate-x-0")
         document.getElementById(`accordionContent${id}`).classList.remove("max-h-80", "py-4")
     }
-    
+
 
         let mainDiv = Array.from(document.getElementById(div).children)
         mainDiv.splice(index, 1)
@@ -127,7 +127,7 @@ function mappingAccordions() {
             <p class="cursor-pointer font-bold text-skin-primary">${e.title}</p>
             <button onclick="toggleAccordion(${e.id}, ${i}, 'accordions', event)"
                 class='w-8 h-8 p-1 text-xl rounded-md bg-skin-main text-skin-secondary flex justify-center items-center relative overflow-hidden'>
-    
+
                 <!-- PLUS SVG -->
                 <svg id="plusSign${e.id}" class="absolute duration-500 transition-all transform translate-x-0 rotate-0" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512"
                     height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -135,19 +135,19 @@ function mappingAccordions() {
                         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
                     </path>
                 </svg>
-    
+
                 <!-- MINUS SVG -->
-    
+
                 <svg id="minusSign${e.id}" class="absolute duration-500 transition-all transform -translate-x-20" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512"
                     height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z">
                     </path>
                 </svg>
-    
+
             </button>
-    
-           
+
+
         </div>
         <div id="accordionContent${e.id}" class="h-max overflow-hidden text-skin-primary px-4 duration-500 max-h-0 py-0">
             <p>
@@ -188,7 +188,7 @@ function mappingAccordions() {
 
             </button>
 
-           
+
         </div>
         <div id="accordionContent${e.id+'2'}" class="h-max overflow-hidden text-skin-primary px-4 duration-500 max-h-0 py-0">
             <p>
@@ -196,7 +196,7 @@ function mappingAccordions() {
             </p>
         </div>
     </div>
-        ` 
+        `
     })
 
 
@@ -242,7 +242,7 @@ mappingAccordions()
 
 //     </button>
 
-   
+
 // </div>
 // <div id="accordionContent1" class="h-max overflow-hidden text-skin-primary px-4 duration-500">
 //     <p>

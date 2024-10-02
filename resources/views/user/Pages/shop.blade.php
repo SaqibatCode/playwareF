@@ -105,34 +105,86 @@
 
                         </div>
 
-                        <section
-                            class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+                        <div id="shopProducts"
+                            class="py-4 sm:p-4 grid place-items-center grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-4 sm:border sm:border-b-0 sm:border-r-0">
+
 
                             @foreach ($products as $product)
-                                <div
-                                    class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                                    <a href="{{ route('shop-single', $product->id) }}">
-                                        <img src="user_folders/Product_Images/{{ $product->mainImage }}" alt="Product"
-                                            class="product_image" />
-                                        <div class="px-4 py-3 w-72">
-                                            <span
-                                                class="text-gray-400 mr-3 uppercase text-xs">{{ $product->brand->name }}</span>
-                                            <p class="text-lg font-bold text-black truncate block capitalize">
-                                                {{ $product->productTitle }}
-                                            </p>
-                                            <div class="flex items-center">
-                                                <p class="text-lg font-semibold text-black cursor-auto my-3">
-                                                    Rs.{{ $product->SellPrice }}</p>
-                                                <del>
-                                                    <p class="text-sm text-gray-600 cursor-auto ml-2">
-                                                        Rs.{{ $product->originalPrice }}</p>
-                                                </del>
-                                            </div>
+                                <div class="max-w-60 border rounded-md overflow-hidden p-2 sm:p-4">
+                                    <div class="group relative flex items-center justify-center max-h-48 overflow-hidden">
+                                        <a href="{{ route('shop-single', $product->id) }}">
+                                            <img src="user_folders/Product_Images/{{ $product->mainImage }}"
+                                                alt="product1" class="object-contain origin-center aspect-square">
+                                        </a>
+                                        <div
+                                            class="bg-white w-full py-2 absolute bottom-0 flex justify-around items-center translate-y-2 invisible opacity-0 transition-all ease-in-out duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
+
+                                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" id="addToCart" class="product-card-icons">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                        viewBox="0 0 512 512" height="1em" width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="none" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="32"
+                                                            d="M80 176a16 16 0 0 0-16 16v216c0 30.24 25.76 56 56 56h272c30.24 0 56-24.51 56-54.75V192a16 16 0 0 0-16-16zm80 0v-32a96 96 0 0 1 96-96h0a96 96 0 0 1 96 96v32">
+                                                        </path>
+                                                        <path fill="none" stroke-linecap="round"
+                                                            stroke-linejoin="round" stroke-width="32"
+                                                            d="M160 224v16a96 96 0 0 0 96 96h0a96 96 0 0 0 96-96v-16">
+                                                        </path>
+                                                    </svg>
+                                                </button>
+                                            </form>
                                         </div>
-                                    </a>
+                                    </div>
+                                    <div class="flex flex-col justify-center gap-2 sm:gap-4">
+                                        <div class="flex items-center">
+                                            <h4 class="text-skin-unique font-bold text-sm sm:text-lg mr-2">
+                                                Rs.{{ $product->SellPrice }}</p>
+                                            </h4>
+                                            <del class="text-gray-400 text-xs sm:text-base mr-2">Rs.{{ $product->originalPrice }}
+                                                </p></del>
+                                        </div>
+
+                                        <a href="{{ route('shop-single', $product->id) }}"
+                                            class="text-xs sm:text-sm text-skin-gray font-bold line-clamp-2">
+                                            {{ $product->productTitle }}</a>
+
+                                        <p class="text-xs sm:text-sm">Rating: 4.5</p>
+
+                                        <div class="flex flex-col min-[350px]:flex-row gap-2 justify-between">
+                                            <span class="text-xs">By: <a href="/vendor"
+                                                    class="text-skin-unique">{{ $product->users->fullName }}</a></span>
+                                            @if ($product->users->approved == 1)
+                                                <p class="text-xs text-skin-secondary flex items-center gap-1">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                        viewBox="0 0 512 512" height="1em" width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z">
+                                                        </path>
+                                                    </svg>
+                                                    Verified
+                                                </p>
+                                            @else
+                                                <p class="text-xs text-skin-secondary flex items-center gap-1">
+                                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                                        viewBox="0 0 512 512" height="1em" width="1em"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z">
+                                                        </path>
+                                                    </svg>
+                                                    Un-verified
+                                                </p>
+                                            @endif
+                                        </div>
+
+                                    </div>
                                 </div>
                             @endforeach
-                        </section>
+                        </div>
 
 
                     </div>

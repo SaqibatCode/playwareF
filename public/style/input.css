@@ -6,7 +6,7 @@
 @layer base {
     :root {
 
-        /* 
+        /*
             primary: BLACK
             secondary: BLUE
             Unique: GREEN
@@ -161,7 +161,7 @@
     }
 
     .product-form-inp {
-        @apply text-sm border hover:ring-1 hover:ring-blue-700 hover:outline-none py-1 px-2 rounded-md;
+        @apply text-sm border hover:ring-1 hover:ring-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-700 hover:outline-none py-1 px-2 rounded-md;
     }
 
 
@@ -444,19 +444,19 @@ body {
 /* .about .social.portfolio .icon {
         background-image: url(https://rafaelavlucas.github.io/assets/codepen/link.svg);
     }
-    
+
     .about .social.dribbble {
         transition: all 0.3s ease;
     }
-    
+
     .about .social.dribbble .icon {
         background-image: url(https://rafaelavlucas.github.io/assets/codepen/dribbble.svg);
     }
-    
+
     .about .social.linkedin {
         transition: all 0.8s ease;
     }
-    
+
     .about .social.linkedin .icon {
         background-image: url(https://rafaelavlucas.github.io/assets/codepen/linkedin.svg);
     } */
@@ -541,7 +541,7 @@ body {
         text-decoration: none;
         color: inherit;
     }
-    
+
     h1:focus,
     h2:focus,
     h3:focus,

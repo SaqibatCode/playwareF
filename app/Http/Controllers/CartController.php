@@ -70,7 +70,7 @@ class CartController extends Controller
         $shipping = Shipping::get();
         if(session('cart')){
             foreach(session('cart') as $id => $details){
-                $subTotal += $details['price'];
+                $subTotal += $details['total'];
             }
         }
         return view('user.Pages.cart', compact('subTotal', 'shipping'));
@@ -78,4 +78,18 @@ class CartController extends Controller
     public function getCheckoutPage(){
         return view('user.Pages.checkout');
     }
+
+
+    public function updateCartQuantity(Request $req) {
+        $cart = session('cart');
+        foreach ($cart as &$session) {
+            if ($session['id'] == $req->id) {
+                $session['quantity'] = (int)$req->quantity;
+                $session['total'] = (int)$req->quantity * $session['price'];
+            }
+        }
+        session(['cart' => $cart]);
+        return response()->json($cart[$req->id]);
+    }
+
 }
