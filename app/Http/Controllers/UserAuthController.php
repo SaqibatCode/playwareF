@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -60,4 +61,27 @@ class UserAuthController extends Controller
     }
 
     public function loginUser() {}
+
+
+    public function getAccountPage(){
+        $user = Auth::user();
+        $orders = Order::where('customer_id', $user->id)->with('all_products')->get();
+        return view('user.Pages.account', compact('user', 'orders'));
+    }
+
+    public function userUpdateData(Request $req){
+        $user = User::findorfail(Auth::user()->id);
+
+        if($user){
+            $user->fullName = $req->fullName;
+            if($req->password !== ''){
+                $user->password = Hash::make($req->password);
+            }
+            $user->number = $req->number;
+            $user->Email = $req->email;
+            $user->dob = $req->dob;
+            $user->save();
+        }
+        return redirect('/my-account')->with('success', 'Saved Sucessfully');
+    }
 }

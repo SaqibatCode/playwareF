@@ -250,8 +250,8 @@ Route::post('update-quantity', [CartController::class, 'updateCartQuantity'])->n
 Route::get('checkout', [CartController::class, 'getCheckoutPage'])->name('checkout');
 
 
-Route::get('my-account', [IndexPageController::class, 'getAccountPage'])->name('myAccount');
-
+Route::get('my-account', [UserAuthController::class, 'getAccountPage'])->name('myAccount');
+Route::post('my-account', [UserAuthController::class, 'userUpdateData'])->name('userUpdateData');
 
 Route::get('sign-up', [UserAuthController::class, 'signUp'])->name('signUp');
 Route::post('sign-up', [UserAuthController::class, 'signUpUser'])->name('user.signup');

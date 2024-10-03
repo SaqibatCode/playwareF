@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -23,59 +24,60 @@ class OrderController extends Controller
 
 
     public function createOrder(Request $req)
-    {
+{
+    $req->validate([
+        'fullName' => 'required',
+        'address' => 'required',
+        'city' => 'required',
+        'zip' => 'required',
+        'state' => 'required',
+        'number' => 'required',
+        'email' => 'required',
+        'paymentMethod' => 'required',
+    ]);
 
-        $req->validate([
-            'fullName' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'zip' => 'required',
-            'state' => 'required',
-            'number' => 'required',
-            'email' => 'required',
-            'paymentMethod' => 'required',
-        ]);
+    // Generate new parent order ID
+    $lastParentOrderId = Order::max('parent_order_id');
+    $newParentOrderId = $lastParentOrderId ? $lastParentOrderId + 1 : 1;
 
-        $lastParentOrderId = Order::max('parent_order_id');
-        $newParentOrderId = $lastParentOrderId ? $lastParentOrderId + 1 : 1;
+    // Retrieve cart items from the session
+    $cartItems = Session::get('cart', []);
 
-        $ordersToInsert = [];
+    // Check if cart is not empty
+    if (empty($cartItems)) {
+        return response()->json(['message' => 'Cart is empty'], 400);
+    }
 
-        // Retrieve cart items from the session
-        $cartItems = Session::get('cart', []);
+    $address = $req->address . ', ' . $req->city . ', ' . $req->zip;
 
-        // Check if cart is not empty
-        if (empty($cartItems)) {
-            return response()->json(['message' => 'Cart is empty'], 400);
-        }
+    foreach ($cartItems as $item) {
 
-        $address = $req->address . ', ' . $req->city . ', ' . $req->zip;
 
-        foreach ($cartItems as $item) {
-            $ordersToInsert[] = [
-                'parent_order_id' => $newParentOrderId,
-                'customer_id' => Auth::id(), // Use the user's ID as customer_id
-                'seller_id' => $item['vendor_id'],
-                'product_id' => $item['id'],
-                'quantity' => $item['quantity'],  // Assuming 'quantity' is available in cart items
-                'total_amount' => $item['price'],
-                'status' => 'In Progress',
-                'shipping_address' => $address,
-                'billing_address' => $address,
-                'paymentType' => $req->paymentMethod,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
+        $order = new Order();
+        $order->parent_order_id = $newParentOrderId;
+        $order->customer_id = Auth::id();
+        $order->seller_id = $item['vendor_id'];
+        $order->product_id = $item['id'];
+        $order->quantity = $item['quantity'];
+        $order->total_amount = $item['price'];
+        $order->status = 'In Progress';
+        $order->shipping_address = $address;
+        $order->billing_address = $address;
+        $order->paymentType = $req->paymentMethod;
+        $order->created_at = now();
+        $order->updated_at = now();
+        $order->save();
 
-        DB::beginTransaction();
-        try {
-            Order::insert($ordersToInsert);
-            DB::commit();
-            return view('user.Pages.success');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['message' => 'Order creation failed', 'error' => $e->getMessage()], 500);
+        $product = Products::findOrFail($item['id']);
+
+        if ($product->productQuantity > 0) {
+            $product->productQuantity -= 1;
+            $product->save();
         }
     }
+    session()->forget('cart');
+    session()->flash('success', 'Your order has been placed successfully!');
+    return redirect()->route('success')->with('parentOrderId', $newParentOrderId);
+}
+
 }

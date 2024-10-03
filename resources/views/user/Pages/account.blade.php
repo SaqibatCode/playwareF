@@ -58,53 +58,121 @@
                         </ul>
                     </div>
 
-                    <div class="text-skin-primary col-span-4 lg:col-span-3 px-4">
+                    <div id="account" class="col-span-2 ">
+                        <div class="text-skin-primary col-span-4 lg:col-span-3 px-4">
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
 
-                        <form class="" enctype="multipart/form-data">
-                            <div class="flex flex-col sm:flex-row justify-between gap-3">
-                                <span class="w-full sm:w-1/2">
-                                    <label for="firstname"
-                                        class="block text-xs font-semibold text-gray-600 uppercase">Firstname</label>
-                                    <input id="firstname" type="text" name="firstname" placeholder="Ali"
-                                        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                        required />
-                                </span>
-                                <span class="w-full sm:w-1/2">
-                                    <label for="lastname"
-                                        class="block text-xs font-semibold text-gray-600 uppercase">Lastname</label>
-                                    <input id="lastname" type="text" name="lastname" placeholder="Amir"
-                                        class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                        required />
-                                </span>
-                            </div>
-                            <label for="username"
-                                class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Username</label>
-                            <input id="username" type="text" name="username" placeholder="Ali123"
-                                class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                required />
-                            <label for="number"
-                                class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Number</label>
-                            <input id="number" type="number" name="number" placeholder="+92 123 4231499"
-                                class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                required />
-                            <label for="email"
-                                class="block mt-2 text-xs font-semibold text-gray-600 uppercase">E-mail</label>
-                            <input id="email" type="email" name="email" placeholder="exampl@gmail.com"
-                                class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                required />
-                            <label for="dob" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Date Of
-                                Birth</label>
-                            <input id="dob" type="date" name="dob"
-                                class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
-                                required />
-                            <button type="submit"
-                                class="w-full py-3 mt-6 font-medium tracking-widest text-skin-inverted uppercase bg-blue-600 shadow-lg focus:outline-none hover:bg-blue-700 transition-all duration-300 hover:shadow-none rounded-md">
-                                update
-                            </button>
-                        </form>
+                            <form method="POST" action="{{ route('userUpdateData') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="flex flex-col sm:flex-row justify-between gap-3">
+                                    <span class="w-full sm:w-1/2">
+                                        <label for="firstname"
+                                            class="block text-xs font-semibold text-gray-600 uppercase">Full
+                                            Name</label>
+                                        <input id="firstname" type="text" name="fullName" placeholder="Ali"
+                                            class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
+                                            required value="{{ $user->fullName }}" />
+                                        <small style="color:red;">
+                                            @error('fullName')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </small>
+                                    </span>
+                                </div>
+                                <label for="number"
+                                    class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Number</label>
+                                <input id="number" type="number" name="number" placeholder="+92 123 4231499"
+                                    class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
+                                    required value="{{ $user->number }}" />
+                                <small style="color:red;">
+                                    @error('number')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </small>
+                                <label for="email"
+                                    class="block mt-2 text-xs font-semibold text-gray-600 uppercase">E-mail</label>
+                                <input id="email" type="email" name="email" placeholder="exampl@gmail.com"
+                                    class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
+                                    required value="{{ $user->Email }}" />
+                                <label for="password"
+                                    class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Password</label>
 
+                                <input id="password" type="password" name="password" placeholder="**********"
+                                    class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md" />
+                                <label for="dob" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">Date
+                                    Of
+                                    Birth</label>
+                                <input id="dob" type="date" name="dob"
+                                    class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
+                                    required value="{{ $user->dob }}" />
+                                <small style="color:red;">
+                                    @error('dob')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </small>
+                                <button type="submit"
+                                    class="w-full py-3 mt-6 font-medium tracking-widest text-skin-inverted uppercase bg-blue-600 shadow-lg focus:outline-none hover:bg-blue-700 transition-all duration-300 hover:shadow-none rounded-md">
+                                    update
+                                </button>
+                            </form>
+
+                        </div>
                     </div>
 
+                    <div id="order" class="col-span-2 px-4">
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-left rtl:text-right">
+                                <thead class="text-xs uppercase">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Order Id
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Product Name
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Quantity
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Sold By
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Amount
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders->all_products as $order)
+                                        <tr class="">
+                                            <th scope="row">
+                                               {{  }}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                Silver
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                Laptop
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                $2999
+                                            </td>
+                                            <td>
+                                                View ORder Details
+                                                Pay Amount
+                                                Order Received
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
                 </div>
 
             </div>
