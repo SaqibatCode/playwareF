@@ -220,7 +220,7 @@
                                     class="bx bx-file"></i><span>Products</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('seller.allProducts') }}">All Products</a></li>
-                                <li><a href="{{ route('seller.addNewProduct') }}">Add New Product</a></li>
+                                <li><a href="{{ route('seller.ProductTypes') }}">Add New Product</a></li>
 
                             </ul>
                         </li>

@@ -22,7 +22,9 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="#">
+                    <form action="{{ route('auth.UploadUsedProduct') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="ProductType" value="1">
                         <div class="row">
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
@@ -274,6 +276,22 @@
 @endsection
 @section('additionScript')
     <script>
+        let images = document.querySelectorAll('.custom-file-input');
+        images.forEach(input => {
+            input.onchange = function() {
+                let container = input.parentElement.parentElement;
+                let img = container.querySelector('img');
+                let label = container.querySelector('label');
+                if (label) {
+                    // label.style.display = 'none';
+                }
+                img.src = window.URL.createObjectURL(input.files[0]);
+            };
+        });
+
+
+
+
         let isMoreThanSeven = 1; // You forgot to declare this variable with `let`
 
         function isMoreThanSevenFunc() {
@@ -301,25 +319,22 @@
         // Initial check when the page loads
         isMoreThanSevenFunc();
 
-        var uploadProductForm = document.querySelector('form[action="{{ route('auth.uploadProduct') }}"]');
+        var uploadProductForm = document.querySelector('form[action="{{ route('auth.UploadUsedProduct') }}"]');
         uploadProductForm.addEventListener('submit', function(e) {
-            let ProductType = $('#ProductType').val();
-            if (ProductType == 1 || ProductType == 2) {
-                e.preventDefault();
+            e.preventDefault();
 
-                let AboutThisItem = document.querySelectorAll('.AboutThisItem');
-                let aboutThisItemhidden = document.querySelector('#aboutThisItemhidden');
-                let AboutThisItemValues = [];
+            let AboutThisItem = document.querySelectorAll('.AboutThisItem');
+            let aboutThisItemhidden = document.querySelector('#aboutThisItemhidden');
+            let AboutThisItemValues = [];
 
-                AboutThisItem.forEach(e => {
-                    AboutThisItemValues.push(e.value);
-                });
+            AboutThisItem.forEach(e => {
+                AboutThisItemValues.push(e.value);
+            });
 
-                let itemPointsJSON = JSON.stringify(AboutThisItemValues);
-                aboutThisItemhidden.value = itemPointsJSON;
+            let itemPointsJSON = JSON.stringify(AboutThisItemValues);
+            aboutThisItemhidden.value = itemPointsJSON;
 
-                this.submit();
-            }
+            this.submit();
         });
 
         $('#category').on('change', function() {

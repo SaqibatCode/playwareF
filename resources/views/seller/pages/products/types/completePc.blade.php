@@ -1,5 +1,6 @@
 @extends('seller.Layout.layout')
 @section('main-content')
+
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -22,7 +23,18 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="#">
+                    <form action="{{ route('auth.UploadCompletePc') }}" method="post" enctype="multipart/form-data">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @csrf
+                        <input type="hidden" name="ProductType" value="4">
                         <div class="row">
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
@@ -200,7 +212,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardUsedOrNew">Used Or New?</label>
-                                                <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew0"
+                                                <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew"
                                                     class="form-control">
                                                     <option value="0" selected="">Please Select</option>
                                                     <option value="1">Used</option>
@@ -646,80 +658,9 @@
                                                 name="additionalProductCategory1"
                                                 class="form-control additionalProductCategory">
                                                 <option value="0">Please Select</option>
-                                                <option value="1"> PC Build</option>
-
-                                                <option value="2"> Processors</option>
-
-                                                <option value="3"> Motherboards</option>
-
-                                                <option value="4"> Graphics Card</option>
-
-                                                <option value="5"> RAMs</option>
-
-                                                <option value="6"> Storage</option>
-
-                                                <option value="7"> Cooling</option>
-
-                                                <option value="8"> PSU</option>
-
-                                                <option value="10"> PC Essentials </option>
-
-                                                <option value="11"> Monitors</option>
-
-                                                <option value="12"> Cases</option>
-
-                                                <option value="13"> Monitor Arms</option>
-
-                                                <option value="15"> Router</option>
-
-                                                <option value="16"> Cables</option>
-
-                                                <option value="17"> Accessories</option>
-
-                                                <option value="18"> Mouse</option>
-
-                                                <option value="19"> Keyboard</option>
-
-                                                <option value="20"> Headphones</option>
-
-                                                <option value="21"> Speakers</option>
-
-                                                <option value="22"> Microphone</option>
-
-                                                <option value="23"> Mousepads</option>
-
-                                                <option value="24"> Headphone stand</option>
-
-                                                <option value="26"> Consoles</option>
-
-                                                <option value="27"> Gaming Chair</option>
-
-                                                <option value="28"> Gaming Desks</option>
-
-                                                <option value="29"> Printers</option>
-
-                                                <option value="30"> Laptop bags</option>
-
-                                                <option value="31"> Mouse Bungee</option>
-
-                                                <option value="32"> Console Accessories</option>
-
-                                                <option value="33"> iPad</option>
-
-                                                <option value="34"> iMac</option>
-
-                                                <option value="35"> MacBook</option>
-
-                                                <option value="36"> Mac Mini</option>
-
-                                                <option value="38"> Airpods</option>
-
-                                                <option value="39"> Complete PCs</option>
-
-                                                <option value="40"> Laptops</option>
-
-                                                <option value="41"> Apple Accessories</option>
-
+                                                @foreach ($categories as $category)
+                                                    <x-categories-select :category="$category" />
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -1087,6 +1028,84 @@
             }
         });
 
+        var uploadProductForm = document.querySelector('form[action="{{ route('auth.UploadCompletePc') }}"]');
+
+        function gatherStorageData() {
+            const storageData = [];
+            // Get all storage rows
+            const rows = document.querySelectorAll('#storageSpecsDiv .row');
+
+            document.querySelectorAll('#storageSpecsDiv .row').forEach((row, index) => {
+                const storageName = row.querySelector('.storageName').value;
+                const storageBrand = row.querySelector('.storageBrand').value;
+                const storageType = row.querySelector('.storageType').value;
+                const storageMemory = row.querySelector('.storageMemory').value;
+                const storageUsedOrNew = row.querySelector('.storageUsedOrNew').value;
+
+                // Collect data into an object
+                const storageItem = {
+                    name: storageName,
+                    brand: storageBrand,
+                    type: storageType,
+                    memory: storageMemory,
+                    usedOrNew: storageUsedOrNew
+                };
+
+                // Add the object to the array
+                storageData.push(storageItem);
+            });
+
+            // Set the hidden input field value
+            document.getElementById('storageData').value = JSON.stringify(storageData);
+        }
+        uploadProductForm.addEventListener('submit', gatherStorageData);
+
+
+        function gatherAdditionalPartData() {
+            const AdditionPartsData = [];
+            const rows = document.querySelectorAll('#additionalPCpartsSpecs .row');
+
+            document.querySelectorAll('#additionalPCpartsSpecs .row').forEach((row, index) => {
+                const AdditionalPartName = row.querySelector('.additionalPCPartName').value;
+                const AdditionalPartUserOrnew = row.querySelector('.additionalPCpartUsedOrNew').value;
+
+                const AdditionalItem = {
+                    name: AdditionalPartName,
+                    userOrnew: AdditionalPartUserOrnew
+                }
+
+                AdditionPartsData.push(AdditionalItem);
+            })
+
+            document.getElementById('additionalPartsData').value = JSON.stringify(AdditionPartsData);
+        }
+        uploadProductForm.addEventListener('submit', gatherAdditionalPartData);
+
+
+        function gatherAdditionalProductsData() {
+            const AdditionalProductsData = [];
+            const rows = document.querySelectorAll('#additionalProducts .row');
+
+            document.querySelectorAll('#additionalProducts .row').forEach((row, index) => {
+                const AdditionalProductName = row.querySelector('.additionalProductName').value;
+                const AdditionalProductBrand = row.querySelector('.additionalProductBrand').value;
+                const AdditionalProductCategory = row.querySelector('.additionalProductCategory').value;
+                const AdditionalProductUsedOrNew = row.querySelector('.additionalProductUsedOrNew')
+                    .value;
+
+                const AdditionalProduct = {
+                    name: AdditionalProductName,
+                    brand: AdditionalProductBrand,
+                    category: AdditionalProductCategory,
+                    usedOrNew: AdditionalProductUsedOrNew
+                };
+
+                AdditionalProductsData.push(AdditionalProduct);
+            });
+
+            document.getElementById('additionProductData').value = JSON.stringify(AdditionalProductsData);
+        }
+        uploadProductForm.addEventListener('submit', gatherAdditionalProductsData);
 
         $(document).on('change', '.additionalProductCategory', function() {
             let categoryID = $(this).val();

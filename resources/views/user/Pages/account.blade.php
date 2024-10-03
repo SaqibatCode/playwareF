@@ -42,19 +42,19 @@
 
                     <div class="text-skin-primary hidden lg:block col-span-1">
                         <ul>
-                            <li
-                                class="border-b-0 border hover:cursor-pointer  text-lg font-bold py-4 px-4 bg-skin-secondary text-skin-inverted transition-all duration-300 hover:bg-skin-secondary hover:text-skin-inverted">
-                                Account</li>
+                            <li id="accountBtn"
+                                class="border-b-0 border hover:cursor-pointer  text-lg font-bold transition-all duration-300 bg-skin-secondary text-skin-inverted">
+                                <span class="block py-4 px-4">Account</span>
+                            </li>
+                            <li id="orderBtn"
+                                class="border-b-0 border hover:cursor-pointer  text-lg font-bold transition-all duration-300 hover:bg-skin-secondary hover:text-skin-inverted">
+                                <span class="block py-4 px-4">Orders</span>
+                            </li>
+
                             <li
                                 class="border-b-0 border hover:cursor-pointer  text-lg font-bold transition-all duration-300 hover:bg-skin-secondary hover:text-skin-inverted">
-                                <a href="/orders.html" class="block py-4 px-4">Orders</a>
+                                <a href="{{ route('logoutUser') }}" class="block py-4 px-4">Logout</a>
                             </li>
-                            <li
-                                class="border-b-0 border hover:cursor-pointer  text-lg font-bold py-4 px-4 transition-all duration-300 hover:bg-skin-secondary hover:text-skin-inverted">
-                                Address</li>
-                            <li
-                                class="border hover:cursor-pointer  text-lg font-bold py-4 px-4 transition-all duration-300 hover:bg-skin-secondary hover:text-skin-inverted">
-                                Logout</li>
                         </ul>
                     </div>
 
@@ -123,48 +123,51 @@
                         </div>
                     </div>
 
-                    <div id="order" class="col-span-2 px-4">
+                    <div id="order" class="col-span-2 px-4" style="display: none;">
                         <div class="relative overflow-x-auto">
                             <table class="w-full text-sm text-left rtl:text-right">
                                 <thead class="text-xs uppercase">
                                     <tr>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3">
                                             Order Id
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3">
                                             Product Name
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3">
                                             Quantity
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3">
                                             Sold By
                                         </th>
-                                        <th scope="col" class="px-6 py-3">
+                                        <th class="px-6 py-3">
                                             Amount
                                         </th>
-                                        <th scope="col" class="px-6 py-3">Action</th>
+                                        <th class="px-6 py-3">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders->all_products as $order)
+                                    @foreach ($orders as $order)
                                         <tr class="">
                                             <th scope="row">
-                                               {{  }}
+                                                {{ '#' . $order->id }}
                                             </th>
                                             <td class="px-6 py-4">
-                                                Silver
+                                                {{ $order->all_products->productTitle }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                Laptop
+                                                {{ $order->quantity }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                $2999
+                                                {{ $order->all_products->users->fullName }}
                                             </td>
                                             <td>
-                                                View ORder Details
-                                                Pay Amount
-                                                Order Received
+                                                {{ 'Rs.' . $order->total_amount }}
+                                            </td>
+                                            <td>
+                                                <a class="btn-1 w-full">View Order Details</a>
+                                                <a class="btn-1 w-full">Pay Amount</a>
+                                                <a class="btn-1 w-full">Order Received</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -180,4 +183,26 @@
 
 
     </main>
+@endsection
+@section('singleScript')
+    <script>
+        $(document).ready(function() {
+            function toggleElements(showElement, hideElement, addClassElement, removeClassElement, addClasses,
+                removeClasses) {
+                $(showElement).show();
+                $(hideElement).hide();
+                $(removeClassElement).removeClass(removeClasses);
+                $(addClassElement).addClass(addClasses);
+            }
+
+            $('#orderBtn').on('click', function() {
+                toggleElements('#order', '#account', '#orderBtn', '#accountBtn',
+                    'bg-skin-secondary text-skin-inverted', 'bg-skin-secondary text-skin-inverted');
+            });
+            $('#accountBtn').on('click', function() {
+                toggleElements('#account', '#order', '#accountBtn', '#orderBtn',
+                    'bg-skin-secondary text-skin-inverted', 'bg-skin-secondary text-skin-inverted');
+            })
+        })
+    </script>
 @endsection

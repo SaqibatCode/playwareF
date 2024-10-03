@@ -22,7 +22,9 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="#">
+                    <form action="{{ route('auth.UploadNewProduct') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="ProductType" value="2">
                         <div class="row">
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
@@ -253,13 +255,27 @@
 @endsection
 @section('additionScript')
     <script>
-        let isMoreThanSeven = 1; // You forgot to declare this variable with `let`
+        let images = document.querySelectorAll('.custom-file-input');
+        images.forEach(input => {
+            input.onchange = function() {
+                let container = input.parentElement.parentElement;
+                let img = container.querySelector('img');
+                let label = container.querySelector('label');
+                if (label) {
+                    // label.style.display = 'none';
+                }
+                img.src = window.URL.createObjectURL(input.files[0]);
+            };
+        });
+
+
+        let isMoreThanSeven = 1;
 
         function isMoreThanSevenFunc() {
             let AboutThisItem = document.querySelectorAll('.AboutThisItem');
 
-            if (AboutThisItem.length >= 7) { // Changed the condition to `>=` to include 7 items
-                addMoreBtn.style.display = 'none'; // Hides the button
+            if (AboutThisItem.length >= 7) {
+                addMoreBtn.style.display = 'none';
             }
         }
 
@@ -440,6 +456,25 @@
                     console.log(err);
                 }
             })
-        })
+        });
+
+
+        var uploadProductForm = document.querySelector('form[action="{{ route('auth.UploadNewProduct') }}"]');
+        uploadProductForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let AboutThisItem = document.querySelectorAll('.AboutThisItem');
+            let aboutThisItemhidden = document.querySelector('#aboutThisItemhidden');
+            let AboutThisItemValues = [];
+
+            AboutThisItem.forEach(e => {
+                AboutThisItemValues.push(e.value);
+            });
+
+            let itemPointsJSON = JSON.stringify(AboutThisItemValues);
+            aboutThisItemhidden.value = itemPointsJSON;
+
+            this.submit();
+        });
     </script>
 @endsection

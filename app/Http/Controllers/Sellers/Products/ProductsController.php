@@ -13,6 +13,7 @@ use App\Models\ProductVariations;
 use App\Models\StorageData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -37,16 +38,764 @@ class ProductsController extends Controller
         ]);
     }
 
+    public function UploadNewProducts(Request $request){
+        $validate = $request->validate([
+            'productTitle' => 'required|string',
+            'category' => 'required|string',
+            'brand' => 'nullable|string',
+            'warranty' => 'required|string',
+            'year_of_making' => 'required|string',
+            'amount_in_stock' => 'required|string',
+            'current_price' => 'required|string',
+            'sale_price' => 'required|string',
+            'AboutThisitem' => 'required|string',
+            'productDescription' => 'required|string',
+            'mainImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'firstImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'secondImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'thirdImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'fourthImage' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'fifthImage' => 'nullable|mimes:png,jpg,jpeg,webp',
+        ], [
+            'productTitle.required' => 'The product title is required.',
+            'productTitle.string' => 'The product title must be a string.',
+            'category.required' => 'The category is required.',
+            'category.string' => 'The category must be a string.',
+            'brand.required' => 'The brand is required.',
+            'brand.string' => 'The brand must be a string.',
+            'warranty.required' => 'The warranty is required.',
+            'warranty.string' => 'The warranty must be a string.',
+            'year_of_making.required' => 'The year of making is required.',
+            'year_of_making.string' => 'The year of making must be a string.',
+            'amount_in_stock.required' => 'The amount in stock is required.',
+            'amount_in_stock.string' => 'The amount in stock must be a string.',
+            'current_price.required' => 'The current price is required.',
+            'current_price.string' => 'The current price must be a string.',
+            'sale_price.required' => 'The sale price is required.',
+            'sale_price.string' => 'The sale price must be a string.',
+            'AboutThisitem.required' => 'The About This Item field is required.',
+            'AboutThisitem.string' => 'The About This Item field must be a string.',
+            'productDescription.required' => 'The product description is required.',
+            'productDescription.string' => 'The product description must be a string.',
+            'mainImage.required' => 'The main image is required.',
+            'mainImage.mimes' => 'The main image must be a file of type: png, jpg, jpeg, webp.',
+            'firstImage.required' => 'The first image is required.',
+            'firstImage.mimes' => 'The first image must be a file of type: png, jpg, jpeg, webp.',
+            'secondImage.required' => 'The second image is required.',
+            'secondImage.mimes' => 'The second image must be a file of type: png, jpg, jpeg, webp.',
+            'thirdImage.required' => 'The third image is required.',
+            'thirdImage.mimes' => 'The third image must be a file of type: png, jpg, jpeg, webp.',
+            'fourthImage.mimes' => 'The fourth image must be a file of type: png, jpg, jpeg, webp.',
+            'fifthImage.mimes' => 'The fifth image must be a file of type: png, jpg, jpeg, webp.',
+        ]);
+
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . Auth::user()->fullName;
+
+        if (!file_exists(public_path($folderPath))) {
+            mkdir(public_path($folderPath), 0777, true);
+        }
+
+        $mainImage = $request->file('mainImage');
+        $mainImageName = time() . '_' . 'front_image' . '.' . $mainImage->getClientOriginalExtension();
+        $mainImage->move(public_path($folderPath), $mainImageName);
+
+        $firstImage = $request->file('firstImage');
+        $firstImageName = time() . '_' . 'first_image' . '.' . $firstImage->getClientOriginalExtension();
+        $firstImage->move(public_path($folderPath), $firstImageName);
+
+        $secondImage = $request->file('secondImage');
+        $secondImageName = time() . '_' . 'second_image' . '.' . $secondImage->getClientOriginalExtension();
+        $secondImage->move(public_path($folderPath), $secondImageName);
+
+        $thirdImage = $request->file('thirdImage');
+        $thirdImageName = time() . '_' . 'third_image' . '.' . $thirdImage->getClientOriginalExtension();
+        $thirdImage->move(public_path($folderPath), $thirdImageName);
+
+        if ($request->file('fourthImage')) {
+            $fourthImage = $request->file('fourthImage');
+            $fourthImageName = time() . '_' . 'fourth_image' . '.' . $fourthImage->getClientOriginalExtension();
+            $fourthImage->move(public_path($folderPath), $fourthImageName);
+        }
+        if ($request->file('fifthImage')) {
+            $fifthImage = $request->file('fifthImage');
+            $fifthImageName = time() . '_' . 'fifth_image' . '.' . $fifthImage->getClientOriginalExtension();
+            $fifthImage->move(public_path($folderPath), $fifthImageName);
+        }
+
+        $product = new Products;
+        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->ProductType = $request->input('ProductType');
+        $product->user_id = Auth::user()->id;
+        $product->productTitle = $validate['productTitle'];
+
+        if ($request->input('brand')) {
+            $product->brandName = $validate['brand'];
+        } else {
+            $product->brandName = 63;
+        }
+
+        $product->repaired = 0;
+
+
+        $product->yearOfProduct = $validate['year_of_making'];
+        $product->warranty = $validate['warranty'];
+
+        if ($request->input('productDescription')) {
+            $product->productDescription = $validate['productDescription'];
+        }
+
+        if ($request->input('AboutThisitem')) {
+            $product->AboutThisitem = $validate['AboutThisitem'];
+        }
+
+        $product->productCategory = $validate['category'];
+        $product->productQuantity = $validate['amount_in_stock'];
+        $product->originalPrice = $validate['current_price'];
+
+        if ($request->input('sale_price')) {
+            $product->SellPrice = $validate['sale_price'];
+        }
+
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+
+        if ($request->file('fourthImage')) {
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+        }
+        if ($request->file('fifthImage')) {
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+        }
+
+        if (Auth::user()->approved != 0) {
+            $product->approved = 1;
+        } else {
+            $product->approved = 0;
+        }
+
+        $product->save();
+
+
+        if ($request->input('productCategory') == '5') {
+            $ram = new OtherSingleProducts;
+            $ram->productId = $product->id;
+            $ram->Type = $validate['ramGeneration'];
+            $ram->RRCS = $validate['ramClockSpeed'];
+            $ram->size = $validate['ramSize'];
+            $ram->save();
+        } elseif ($request->input('productCategory') == '6') {
+            $storage = new OtherSingleProducts;
+            $storage->productId = $product->id;
+            $storage->Type = $validate['storageType'];
+            $storage->size = $validate['storageSize'];
+            $storage->save();
+        } elseif ($request->input('productCategory') == '11') {
+            $monitor = new OtherSingleProducts;
+            $monitor->productId = $product->id;
+            $monitor->Type = $validate['monitorPanelType'];
+            $monitor->RRCS = $validate['monitorRefreshRate'];
+            $monitor->size = $validate['monitorSize'];
+            $monitor->modelNo = $validate['monitorModelNo'];
+            $monitor->save();
+        }
+
+        return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+    }
+
+    public function UploadUsedProducts(Request $request){
+        $validate = $request->validate([
+            'productTitle' => 'required|string',
+            'category' => 'required|string',
+            'brand' => 'nullable|string',
+            'warranty' => 'required|string',
+            'year_of_making' => 'required|string',
+            'amount_in_stock' => 'required|string',
+            'current_price' => 'required|string',
+            'sale_price' => 'required|string',
+            'isRepairedOrOpened' => 'nullable|string',
+            'reason' => $request->input('isRepairedOrOpened') == "on" ? 'required|string' : 'nullable|string',
+            'AboutThisitem' => 'required|string',
+            'productDescription' => 'required|string',
+            'mainImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'firstImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'secondImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'thirdImage' => 'required|mimes:png,jpg,jpeg,webp',
+            'fourthImage' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'fifthImage' => 'nullable|mimes:png,jpg,jpeg,webp',
+        ], [
+            'productTitle.required' => 'The product title is required.',
+            'productTitle.string' => 'The product title must be a string.',
+            'category.required' => 'The category is required.',
+            'category.string' => 'The category must be a string.',
+            'brand.required' => 'The brand is required.',
+            'brand.string' => 'The brand must be a string.',
+            'warranty.required' => 'The warranty is required.',
+            'warranty.string' => 'The warranty must be a string.',
+            'year_of_making.required' => 'The year of making is required.',
+            'year_of_making.string' => 'The year of making must be a string.',
+            'amount_in_stock.required' => 'The amount in stock is required.',
+            'amount_in_stock.string' => 'The amount in stock must be a string.',
+            'current_price.required' => 'The current price is required.',
+            'current_price.string' => 'The current price must be a string.',
+            'sale_price.required' => 'The sale price is required.',
+            'sale_price.string' => 'The sale price must be a string.',
+            'isRepairedOrOpened.string' => 'The value for "Is Repaired or Opened" must be a string.',
+            'reason.required' => 'The reason is required when the item is marked as repaired or opened.',
+            'reason.string' => 'The reason must be a string.',
+            'AboutThisitem.required' => 'The About This Item field is required.',
+            'AboutThisitem.string' => 'The About This Item field must be a string.',
+            'productDescription.required' => 'The product description is required.',
+            'productDescription.string' => 'The product description must be a string.',
+            'mainImage.required' => 'The main image is required.',
+            'mainImage.mimes' => 'The main image must be a file of type: png, jpg, jpeg, webp.',
+            'firstImage.required' => 'The first image is required.',
+            'firstImage.mimes' => 'The first image must be a file of type: png, jpg, jpeg, webp.',
+            'secondImage.required' => 'The second image is required.',
+            'secondImage.mimes' => 'The second image must be a file of type: png, jpg, jpeg, webp.',
+            'thirdImage.required' => 'The third image is required.',
+            'thirdImage.mimes' => 'The third image must be a file of type: png, jpg, jpeg, webp.',
+            'fourthImage.mimes' => 'The fourth image must be a file of type: png, jpg, jpeg, webp.',
+            'fifthImage.mimes' => 'The fifth image must be a file of type: png, jpg, jpeg, webp.',
+        ]);
+
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
+
+        if (!file_exists(public_path($folderPath))) {
+            mkdir(public_path($folderPath), 0777, true);
+        }
+
+        $mainImage = $request->file('mainImage');
+        $mainImageName = time() . '_' . 'front_image' . '.' . $mainImage->getClientOriginalExtension();
+        $mainImage->move(public_path($folderPath), $mainImageName);
+
+        $firstImage = $request->file('firstImage');
+        $firstImageName = time() . '_' . 'first_image' . '.' . $firstImage->getClientOriginalExtension();
+        $firstImage->move(public_path($folderPath), $firstImageName);
+
+        $secondImage = $request->file('secondImage');
+        $secondImageName = time() . '_' . 'second_image' . '.' . $secondImage->getClientOriginalExtension();
+        $secondImage->move(public_path($folderPath), $secondImageName);
+
+        $thirdImage = $request->file('thirdImage');
+        $thirdImageName = time() . '_' . 'third_image' . '.' . $thirdImage->getClientOriginalExtension();
+        $thirdImage->move(public_path($folderPath), $thirdImageName);
+
+        if ($request->file('fourthImage')) {
+            $fourthImage = $request->file('fourthImage');
+            $fourthImageName = time() . '_' . 'fourth_image' . '.' . $fourthImage->getClientOriginalExtension();
+            $fourthImage->move(public_path($folderPath), $fourthImageName);
+        }
+        if ($request->file('fifthImage')) {
+            $fifthImage = $request->file('fifthImage');
+            $fifthImageName = time() . '_' . 'fifth_image' . '.' . $fifthImage->getClientOriginalExtension();
+            $fifthImage->move(public_path($folderPath), $fifthImageName);
+        }
+
+        $product = new Products;
+        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->ProductType = $request->input('ProductType');
+        $product->user_id = Auth::user()->id;
+        $product->productTitle = $validate['productTitle'];
+
+        if ($request->input('brand')) {
+            $product->brandName = $validate['brand'];
+        } else {
+            $product->brandName = 63;
+        }
+
+        if ($request->input('isRepairedOrOpened')) {
+            $product->repaired = $validate['isRepairedOrOpened'] == "on" ? 1 : 0;
+            if ($validate['isRepairedOrOpened'] == "on") {
+                $product->explainAboutRepairing = $validate['reason'];
+            }
+        } else {
+            $product->repaired = 0;
+        }
+
+
+        $product->yearOfProduct = $validate['year_of_making'];
+        $product->warranty = $validate['warranty'];
+
+        if ($request->input('productDescription')) {
+            $product->productDescription = $validate['productDescription'];
+        }
+
+        if ($request->input('AboutThisitem')) {
+            $product->AboutThisitem = $validate['AboutThisitem'];
+        }
+
+        $product->productCategory = $validate['category'];
+        $product->productQuantity = $validate['amount_in_stock'];
+        $product->originalPrice = $validate['current_price'];
+
+        if ($request->input('sale_price')) {
+            $product->SellPrice = $validate['sale_price'];
+        }
+
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+
+        if ($request->file('fourthImage')) {
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+        }
+        if ($request->file('fifthImage')) {
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+        }
+
+        if (Auth::user()->approved != 0) {
+            $product->approved = 1;
+        } else {
+            $product->approved = 0;
+        }
+        $product->save();
+
+
+        if ($request->input('productCategory') == '5') {
+            $ram = new OtherSingleProducts;
+            $ram->productId = $product->id;
+            $ram->Type = $validate['ramGeneration'];
+            $ram->RRCS = $validate['ramClockSpeed'];
+            $ram->size = $validate['ramSize'];
+            $ram->save();
+        } elseif ($request->input('productCategory') == '6') {
+            $storage = new OtherSingleProducts;
+            $storage->productId = $product->id;
+            $storage->Type = $validate['storageType'];
+            $storage->size = $validate['storageSize'];
+            $storage->save();
+        } elseif ($request->input('productCategory') == '11') {
+            $monitor = new OtherSingleProducts;
+            $monitor->productId = $product->id;
+            $monitor->Type = $validate['monitorPanelType'];
+            $monitor->RRCS = $validate['monitorRefreshRate'];
+            $monitor->size = $validate['monitorSize'];
+            $monitor->modelNo = $validate['monitorModelNo'];
+            $monitor->save();
+        }
+
+        return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+    }
+
+    public function uploadCompletePc(Request $request){
+
+        $validate = $request->validate([
+            'productTitle' => 'required|string',
+            'productDescription' => 'required|string',
+            'warranty' => 'required|string',
+            'year_of_making' => 'required|string',
+            'amount_in_stock' => 'required|string',
+            'current_price' => 'required|string',
+            'sale_price' => 'required|string',
+            'isRepairedOrOpened' => 'nullable|string',
+            'reason' => $request->input('isRepairedOrOpened') == 'on' ? 'required|string' : 'nullable|string',
+            'processorName' => 'required|string',
+            'processorBrand' => 'required|string',
+            'processorUsedOrNew' => 'required|string',
+            'graphicCardName' => 'required|string',
+            'graphicCardBrand' => 'required|string',
+            'graphicCardMemory' => 'required|string',
+            'graphicCardUsedOrNew' => 'required|string',
+            'motherboardName' => 'required|string',
+            'motherboardBrand' => 'required|string',
+            'motherboardUsedOrNew' => 'required|string',
+            'ramName' => 'required|string',
+            'ramBrand' => 'required|string',
+            'ramMemory' => 'required|string',
+            'ramUsedOrNew' => 'required|string',
+            'ramQuantity' => 'required|string',
+            'psuName' => 'required|string',
+            'psuBrand' => 'required|string',
+            'psuWatts' => 'required|string',
+            'psuUsedOrNew' => 'required|string',
+            'caseName' => 'required|string',
+            'caseBrand' => 'required|string',
+            'caseUsedOrNew' => 'required|string',
+            'coolerName' => 'required|string',
+            'coolerBrand' => 'required|string',
+            'coolerUsedOrNew' => 'required|string',
+            'storageData' => 'required|json',
+            'additionalPartsData' => 'required|json',
+            'additionProductData' => 'required|json',
+        ]);
+
+
+        $storageData = json_decode($request->input('storageData'), true);
+        $additionalPartsData = json_decode($request->input('additionalPartsData'), true);
+        $additionProductData = json_decode($request->input('additionProductData'), true);
+
+        $storageDataValidator = Validator::make($storageData, [
+            '*.name' => 'required|string',
+            '*.brand' => 'required|string',
+            '*.type' => 'required|string',
+            '*.memory' => 'required|string',
+            '*.usedOrNew' => 'required|string',
+        ]);
+
+        if ($storageDataValidator->fails()) {
+            return back()->withErrors($storageDataValidator)->withInput();
+        }
+
+        $additionalPartsDataValidator = Validator::make($additionalPartsData, [
+            '*.name' => 'required|string',
+            '*.userOrnew' => 'required|string',
+        ]);
+
+        if ($additionalPartsDataValidator->fails()) {
+            return back()->withErrors($storageDataValidator)->withInput();
+        }
+
+        $additionProductDataValidator = Validator::make($additionProductData, [
+            '*.name' => 'required|string',
+            '*.brand' => 'required|string',
+            '*.category' => 'required|string',
+            '*.usedOrNew' => 'required|string',
+        ]);
+
+        if ($additionProductDataValidator->fails()) {
+            return back()->withErrors($additionProductDataValidator)->withInput();
+        }
+
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
+
+        if (!file_exists(public_path($folderPath))) {
+            mkdir(public_path($folderPath), 0777, true);
+        }
+
+        $mainImage = $request->file('mainImage');
+        $mainImageName = time() . '_' . 'front_image' . '.' . $mainImage->getClientOriginalExtension();
+        $mainImage->move(public_path($folderPath), $mainImageName);
+
+        $firstImage = $request->file('firstImage');
+        $firstImageName = time() . '_' . 'first_image' . '.' . $firstImage->getClientOriginalExtension();
+        $firstImage->move(public_path($folderPath), $firstImageName);
+
+        $secondImage = $request->file('secondImage');
+        $secondImageName = time() . '_' . 'second_image' . '.' . $secondImage->getClientOriginalExtension();
+        $secondImage->move(public_path($folderPath), $secondImageName);
+
+        $thirdImage = $request->file('thirdImage');
+        $thirdImageName = time() . '_' . 'third_image' . '.' . $thirdImage->getClientOriginalExtension();
+        $thirdImage->move(public_path($folderPath), $thirdImageName);
+
+        if ($request->file('fourthImage')) {
+            $fourthImage = $request->file('fourthImage');
+            $fourthImageName = time() . '_' . 'fourth_image' . '.' . $fourthImage->getClientOriginalExtension();
+            $fourthImage->move(public_path($folderPath), $fourthImageName);
+        }
+        if ($request->file('fifthImage')) {
+            $fifthImage = $request->file('fifthImage');
+            $fifthImageName = time() . '_' . 'fifth_image' . '.' . $fifthImage->getClientOriginalExtension();
+            $fifthImage->move(public_path($folderPath), $fifthImageName);
+        }
+
+        $product = new Products;
+        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->ProductType = $request->input('ProductType');
+        $product->user_id = Auth::user()->id;
+        $product->productTitle = $validate['productTitle'];
+
+
+        if ($request->input('brand')) {
+            $product->brandName = $validate['brand'];
+        } else {
+            $product->brandName = 63;
+        }
+
+        if ($request->input('isRepairedOrOpened')) {
+            $product->repaired = $validate['isRepairedOrOpened'] == "on" ? 1 : 0;
+            if ($validate['isRepairedOrOpened'] == "on") {
+                $product->explainAboutRepairing = $validate['reason'];
+            }
+        } else {
+            $product->repaired = 0;
+        }
+
+        $product->productQuantity = $validate['amount_in_stock'];
+        $product->yearOfProduct = $validate['year_of_making'];
+        $product->warranty = $validate['warranty'];
+        $product->productCategory = 39;
+
+        if ($request->input('productDescription')) {
+            $product->productDescription = $validate['productDescription'];
+        }
+
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+
+        if ($request->file('fourthImage')) {
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+        }
+        if ($request->file('fifthImage')) {
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+        }
+
+        if (Auth::user()->approved != 0) {
+            $product->approved = 1;
+        } else {
+            $product->approved = 0;
+        }
+        $product->save();
+
+        $ProductVariation = new ProductVariations;
+        $ProductVariation->productId = $product->id;
+        $ProductVariation->ProcessorName = $validate['processorName'];
+        $ProductVariation->ProcessorBrand = $validate['processorBrand'];
+        $ProductVariation->ProcessorUsedOrNew = $validate['processorUsedOrNew'];
+        $ProductVariation->GraphicCardName = $validate['graphicCardName'];
+        $ProductVariation->GraphicCardBrand = $validate['graphicCardBrand'];
+        $ProductVariation->GraphicCardMemory = $validate['graphicCardMemory'];
+        $ProductVariation->GraphicCardUsedOrNew = $validate['graphicCardUsedOrNew'];
+        $ProductVariation->MotherBoardName = $validate['motherboardName'];
+        $ProductVariation->MotherBoardBrand = $validate['motherboardBrand'];
+        $ProductVariation->MotherBoardUsedOrNew = $validate['motherboardUsedOrNew'];
+        $ProductVariation->RamName = $validate['ramName'];
+        $ProductVariation->RamBrand = $validate['ramBrand'];
+        $ProductVariation->RamMemory = $validate['ramMemory'];
+        $ProductVariation->ramUsedOrNew = $validate['ramUsedOrNew'];
+        $ProductVariation->RamQuantity = $validate['ramQuantity'];
+        $ProductVariation->PSUName = $validate['psuName'];
+        $ProductVariation->PSUBrand = $validate['psuBrand'];
+        $ProductVariation->PSUWatts = $validate['psuWatts'];
+        $ProductVariation->PSUUsedOrNew = $validate['psuUsedOrNew'];
+        $ProductVariation->CaseName = $validate['caseName'];
+        $ProductVariation->CaseBrand = $validate['caseBrand'];
+        $ProductVariation->CaseUsedOrNew = $validate['caseUsedOrNew'];
+        $ProductVariation->CoolerName = $validate['coolerName'];
+        $ProductVariation->CoolerBrand = $validate['coolerBrand'];
+        $ProductVariation->coolerUsedOrNew = $validate['coolerUsedOrNew'];
+        $ProductVariation->save();
+
+
+        foreach ($storageData as $storageItem) {
+            $Storage = new StorageData;
+            $Storage->productId = $product->id;
+            $Storage->name = $storageItem['name'];
+            $Storage->brandID = $storageItem['brand'];
+            $Storage->type = $storageItem['type'];
+            $Storage->Memory = $storageItem['memory'];
+            $Storage->usedOrNew = $storageItem['usedOrNew'];
+            $Storage->save();
+        }
+
+        foreach ($additionalPartsData as $pcparts) {
+            $additionparts = new AdditionalPcPartsData;
+            $additionparts->productId = $product->id;
+            $additionparts->name = $pcparts['name'];
+            $additionparts->userOrnew = $pcparts['userOrnew'];
+            $additionparts->save();
+        }
+
+        foreach ($additionProductData as $additionProduct) {
+            $additionsProduct = new additionalProducts;
+            $additionsProduct->productId = $product->id;
+            $additionsProduct->name = $additionProduct['name'];
+            $additionsProduct->brandId = $additionProduct['brand'];
+            $additionsProduct->CategoryID = $additionProduct['category'];
+            $additionsProduct->UsedOrNew = $additionProduct['usedOrNew'];
+            $additionsProduct->save();
+        }
+
+
+        return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+    }
+    public function uploadLaptop(Request $request){
+
+        $validate = $request->validate([
+            'productTitle' => 'required|string',
+            'productDescription' => 'required|string',
+            'warranty' => 'required|string',
+            'year_of_making' => 'required|string',
+            'amount_in_stock' => 'required|string',
+            'current_price' => 'required|string',
+            'sale_price' => 'required|string',
+            'isRepairedOrOpened' => 'nullable|string',
+            'reason' => $request->input('isRepairedOrOpened') == 'on' ? 'required|string' : 'nullable|string',
+            'processorName' => 'required|string',
+            'processorBrand' => 'required|string',
+            'processorUsedOrNew' => 'required|string',
+            'graphicCardName' => 'required|string',
+            'graphicCardBrand' => 'required|string',
+            'graphicCardMemory' => 'required|string',
+            'graphicCardUsedOrNew' => 'required|string',
+            'motherboardName' => 'required|string',
+            'motherboardBrand' => 'required|string',
+            'motherboardUsedOrNew' => 'required|string',
+            'ramName' => 'required|string',
+            'ramBrand' => 'required|string',
+            'ramMemory' => 'required|string',
+            'ramUsedOrNew' => 'required|string',
+            'ramQuantity' => 'required|string',
+            'psuName' => 'required|string',
+            'psuBrand' => 'required|string',
+            'psuWatts' => 'required|string',
+            'psuUsedOrNew' => 'required|string',
+            'caseName' => 'required|string',
+            'caseBrand' => 'required|string',
+            'caseUsedOrNew' => 'required|string',
+            'coolerName' => 'required|string',
+            'coolerBrand' => 'required|string',
+            'coolerUsedOrNew' => 'required|string',
+            'storageData' => 'required|json',
+        ]);
+
+
+        $storageData = json_decode($request->input('storageData'), true);
+
+
+        $storageDataValidator = Validator::make($storageData, [
+            '*.name' => 'required|string',
+            '*.brand' => 'required|string',
+            '*.type' => 'required|string',
+            '*.memory' => 'required|string',
+            '*.usedOrNew' => 'required|string',
+        ]);
+
+        if ($storageDataValidator->fails()) {
+            return back()->withErrors($storageDataValidator)->withInput();
+        }
+
+
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
+
+        if (!file_exists(public_path($folderPath))) {
+            mkdir(public_path($folderPath), 0777, true);
+        }
+
+        $mainImage = $request->file('mainImage');
+        $mainImageName = time() . '_' . 'front_image' . '.' . $mainImage->getClientOriginalExtension();
+        $mainImage->move(public_path($folderPath), $mainImageName);
+
+        $firstImage = $request->file('firstImage');
+        $firstImageName = time() . '_' . 'first_image' . '.' . $firstImage->getClientOriginalExtension();
+        $firstImage->move(public_path($folderPath), $firstImageName);
+
+        $secondImage = $request->file('secondImage');
+        $secondImageName = time() . '_' . 'second_image' . '.' . $secondImage->getClientOriginalExtension();
+        $secondImage->move(public_path($folderPath), $secondImageName);
+
+        $thirdImage = $request->file('thirdImage');
+        $thirdImageName = time() . '_' . 'third_image' . '.' . $thirdImage->getClientOriginalExtension();
+        $thirdImage->move(public_path($folderPath), $thirdImageName);
+
+        if ($request->file('fourthImage')) {
+            $fourthImage = $request->file('fourthImage');
+            $fourthImageName = time() . '_' . 'fourth_image' . '.' . $fourthImage->getClientOriginalExtension();
+            $fourthImage->move(public_path($folderPath), $fourthImageName);
+        }
+        if ($request->file('fifthImage')) {
+            $fifthImage = $request->file('fifthImage');
+            $fifthImageName = time() . '_' . 'fifth_image' . '.' . $fifthImage->getClientOriginalExtension();
+            $fifthImage->move(public_path($folderPath), $fifthImageName);
+        }
+
+        $product = new Products;
+        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->ProductType = $request->input('ProductType');
+        $product->user_id = Auth::user()->id;
+        $product->productTitle = $validate['productTitle'];
+
+
+        if ($request->input('brand')) {
+            $product->brandName = $validate['brand'];
+        } else {
+            $product->brandName = 63;
+        }
+
+        if ($request->input('isRepairedOrOpened')) {
+            $product->repaired = $validate['isRepairedOrOpened'] == "on" ? 1 : 0;
+            if ($validate['isRepairedOrOpened'] == "on") {
+                $product->explainAboutRepairing = $validate['reason'];
+            }
+        } else {
+            $product->repaired = 0;
+        }
+
+        $product->productQuantity = $validate['amount_in_stock'];
+        $product->yearOfProduct = $validate['year_of_making'];
+        $product->warranty = $validate['warranty'];
+        $product->productCategory = 40;
+
+        if ($request->input('productDescription')) {
+            $product->productDescription = $validate['productDescription'];
+        }
+
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+
+        if ($request->file('fourthImage')) {
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+        }
+        if ($request->file('fifthImage')) {
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+        }
+
+        if (Auth::user()->approved != 0) {
+            $product->approved = 1;
+        } else {
+            $product->approved = 0;
+        }
+        $product->save();
+
+        $ProductVariation = new ProductVariations;
+        $ProductVariation->productId = $product->id;
+        $ProductVariation->ProcessorName = $validate['processorName'];
+        $ProductVariation->ProcessorBrand = $validate['processorBrand'];
+        $ProductVariation->ProcessorUsedOrNew = $validate['processorUsedOrNew'];
+        $ProductVariation->GraphicCardName = $validate['graphicCardName'];
+        $ProductVariation->GraphicCardBrand = $validate['graphicCardBrand'];
+        $ProductVariation->GraphicCardMemory = $validate['graphicCardMemory'];
+        $ProductVariation->GraphicCardUsedOrNew = $validate['graphicCardUsedOrNew'];
+        $ProductVariation->MotherBoardName = $validate['motherboardName'];
+        $ProductVariation->MotherBoardBrand = $validate['motherboardBrand'];
+        $ProductVariation->MotherBoardUsedOrNew = $validate['motherboardUsedOrNew'];
+        $ProductVariation->RamName = $validate['ramName'];
+        $ProductVariation->RamBrand = $validate['ramBrand'];
+        $ProductVariation->RamMemory = $validate['ramMemory'];
+        $ProductVariation->ramUsedOrNew = $validate['ramUsedOrNew'];
+        $ProductVariation->RamQuantity = $validate['ramQuantity'];
+        $ProductVariation->PSUName = $validate['psuName'];
+        $ProductVariation->PSUBrand = $validate['psuBrand'];
+        $ProductVariation->PSUWatts = $validate['psuWatts'];
+        $ProductVariation->PSUUsedOrNew = $validate['psuUsedOrNew'];
+        $ProductVariation->CaseName = $validate['caseName'];
+        $ProductVariation->CaseBrand = $validate['caseBrand'];
+        $ProductVariation->CaseUsedOrNew = $validate['caseUsedOrNew'];
+        $ProductVariation->CoolerName = $validate['coolerName'];
+        $ProductVariation->CoolerBrand = $validate['coolerBrand'];
+        $ProductVariation->coolerUsedOrNew = $validate['coolerUsedOrNew'];
+        $ProductVariation->save();
+
+
+        foreach ($storageData as $storageItem) {
+            $Storage = new StorageData;
+            $Storage->productId = $product->id;
+            $Storage->name = $storageItem['name'];
+            $Storage->brandID = $storageItem['brand'];
+            $Storage->type = $storageItem['type'];
+            $Storage->Memory = $storageItem['memory'];
+            $Storage->usedOrNew = $storageItem['usedOrNew'];
+            $Storage->save();
+        }
+
+        return redirect(route('seller.allProducts'))->with(['success' => 'Product Uploaded Successfully']);
+    }
     public function uploadProduct(Request $request)
     {
 
-        // dd($request->all());
+        dd($request->all());
 
         $validate = $request->validate([
             'ProductType' => 'required',
             'productTitle' => 'required|string',
-            'productCategory' => ($request->ProductType == '4' || $request->ProductType == '5') ? 'nullable|string' : 'required|string',
-            'brandName' => ($request->input('thisBrandDoesNotHaveProduct') == 'on' || $request->input('ProductType') == '4' || $request->input('ProductType') == '5') ? 'nullable|string' : 'required|string',
+            'category' => ($request->ProductType == '4' || $request->ProductType == '5') ? 'nullable|string' : 'required|string',
+            'brand' => ($request->input('thisBrandDoesNotHaveProduct') == 'on' || $request->input('ProductType') == '4' || $request->input('ProductType') == '5') ? 'nullable|string' : 'required|string',
             'yearOfProduct' => 'required|string',
             'warranty' => 'required|string',
             'reason' => 'nullable|string',
@@ -403,9 +1152,7 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function UploadUsedProducts(Request $req){
-        return response()->json($req->all());
-    }
+
 
     public function getCompletePc()
     {

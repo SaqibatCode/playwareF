@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('productTitle');
+            $table->string('slug')->unique();
             $table->unsignedBigInteger('brandName');
             $table->foreign('brandName')->references('id')->on('brands')->onDelete('cascade');
             $table->unsignedBigInteger('productCategory');
@@ -23,7 +24,6 @@ return new class extends Migration {
             $table->string('AboutThisitem')->nullable();
             $table->integer('productQuantity');
             $table->string('yearOfProduct');
-            $table->string('productSku');
             $table->string('warranty');
             $table->string('reason')->nullable();
             $table->integer('repaired')->default(0);

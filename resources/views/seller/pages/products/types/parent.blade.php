@@ -37,7 +37,7 @@
                             <img src="{{ asset('assets/images/computer.png') }}" class="w-25" alt="">
                             <h1 class="text-black mt-3">Complete PC</h1>
                         </a>
-                        <a
+                        <a href="{{ route('seller.Laptop') }}"
                             class="col-6 gap-4 border hover-product-card border-black rounded rounded-2 cursor-pointer d-flex flex-column align-items-center justify-content-center py-4 bg-secondary-subtle">
                             <img src="{{ asset('assets/images/laptop.png') }}" class="w-25" alt="">
                             <h1 class="text-black mt-3">Laptop</h1>

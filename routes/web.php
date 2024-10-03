@@ -61,7 +61,10 @@ Route::prefix('api/v1')->group(function () {
 
         Route::prefix('upload')->group(function () {
             Route::prefix('product')->controller(ProductsController::class)->group(function () {
+                Route::post('new', 'UploadNewProducts')->name('auth.UploadNewProduct');
                 Route::post('used', 'UploadUsedProducts')->name('auth.UploadUsedProduct');
+                Route::post('complete-pc', 'uploadCompletePc')->name('auth.UploadCompletePc');
+                Route::post('laptop', 'uploadLaptop')->name('auth.UploadLaptop');
             });
         });
 
@@ -257,3 +260,5 @@ Route::get('sign-up', [UserAuthController::class, 'signUp'])->name('signUp');
 Route::post('sign-up', [UserAuthController::class, 'signUpUser'])->name('user.signup');
 Route::get('login-user', [UserAuthController::class, 'getLoginPage'])->name('login-user');
 Route::post('checkout', [OrderController::class, 'createOrder'])->name('createOrder');
+
+Route::get('logout', [UserAuthController::class, 'logoutUser'])->name('logoutUser');

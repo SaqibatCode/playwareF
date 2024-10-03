@@ -11,6 +11,6 @@ class Order extends Model
 
 
     public function all_products(){
-        return $this->hasMany(Products::class, 'id');
+        return $this->hasOne(Products::class, 'id', 'product_id');
     }
 }

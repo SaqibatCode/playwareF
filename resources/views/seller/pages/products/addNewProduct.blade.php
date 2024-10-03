@@ -3053,7 +3053,6 @@
                 // Set the hidden input field value
                 document.getElementById('storageData').value = JSON.stringify(storageData);
             }
-
             uploadProductForm.addEventListener('submit', gatherStorageData);
 
 
@@ -3075,7 +3074,6 @@
 
                 document.getElementById('additionalPartsData').value = JSON.stringify(AdditionPartsData);
             }
-
             uploadProductForm.addEventListener('submit', gatherAdditionalPartData);
 
             function gatherAdditionalProductsData() {
@@ -3101,8 +3099,6 @@
 
                 document.getElementById('additionProductData').value = JSON.stringify(AdditionalProductsData);
             }
-
-
             uploadProductForm.addEventListener('submit', gatherAdditionalProductsData);
 
             function gatherLaptopStorage() {
@@ -3128,8 +3124,6 @@
 
                 document.getElementById('laptopStorage').value = JSON.stringify(LaptopStorageData);
             }
-
-
             uploadProductForm.addEventListener('submit', gatherLaptopStorage);
 
 

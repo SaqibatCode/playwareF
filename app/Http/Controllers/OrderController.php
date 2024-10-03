@@ -59,7 +59,7 @@ class OrderController extends Controller
         $order->seller_id = $item['vendor_id'];
         $order->product_id = $item['id'];
         $order->quantity = $item['quantity'];
-        $order->total_amount = $item['price'];
+        $order->total_amount = $item['total'];
         $order->status = 'In Progress';
         $order->shipping_address = $address;
         $order->billing_address = $address;

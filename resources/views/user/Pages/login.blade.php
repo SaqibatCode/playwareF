@@ -27,7 +27,7 @@
                 <input id="Password" type="password" name="password" placeholder="*********"
                     class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"
                     required />
-                <small>Haven't Got Account? <a href="#">Sign Up</a> Here</small>
+                <small>Haven't Got Account? <a href="{{ route('signUp') }}">Sign Up</a> Here</small>
                 <button type="submit"
                     class="w-full py-3 mt-6 font-medium tracking-widest text-skin-inverted uppercase bg-blue-600 shadow-lg focus:outline-none hover:bg-blue-700 transition-all duration-300 hover:shadow-none rounded-md">
                     Login

@@ -65,7 +65,13 @@ class UserAuthController extends Controller
 
     public function getAccountPage(){
         $user = Auth::user();
-        $orders = Order::where('customer_id', $user->id)->with('all_products')->get();
+        if(!$user){
+            return redirect()->route('login-user');
+        }
+        $orders = Order::where('customer_id', $user->id)->with('all_products', 'all_products.users')->get();
+
+        // return response()->json($orders);
+
         return view('user.Pages.account', compact('user', 'orders'));
     }
 
@@ -83,5 +89,14 @@ class UserAuthController extends Controller
             $user->save();
         }
         return redirect('/my-account')->with('success', 'Saved Sucessfully');
+    }
+
+    public function logoutUser(){
+        if(!Auth::check()){
+            return redirect()->route('login-user');
+        }
+
+        Auth::logout();
+        return redirect()->route('login-user');
     }
 }

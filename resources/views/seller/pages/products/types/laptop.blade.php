@@ -22,7 +22,18 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="#">
+                    <form action="{{ route('auth.UploadLaptop') }}" method="POST" enctype="multipart/form-data">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @csrf
+                        <input type="hidden" name="ProductType" value="5">
                         <div class="row">
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
@@ -200,7 +211,7 @@
                                         <div class="col-md col-sm-12">
                                             <div class="form-group">
                                                 <label for="graphicCardUsedOrNew">Used Or New?</label>
-                                                <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew0"
+                                                <select id="graphicCardUsedOrNew" name="graphicCardUsedOrNew"
                                                     class="form-control">
                                                     <option value="0" selected="">Please Select</option>
                                                     <option value="1">Used</option>
@@ -331,7 +342,7 @@
                                 <div class="col-12">
                                     <h4>Storage:</h4>
                                 </div>
-                                <input type="hidden" id="storageData" name="storageData">
+                                <input type="hidden" id="laptopStorage" name="storageData">
                                 <div id="storageSpecsDiv" class="col-12">
                                     <div id="row1" class="row">
                                         <div class="col-12">
@@ -773,5 +784,33 @@
 
 
 
+        var uploadProductForm = document.querySelector('form[action="{{ route('auth.UploadLaptop') }}"]');
+
+        function gatherLaptopStorage() {
+            const LaptopStorageData = [];
+
+            const rows = document.querySelectorAll('#storageSpecsDiv .row');
+
+            rows.forEach((row, index) => {
+                const LaptopStorageName = row.querySelector('.storageName').value;
+                const LaptopStorageBrand = row.querySelector('.storageBrand').value;
+                const LaptopStorageType = row.querySelector('.storageType').value;
+                const LaptopstorageMemory = row.querySelector('.storageMemory').value;
+                const LaptopstorageUsedOrNew = row.querySelector('.storageUsedOrNew').value;
+
+                const LaptopStorage = {
+                    name: LaptopStorageName,
+                    brand: LaptopStorageBrand,
+                    type: LaptopStorageType,
+                    memory: LaptopstorageMemory,
+                    usedOrNew: LaptopstorageUsedOrNew
+                };
+
+                LaptopStorageData.push(LaptopStorage);
+            });
+
+            document.getElementById('laptopStorage').value = JSON.stringify(LaptopStorageData);
+        }
+        uploadProductForm.addEventListener('submit', gatherLaptopStorage);
     </script>
 @endsection
