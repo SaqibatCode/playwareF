@@ -40,10 +40,9 @@
                             <label for="productTitle">Package Title</label>
                             <input type="text" value="{{ old('productTitle') }}" id="productTitle" name="productTitle"
                                 class="form-control" placeholder="Package 1 Flash Deal">
-                            {{-- @error('productTitle')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror --}}
-
+                            @error('productTitle')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
 
 
@@ -57,6 +56,9 @@
                                     <label for="PackageQuantity">Package Quantity</label>
                                     <input type="number" id="PackageQuantity" name="PackageQuantity" class="form-control"
                                         placeholder="Eg. 100">
+                                    @error('PackageQuantity')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
@@ -64,6 +66,9 @@
                                     <label for="originalPrice">Original Price</label>
                                     <input type="number" id="originalPrice" name="originalPrice" class="form-control"
                                         placeholder="Eg. 1500">
+                                    @error('originalPrice')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -72,6 +77,9 @@
                                     <label for="sellPrice">Sale Price (Leave Empty If Not On Sale)</label>
                                     <input type="number" id="sellPrice" name="sellPrice" class="form-control"
                                         placeholder="Eg. 1200">
+                                    @error('sellPrice')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -79,126 +87,142 @@
                         <div class="row">
                             <div id="packageProductsDiv" class="col-12">
 
-                                <div id="packageProductrow1" class='row'>
-                                    <input type="hidden" id="packageProductData" name="packageProductData">
-                                    <div class="col-12">
-                                        <h5>Product 1</h5>
-                                    </div>
-                                    <div class="col-md col-sm-12">
-                                        <div class="form-group">
-                                            <label for="packageProductName1">Enter Name</label>
-                                            <input type="text" data-id="1" id="packageProductName1"
-                                                name="packageProductName1" class="form-control packageProductName"
-                                                placeholder="Product Title">
-                                        </div>
-                                    </div>
-                                    <div class="col-md col-sm-12">
-                                        <div class="form-group">
-                                            <label for="packageProductCategory1">Product Category</label>
-                                            <select data-id="1" id="packageProductCategory1"
-                                                name="packageProductCategory1" class="form-control packageProductCategory">
-                                                <option value="0">Please Select</option>
-                                                @foreach ($categories as $category)
-                                                    <x-categories-select :category="$category" :oldValue="old('productCategory')" />
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md col-sm-12">
-                                        <div class="form-group">
-                                            <label for="productBrand1">Product Brand</label>
-                                            <select data-id="1" id="productBrand1" name="productBrand1"
-                                                class="form-control packageProductBrandName">
-                                                <option value="0">Please Select</option>
-                                                @foreach ($categories as $category)
-                                                    <x-categories-select :category="$category" :oldValue="old('productCategory')" />
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md col-sm-12">
-                                        <div class="form-group">
-                                            <label for="packageProductUsedOrNew1">Used Or New?</label>
-                                            <select data-id="1" id="packageProductUsedOrNew1"
-                                                name="packageProductUsedOrNew1"
-                                                class="form-control packageProductUsedOrNew">
-                                                <option value="0">Please Select</option>
-                                                <option value="1">Used</option>
-                                                <option value="2">New</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            @php
-                                $PackageProducts = json_decode(old('packageProductData'));
-                                print_r($PackageProducts);
-
-                            @endphp
-                            @if ($PackageProducts > 0)
-                            @php
-                                $count = 1;
-                            @endphp
-                                @foreach ($PackageProducts as $package)
+                                @if (old('packageProductData'))
                                     @php
-                                        $count++;
+                                        $packageProductData = json_decode(old('packageProductData'), true);
                                     @endphp
-                                    <div id="packageProductsDiv" class="col-12">
-                                        <div id="packageProductrow{{$count}}" class='row'> 
+                                    @foreach ($packageProductData as $ProductData)
+                                        <div id="packageProductrow{{ $loop->index + 1 }}" class='row'>
+                                            <input type="hidden" id="packageProductData" name="packageProductData">
                                             <div class="col-12">
-                                                <h5>Product {{$count}}</h5>
+                                                <h5>Product {{ $loop->index + 1 }}</h5>
                                             </div>
                                             <div class="col-md col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="packageProductName{{$count}}">Enter Name</label>
-                                                    <input type="text" data-id="{{$count}}" id="packageProductName{{$count}}"
-                                                        name="packageProductName{{$count}}" class="form-control packageProductName"
-                                                        placeholder="Product Title">
+                                                    <label for="packageProductName{{ $loop->index + 1 }}">Enter Name</label>
+                                                    <input type="text" data-id="{{ $loop->index + 1 }}"
+                                                        id="packageProductName{{ $loop->index + 1 }}"
+                                                        name="packageProductName{{ $loop->index + 1 }}"
+                                                        class="form-control packageProductName" placeholder="Product Title"
+                                                        value="{{ $ProductData['name'] }}">
                                                 </div>
+                                                @if (empty($ProductData['name']))
+                                                    <span class="text-danger">This field is required.</span>
+                                                @endif
                                             </div>
+
                                             <div class="col-md col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="packageProductCategory{{$count}}">Product Category</label>
-                                                    <select data-id="{{$count}}" id="packageProductCategory{{$count}}"
-                                                        name="packageProductCategory{{$count}}"
+                                                    <label for="packageProductCategory{{ $loop->index + 1 }}">Product
+                                                        Category</label>
+                                                    <select data-id="{{ $loop->index + 1 }}"
+                                                        id="packageProductCategory{{ $loop->index + 1 }}"
+                                                        name="packageProductCategory{{ $loop->index + 1 }}"
                                                         class="form-control packageProductCategory">
                                                         <option value="0">Please Select</option>
                                                         @foreach ($categories as $category)
-                                                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                            <x-categories-select :category="$category" :oldValue="$ProductData['category']" />
                                                         @endforeach
                                                     </select>
+                                                    @if (empty($ProductData['category']))
+                                                        <span class="text-danger">This field is required.</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="productBrand{{$count}}">Product Brand</label>
-                                                    <select data-id="{{$count}}" id="productBrand{{$count}}" name="productBrand{{$count}}"
+                                                    <label for="productBrand{{ $loop->index + 1 }}">Product Brand</label>
+                                                    <select data-id="{{ $loop->index + 1 }}"
+                                                        id="productBrand{{ $loop->index + 1 }}"
+                                                        name="productBrand{{ $loop->index + 1 }}"
                                                         class="form-control packageProductBrandName">
                                                         <option value="0">Please Select</option>
-                                                        @foreach ($categories as $category)
-                                                            <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                        @foreach ($brands as $brand)
+                                                            <option value="{{ $brand->id }}" {{ $brand->id == $storage['brand'] ? 'selected' : '' }}> {{ $brand->name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @if (empty($ProductData['brand']))
+                                                        <span class="text-danger">This field is required.</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-md col-sm-12">
                                                 <div class="form-group">
-                                                    <label for="packageProductUsedOrNew{{$count}}">Used Or New?</label>
-                                                    <select data-id="{{$count}}" id="packageProductUsedOrNew{{$count}}"
-                                                        name="packageProductUsedOrNew{{$count}}"
+                                                    <label for="packageProductUsedOrNew{{ $loop->index + 1 }}">Used Or
+                                                        New?</label>
+                                                    <select data-id="{{ $loop->index + 1 }}"
+                                                        id="packageProductUsedOrNew{{ $loop->index + 1 }}"
+                                                        name="packageProductUsedOrNew{{ $loop->index + 1 }}"
                                                         class="form-control packageProductUsedOrNew">
-                                                        <option value="0">Please Select</option>
-                                                        <option value="1">Used</option>
-                                                        <option value="2">New</option>
+                                                        <option selected value="">Please Select</option>
+                                                        <option value="1"
+                                                            {{ $ProductData['usedornew'] == 1 ? 'selected' : '' }}>Used
+                                                        </option>
+                                                        <option value="2"
+                                                            {{ $ProductData['usedornew'] == 2 ? 'selected' : '' }}>New
+                                                        </option>
                                                     </select>
+                                                    @if (empty($ProductData['usedornew']))
+                                                        <span class="text-danger">This field is required.</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div id="packageProductrow1" class='row'>
+                                        <input type="hidden" id="packageProductData" name="packageProductData">
+                                        <div class="col-12">
+                                            <h5>Product 1</h5>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="packageProductName1">Enter Name</label>
+                                                <input type="text" data-id="1" id="packageProductName1"
+                                                    name="packageProductName1" class="form-control packageProductName"
+                                                    placeholder="Product Title">
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="packageProductCategory1">Product Category</label>
+                                                <select data-id="1" id="packageProductCategory1"
+                                                    name="packageProductCategory1"
+                                                    class="form-control packageProductCategory">
+                                                    <option value="0">Please Select</option>
+                                                    @foreach ($categories as $category)
+                                                        <x-categories-select :category="$category" :oldValue="old('productCategory')" />
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="productBrand1">Product Brand</label>
+                                                <select data-id="1" id="productBrand1" name="productBrand1"
+                                                    class="form-control packageProductBrandName">
+                                                    <option value="0">Please Select</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md col-sm-12">
+                                            <div class="form-group">
+                                                <label for="packageProductUsedOrNew1">Used Or New?</label>
+                                                <select data-id="1" id="packageProductUsedOrNew1"
+                                                    name="packageProductUsedOrNew1"
+                                                    class="form-control packageProductUsedOrNew">
+                                                    <option value="0">Please Select</option>
+                                                    <option value="1">Used</option>
+                                                    <option value="2">New</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                @endforeach
-                            @endif
+                                @endif
+
+                            </div>
+
 
                             <div class="col-12 mb-4">
                                 <button type="button" class="btn btn-primary mt-2" id="addMoreBtn">Add More Products

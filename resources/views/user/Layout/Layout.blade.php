@@ -30,7 +30,7 @@
                 <img class="w-40 h-auto" src="{{ asset('assets/images/logo/logo.svg') }}">
             </a>
 
-            <ul class="hidden items-center gap-6 xl:gap-8 min-[992px]:flex">
+            <ul class="hidden items-center gap-6 xl:gap-8 min-[992px]:flex ">
                 <!-- LOGO -->
 
 
@@ -54,7 +54,14 @@
                         href="{{ route('contact') }}">Support</a></li>
 
             </ul>
-            <ul class="flex gap-4">
+            <style>
+                @media(max-width:767px){
+                    .desktop-menu-class {
+                        display: none;
+                    }
+                }
+            </style>
+            <ul class="flex gap-4 desktop-menu-class">
                 <li onclick="toggleSubcategoryMegaMenu('searchBarMenu')"
                     onmouseover="toggleOutSubcategoryMegaMenu('searchBarMenu')" class="nav-link text-2xl">
                     <svg stroke="currentColor" fill="currentColor" stroke-width="1" version="1.1" id="search-icon"
@@ -71,7 +78,7 @@
                 <li class="nav-link text-2xl">
                     <a href="{{ route('cart') }}" style="position: relative;">
                         <span class="quantity"
-                            style="position: absolute; top: -8px; right: -8px; background-color: white; color: black; font-size: 12px; padding: 4px; display: flex; align-items: center; justify-content:center; height: 20px; width: 20px; border-radius: 100%;">{{ session('cart') ? count(session('cart')) : 0; }}</span>
+                            style="position: absolute; top: -8px; right: -8px; background-color: white; color: black; font-size: 12px; padding: 4px; display: flex; align-items: center; justify-content:center; height: 20px; width: 20px; border-radius: 100%;">{{ session('cart') ? count(session('cart')) : 0 }}</span>
                         <svg stroke="currentColor" fill="currentColor" stroke-width="1" viewBox="0 0 24 24"
                             height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                             <g id="Shopping_Cart">
@@ -400,8 +407,24 @@
     @yield('mainContent')
 
 
+    @if (!Auth::check())
+        <div class="user-signup-module">
 
+            <a href="{{ route('register') }}"> <button class="btn-1 btn-full" >I want to Sell</button></a>
+            <a href="{{ route('signUp') }}"><button class="btn-1 btn-full">I want to Buy</button></a>
 
+        </div>
+        <style>
+            .user-signup-module {
+                position: fixed;
+                left: 10px;
+                bottom: 10px;
+                background: white;
+                padding: 20px;
+                border-radius: 20px;
+            }
+        </style>
+    @endif
     <footer id="footer" class="flex flex-col items-center bg-skin-gray text-center text-skin-inverted">
         <div class="container px-6 pt-6">
             <!-- Social media icons container -->

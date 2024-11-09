@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use App\Models\Order;
 use App\Models\Products;
 use Illuminate\Http\Request;
@@ -10,7 +11,37 @@ class IndexPageController extends Controller
 {
     public function getIndexPage()
     {
-        return view('user.Pages.Index');
+        $recentProducts = Products::where('approved', 1)
+        ->with(['brand', 'category', 'users'])
+        ->where('productQuantity', '!=', 0)
+        ->latest()
+        ->take(5)
+        ->get();
+        $mouse = 'mouse';
+        $mouseCat = Products::where('approved', 1)
+        ->with(['brand', 'category', 'users'])
+        ->whereHas('category', function ($query) use ($mouse) {
+            $query->where('name', $mouse);
+        })
+        ->get();
+
+        $keyboard = 'keyboard';
+        $keyboardCat = Products::where('approved', 1)
+        ->with(['brand', 'category', 'users'])
+        ->whereHas('category', function ($query) use ($keyboard) {
+            $query->where('name', $keyboard);
+        })
+        ->get();
+
+        $graphic = 'Graphics Card';
+        $graphicCat = Products::where('approved', 1)
+        ->with(['brand', 'category', 'users'])
+        ->whereHas('category', function ($query) use ($graphic) {
+            $query->where('name', $graphic);
+        })
+        ->get();
+        $category = Categories::all();
+        return view('user.Pages.Index', compact('recentProducts', 'mouseCat', 'keyboardCat', 'graphicCat'));
     }
 
     public function getShopPage()
@@ -51,6 +82,8 @@ class IndexPageController extends Controller
         $success = session()->get('success', '');
         $parentOrderId = session('parentOrderId');
         $order = Order::where('parent_order_id', $parentOrderId)->with('all_products')->get();
+        // return response()->json($order);
+        // return response()->json($order);
         return view('user.Pages.success', compact('success', 'order'));
     }
 

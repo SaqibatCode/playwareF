@@ -1,4 +1,4 @@
-@extends('admin.Layout.layout')
+@extends('admin.layout.layout')
 @section('main-content')
 
     <div class="page-content">
@@ -102,7 +102,7 @@
                                     <tbody>
 
                                         @foreach ($categories as $category)
-                                            <x-adminCategoryItem :category="$category" />
+                                            <x-admincategoryitem :category="$category" />
                                         @endforeach
                                     </tbody>
                                 </table>

@@ -24,7 +24,7 @@
 <ul>
     @if ($category->children)
         @foreach ($category->children as $child)
-            <x-adminCategoryItem :category="$child" :level="$level + 1" />
+            <x-admincategoryitem :category="$child" :level="$level + 1" />
         @endforeach
     @endif
 </ul>

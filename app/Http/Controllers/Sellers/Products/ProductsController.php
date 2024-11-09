@@ -17,6 +17,14 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
+    private $fullNameUnderscored;
+
+    public function __construct()
+    {
+        if (Auth::check()) {
+            $this->fullNameUnderscored = str_replace(' ', '_', $this->fullNameUnderscored);
+        }
+    }
     public function getAllProducts()
     {
         $userId = Auth::user()->id;
@@ -89,7 +97,7 @@ class ProductsController extends Controller
             'fifthImage.mimes' => 'The fifth image must be a file of type: png, jpg, jpeg, webp.',
         ]);
 
-        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . Auth::user()->fullName;
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . $this->fullNameUnderscored;
 
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
@@ -123,7 +131,7 @@ class ProductsController extends Controller
         }
 
         $product = new Products;
-        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->slug = $this->fullNameUnderscored . "-" . strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
         $product->ProductType = $request->input('ProductType');
         $product->user_id = Auth::user()->id;
         $product->productTitle = $validate['productTitle'];
@@ -156,16 +164,16 @@ class ProductsController extends Controller
             $product->SellPrice = $validate['sale_price'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $thirdImageName;
 
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fifthImageName;
         }
 
         if (Auth::user()->approved != 0) {
@@ -258,8 +266,10 @@ class ProductsController extends Controller
             'fourthImage.mimes' => 'The fourth image must be a file of type: png, jpg, jpeg, webp.',
             'fifthImage.mimes' => 'The fifth image must be a file of type: png, jpg, jpeg, webp.',
         ]);
+    
+        
+$folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . $fullNameUnderscored;
 
-        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
 
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
@@ -293,7 +303,7 @@ class ProductsController extends Controller
         }
 
         $product = new Products;
-        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->slug = $this->fullNameUnderscored . "-" . strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
         $product->ProductType = $request->input('ProductType');
         $product->user_id = Auth::user()->id;
         $product->productTitle = $validate['productTitle'];
@@ -333,16 +343,16 @@ class ProductsController extends Controller
             $product->SellPrice = $validate['sale_price'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $thirdImageName;
 
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fifthImageName;
         }
 
         if (Auth::user()->approved != 0) {
@@ -458,7 +468,7 @@ class ProductsController extends Controller
             return back()->withErrors($additionProductDataValidator)->withInput();
         }
 
-        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored);
 
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
@@ -492,7 +502,7 @@ class ProductsController extends Controller
         }
 
         $product = new Products;
-        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->slug = $this->fullNameUnderscored . "-" . strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
         $product->ProductType = $request->input('ProductType');
         $product->user_id = Auth::user()->id;
         $product->productTitle = $validate['productTitle'];
@@ -522,16 +532,16 @@ class ProductsController extends Controller
             $product->productDescription = $validate['productDescription'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $thirdImageName;
 
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fifthImageName;
         }
 
         if (Auth::user()->approved != 0) {
@@ -660,7 +670,7 @@ class ProductsController extends Controller
         }
 
 
-        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName);
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored);
 
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
@@ -694,7 +704,7 @@ class ProductsController extends Controller
         }
 
         $product = new Products;
-        $product->slug = strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
+        $product->slug = $this->fullNameUnderscored . "-" . strtolower(trim(preg_replace('/[\/\\s]+/', '-', $validate['productTitle'])));
         $product->ProductType = $request->input('ProductType');
         $product->user_id = Auth::user()->id;
         $product->productTitle = $validate['productTitle'];
@@ -724,16 +734,16 @@ class ProductsController extends Controller
             $product->productDescription = $validate['productDescription'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $thirdImageName;
 
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fifthImageName;
         }
 
         if (Auth::user()->approved != 0) {
@@ -861,7 +871,7 @@ class ProductsController extends Controller
         ]);
 
 
-        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . Auth::user()->fullName;
+        $folderPath = 'user_folders/Product_Images/' . Auth::user()->id . '_' . $this->fullNameUnderscored;
         if (!file_exists(public_path($folderPath))) {
             mkdir(public_path($folderPath), 0777, true);
         }
@@ -943,15 +953,15 @@ class ProductsController extends Controller
             $product->AboutThisitem = $validate['AboutThisitem'];
         }
 
-        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $mainImageName;
-        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $firstImageName;
-        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $secondImageName;
-        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $thirdImageName;
+        $product->mainImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $mainImageName;
+        $product->firstImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $firstImageName;
+        $product->secondImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $secondImageName;
+        $product->thirdImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $thirdImageName;
         if ($request->file('fourthImage')) {
-            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fourthImageName;
+            $product->fourthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fourthImageName;
         }
         if ($request->file('fifthImage')) {
-            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', Auth::user()->fullName) . '/' . $fifthImageName;
+            $product->fifthImage = Auth::user()->id . '_' . str_replace(' ', '_', $this->fullNameUnderscored) . '/' . $fifthImageName;
         }
         if (Auth::user()->approved != 0) {
             $product->approved = 1;
@@ -1160,11 +1170,25 @@ class ProductsController extends Controller
         $categories = Categories::root()->get();
         $brands = Brands::get();
         $storageBrands = Categories::where('id', 6)->first();
+        $processorBrands = Categories::where('id', 2)->first();
+        $graphidCardBrands = Categories::where('id', 4)->first();
+        $motherBoardBrands = Categories::where('id', 3)->first();
+        $ramBrands = Categories::where('id', 5)->first();
+        $psuBrands = Categories::where('id', 8)->first();
+        $caseBrands = Categories::where('id', 12)->first();
+        $coolerBrands = Categories::where('id', 7)->first();
         return view('seller.pages.products.types.completePc', [
             'title' => 'Complete PC',
             'brands' => $storageBrands->brands,
             'allBrands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'processorBrands' => $processorBrands->brands,
+            'graphidCardBrands' => $graphidCardBrands->brands,
+            'motherBoardBrands' => $motherBoardBrands->brands,
+            'ramBrands' => $ramBrands->brands,
+            'psuBrands' => $psuBrands->brands,
+            'caseBrands' => $caseBrands->brands,
+            'coolerBrands' => $coolerBrands->brands
         ]);
     }
 
@@ -1172,11 +1196,25 @@ class ProductsController extends Controller
         $categories = Categories::root()->get();
         $brands = Brands::get();
         $storageBrands = Categories::where('id', 6)->first();
+        $processorBrands = Categories::where('id', 2)->first();
+        $graphidCardBrands = Categories::where('id', 4)->first();
+        $motherBoardBrands = Categories::where('id', 3)->first();
+        $ramBrands = Categories::where('id', 5)->first();
+        $psuBrands = Categories::where('id', 8)->first();
+        $caseBrands = Categories::where('id', 12)->first();
+        $coolerBrands = Categories::where('id', 7)->first();
         return view('seller.pages.products.types.laptop', [
             'title' => 'Laptop',
             'brands' => $storageBrands->brands,
             'allBrands' => $brands,
-            'categories' => $categories
+            'categories' => $categories,
+            'processorBrands' => $processorBrands->brands,
+            'graphidCardBrands' => $graphidCardBrands->brands,
+            'motherBoardBrands' => $motherBoardBrands->brands,
+            'ramBrands' => $ramBrands->brands,
+            'psuBrands' => $psuBrands->brands,
+            'caseBrands' => $caseBrands->brands,
+            'coolerBrands' => $coolerBrands->brands,
         ]);
     }
 

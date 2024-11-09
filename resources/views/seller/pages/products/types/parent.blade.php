@@ -1,5 +1,10 @@
 @extends('seller.Layout.layout')
 @section('main-content')
+    <style>
+        .hover-product-card:hover{
+            background-color: #ebebeb;
+        }
+    </style>
     <div class="page-content">
         <div class="container-fluid">
             <div class="row">
@@ -30,7 +35,7 @@
                         <a href="{{ route('seller.UsedProduct') }}"
                             class="col-6 gap-4 border hover-product-card border-black rounded rounded-2 cursor-pointer d-flex flex-column align-items-center justify-content-center py-4 bg-secondary-subtle">
                             <img src="{{ asset('assets/images/box.png') }}" class="w-25" alt="">
-                            <h1 class="text-black mt-3">Old Product</h1>
+                            <h1 class="text-black mt-3">Used Product</h1>
                         </a>
                         <a href="{{ route('seller.CompletedPC') }}"
                             class="col-6 gap-4 border hover-product-card border-black rounded rounded-2 cursor-pointer d-flex flex-column align-items-center justify-content-center py-4 bg-secondary-subtle">

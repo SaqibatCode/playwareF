@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserAuthController extends Controller
@@ -60,7 +61,25 @@ class UserAuthController extends Controller
         }
     }
 
-    public function loginUser() {}
+    public function loginUser(Request $request) {
+        $credentials = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        // Attempt to login with the given credentials
+        if (Auth::attempt($credentials)) {
+            // Authentication was successful
+            $request->session()->regenerate(); // Regenerate session to prevent session fixation
+
+            return redirect()->intended('/'); // Redirect to intended page or dashboard
+        }
+
+        // If the login attempt was unsuccessful, redirect back with an error
+        return back()->withErrors([
+            'username' => 'The provided credentials do not match our records.',
+        ])->onlyInput('username');
+    }
 
 
     public function getAccountPage(){
@@ -68,9 +87,18 @@ class UserAuthController extends Controller
         if(!$user){
             return redirect()->route('login-user');
         }
-        $orders = Order::where('customer_id', $user->id)->with('all_products', 'all_products.users')->get();
 
-        // return response()->json($orders);
+        $subQuery = Order::select('parent_order_id', DB::raw('MIN(id) as id'))
+            ->where('customer_id', $user->id)
+            ->groupBy('parent_order_id');
+
+        $orders = Order::joinSub($subQuery, 'sub', function ($join) {
+                $join->on('orders.id', '=', 'sub.id');
+        })
+            ->with('all_products')
+            ->get();
+
+
 
         return view('user.Pages.account', compact('user', 'orders'));
     }
@@ -99,4 +127,6 @@ class UserAuthController extends Controller
         Auth::logout();
         return redirect()->route('login-user');
     }
+
+
 }

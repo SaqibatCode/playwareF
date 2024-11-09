@@ -21,6 +21,7 @@ use App\Http\Controllers\Sellers\Profile\ProfileDetailsController;
 use App\Http\Controllers\Admin\Products\ApprovedProductsController;
 use App\Http\Controllers\Admin\Products\ProductApprovalRequiredController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\Orders\OrderController as AdminOrderController;
 use App\Http\Controllers\Sellers\Dashboard\DashboardController as SellerDashboardController;
 
 /*
@@ -49,6 +50,10 @@ Route::prefix('api/v1')->group(function () {
     Route::post('/admin/login', [AuthController::class, 'loginAdmin'])->name('login.admin');
     Route::post('/seller/forgotPassword', [AuthController::class, 'forgotPasswordPost'])->name('forgotPasswordPost.seller');
     Route::post('/seller/reset-password', [AuthController::class, 'resetPasswordPost'])->name('resetPasswordPost.seller');
+
+    Route::prefix('account')->controller(OrderController::class)->group(function(){
+        Route::post('paid', 'postPaid')->name('account.paidPost');
+    });
 
 
     Route::middleware('seller')->prefix('seller')->group(function () {
@@ -110,6 +115,7 @@ Route::prefix('api/v1')->group(function () {
                 Route::post('/create-brand', [BrandController::class, 'createBrand'])->name('admin.createbrand');
                 Route::delete('/delete-brand/{id}', [BrandController::class, 'deleteBrands'])->name('admin.deleteBrand');
             });
+
         });
     });
 });
@@ -187,6 +193,10 @@ Route::middleware('admin')->prefix('admin')->group(function () {
         Route::get('/support-ticket', [SupportTicketController::class, 'getSupportTicketPage'])->name('admin.supportTicket');
         Route::get('/reports', [ReportsController::class, 'getReportsPage'])->name('admin.reports');
     });
+
+    Route::prefix('order')->controller(AdminOrderController::class)->group(function(){
+        Route::get('all', 'getAllOrders')->name('Admin.Orders');
+    });
 });
 
 
@@ -202,7 +212,6 @@ Route::middleware('isLogin')->group(function () {
 
 // Routes For Admin Order & Sales
 
-Route::get('admin/orders', [OrderController::class, 'getOrders'])->name('admin.orders');
 Route::get(
     'ticket-detail',
     function () {
@@ -259,6 +268,11 @@ Route::post('my-account', [UserAuthController::class, 'userUpdateData'])->name('
 Route::get('sign-up', [UserAuthController::class, 'signUp'])->name('signUp');
 Route::post('sign-up', [UserAuthController::class, 'signUpUser'])->name('user.signup');
 Route::get('login-user', [UserAuthController::class, 'getLoginPage'])->name('login-user');
+Route::post('login-user', [UserAuthController::class, 'loginUser'])->name('auth.login-user');
 Route::post('checkout', [OrderController::class, 'createOrder'])->name('createOrder');
 
 Route::get('logout', [UserAuthController::class, 'logoutUser'])->name('logoutUser');
+
+
+Route::get('/get-order-details', [OrderController::class , 'getOrderDetails']);
+Route::get('/get-vendor-orders', [AdminOrderController::class, 'getVendorOrders']);

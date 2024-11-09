@@ -45,20 +45,30 @@
                                     <select name="category" id="category" class="form-control form-select">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}"
+                                                {{ old('category') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="brand" class="form-label">Brand</label>
                                     <select name="brand" id="brand" class="form-control form-select">
-                                        <option value="">Select Brand</option>
+                                        <option selected>Select Brand</option>
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            <option value="{{ $brand->id }}"
+                                                {{ old('brand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    @error('brand')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -73,8 +83,10 @@
                                         <option value="1 Year">1 Year</option>
                                         <option value="2 Year">2 Year</option>
                                         <option value="3 Year">3 Year</option>
-
                                     </select>
+                                    @error('warranty')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
@@ -83,8 +95,13 @@
                                     <select name="year_of_making" id="year_of_making" class="form-control form-select">
                                         <option value="">Year Of Making</option>
                                         @for ($i = 2010; $i <= 2024; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            <option value="{{ $i }}"
+                                                {{ old('year_of_making') == $i ? 'selected' : '' }}>{{ $i }}
+                                            </option>
                                         @endfor
+                                        @error('year_of_making')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </select>
                                 </div>
                             </div>
@@ -95,21 +112,30 @@
                                 <div class="form-group">
                                     <label for="amount_in_stock" class="form-label">Amount In Stock</label>
                                     <input type="number" name="amount_in_stock" id="amount_in_stock" placeholder="1 to 20"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('amount_in_stock') }}">
+                                    @error('amount_in_stock')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="current_price" class="form-label">Current Price</label>
                                     <input type="number" name="current_price" id="current_price" placeholder="100 to 1500"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('current_price') }}">
+                                    @error('current_price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="sale_price" class="form-label">Sale Price</label>
                                     <input type="number" name="sale_price" id="sale_price" placeholder="50 to 1450"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('sale_price') }}">
+                                    @error('sale_price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -121,14 +147,15 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="isRepairedOrOpened"
                                             id="isRepairedOrOpened" data-toggle="collapse" data-target="#collapseExample"
-                                            aria-expanded="false" aria-controls="collapseExample">
+                                            aria-expanded="false" {{ old('isRepairedOrOpened') == 'on' ? 'checked' : '' }}
+                                            aria-controls="collapseExample">
                                         <label class="form-check-label" for="isRepairedOrOpened">
                                             Has Product Reparied?
                                         </label>
                                     </div>
                                     <div class="collapse mt-2" id="collapseExample">
                                         <textarea name="reason" style="height: 200px;" id="" class="form-control"
-                                            placeholder="Please Enter The Reason"></textarea>
+                                            placeholder="Please Enter The Reason">{{ old('reason') }}</textarea>
                                     </div>
                                 </div>
 
@@ -264,7 +291,6 @@
                                     @enderror
                                 </label>
                             </div>
-
                         </div>
 
                         <button class="btn btn-primary mt-3 w-100" id="uploadProduct">Upload Product</button>

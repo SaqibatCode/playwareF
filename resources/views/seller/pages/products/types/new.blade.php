@@ -45,9 +45,14 @@
                                     <select name="category" id="category" class="form-control form-select">
                                         <option value="">Select Category</option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}"
+                                                {{ old('category') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
@@ -56,9 +61,14 @@
                                     <select name="brand" id="brand" class="form-control form-select">
                                         <option value="">Select Brand</option>
                                         @foreach ($brands as $brand)
-                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                            <option value="{{ $brand->id }}"
+                                                {{ old('brand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    @error('brand')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -69,12 +79,19 @@
                                     <label for="warranty" class="form-label">Warranty</label>
                                     <select name="warranty" id="warranty" class="form-control form-select">
                                         <option value="">Select Warranty</option>
-                                        <option value="6 Month">6 Month</option>
-                                        <option value="1 Year">1 Year</option>
-                                        <option value="2 Year">2 Year</option>
-                                        <option value="3 Year">3 Year</option>
+                                        <option value="6 Month" {{ old('warranty') == '6 Month' ? 'selected' : '' }}>6
+                                            Month</option>
+                                        <option value="1 Year" {{ old('warranty') == '1 Year' ? 'selected' : '' }}>1 Year
+                                        </option>
+                                        <option value="2 Year" {{ old('warranty') == '2 Year' ? 'selected' : '' }}>2 Year
+                                        </option>
+                                        <option value="3 Year" {{ old('warranty') == '3 Year' ? 'selected' : '' }}>3 Year
+                                        </option>
 
                                     </select>
+                                    @error('warranty')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
@@ -83,9 +100,14 @@
                                     <select name="year_of_making" id="year_of_making" class="form-control form-select">
                                         <option value="">Year Of Making</option>
                                         @for ($i = 2010; $i <= 2024; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
+                                            <option value="{{ $i }}"
+                                                {{ old('year_of_making') == $i ? 'selected' : '' }}>{{ $i }}
+                                            </option>
                                         @endfor
                                     </select>
+                                    @error('year_of_making')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -95,21 +117,30 @@
                                 <div class="form-group">
                                     <label for="amount_in_stock" class="form-label">Amount In Stock</label>
                                     <input type="number" name="amount_in_stock" id="amount_in_stock" placeholder="1 to 20"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('amount_in_stock') }}">
+                                    @error('amount_in_stock')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="current_price" class="form-label">Current Price</label>
                                     <input type="number" name="current_price" id="current_price" placeholder="100 to 1500"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('current_price') }}">
+                                    @error('current_price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md col-sm-12">
                                 <div class="form-group">
                                     <label for="sale_price" class="form-label">Sale Price</label>
                                     <input type="number" name="sale_price" id="sale_price" placeholder="50 to 1450"
-                                        class="form-control">
+                                        class="form-control" value="{{ old('sale_price') }}">
+                                    @error('sale_price')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -239,7 +270,7 @@
                                         <label class="custom-file-label" for="fifthImage">Choose file</label>
                                     </div>
                                     @error('fifthImage')
-                                        <span class="text-danger">{{ $message }}</span>
+                                        <span class="text-danger" style="display: block;">{{ $message }}</span>
                                     @enderror
                                 </label>
                             </div>
@@ -255,18 +286,39 @@
 @endsection
 @section('additionScript')
     <script>
+
+
         let images = document.querySelectorAll('.custom-file-input');
         images.forEach(input => {
             input.onchange = function() {
                 let container = input.parentElement.parentElement;
                 let img = container.querySelector('img');
                 let label = container.querySelector('label');
-                if (label) {
-                    // label.style.display = 'none';
+
+                if (input.files && input.files[0]) {
+                    img.src = window.URL.createObjectURL(input.files[0]);
+
+                    const fileReader = new FileReader();
+                    fileReader.onload = function(e) {
+                        localStorage.setItem(input.id, e.target.result);
+                    };
+                    fileReader.readAsDataURL(input.files[0]);
                 }
-                img.src = window.URL.createObjectURL(input.files[0]);
             };
         });
+
+        window.onload = function() {
+            images.forEach(input => {
+                let container = input.parentElement.parentElement;
+                let img = container.querySelector('img');
+                // Load image from localStorage
+                const storedImage = localStorage.getItem(input.id);
+                if (storedImage) {
+                    img.src = storedImage;
+                }
+            });
+        };
+
 
 
         let isMoreThanSeven = 1;

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,15 +12,6 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
-    public function getOrders()
-    {
-
-        $title = 'All Orders';
-        return view('admin.pages.order.all-orders', compact('title'));
-    }
-
-
-    // front-end methods
 
 
 
@@ -37,9 +29,8 @@ class OrderController extends Controller
     ]);
 
     // Generate new parent order ID
-    $lastParentOrderId = Order::max('parent_order_id');
-    $newParentOrderId = $lastParentOrderId ? $lastParentOrderId + 1 : 1;
-
+    $lastOrder = Order::orderByRaw('CAST(parent_order_id AS UNSIGNED) DESC')->first();
+    $newParentOrderId = $lastOrder ? $lastOrder->parent_order_id + 1 : 1;
     // Retrieve cart items from the session
     $cartItems = Session::get('cart', []);
 
@@ -79,5 +70,53 @@ class OrderController extends Controller
     session()->flash('success', 'Your order has been placed successfully!');
     return redirect()->route('success')->with('parentOrderId', $newParentOrderId);
 }
+
+
+    public function getOrderDetails(Request $req){
+
+        $req->validate([
+            'order_id' => 'required',
+        ]);
+        $order = Order::with('all_products')->where('parent_order_id', $req->order_id)->get();
+
+        return response()->json($order);
+    }
+
+    public function postPaid(Request $req)
+    {
+
+        $req->validate([
+            'order_id' => 'required|string',
+            'uploadPaymentScreenShot' => 'required|mimes:png,jpg,jpeg,webp|max:2048',
+        ]);
+
+        $order_id = $req->order_id;
+
+        $orders = Order::where('parent_order_id', $order_id)->get();
+
+        if ($orders->isEmpty()) {
+            return response()->json(['message' => 'No orders found for this parent order ID.'], 404);
+        }
+
+        foreach ($orders as $order) {
+            $order->paymentCheck = 'Paid';
+            $order->save();
+        }
+
+
+        if ($req->hasFile('uploadPaymentScreenShot')) {
+            $file = $req->file('uploadPaymentScreenShot');
+            $filename = 'payment_screenshot_' . time() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('payment_screenshots'), $filename);
+
+            $payment = new Payment;
+            $payment->order_id = $orders->first()->parent_order_id;
+            $payment->payment_screenshot =  $filename;
+            $payment->save();
+        }
+
+        return back()->with(['paymentSuccess' => 'Orders updated successfully to Paid and payment recorded.']);
+    }
 
 }

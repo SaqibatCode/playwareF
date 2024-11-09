@@ -27,7 +27,7 @@
         <section class="px-4 flex justify-center items-center py-20">
             <h1 class="text-6xl font-bold">Sign Up</h1>
         </section>
-        <section class="px-4">
+        <section class="px-4" style="padding: 20px;">
             <form class="" action="{{ route('user.signup') }}" method="POST">
                 @csrf
                 <div class="flex flex-col sm:flex-row justify-between gap-3">

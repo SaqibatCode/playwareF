@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Sellers\Package;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brands;
 use App\Models\Categories;
 use App\Models\PackageDetails;
 use App\Models\packageProducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PackageController extends Controller
 {
@@ -25,10 +27,11 @@ class PackageController extends Controller
     {
 
         $categories = Categories::root()->get();
-
+        $brands = Brands::all();
         return view('seller.pages.products.addNewPackage', [
             'title' => 'Create Package',
-            'categories' => $categories
+            'categories' => $categories,
+            'brands' => $brands
         ]);
     }
 
@@ -51,6 +54,20 @@ class PackageController extends Controller
             'fifthImage' => 'nullable|mimes:png,jpg|max:2050',
 
         ]);
+
+        $packageData = json_decode($request->input('packageProductData'), true);
+
+
+        $packageDataValidator = Validator::make($packageData, [
+            '*.name' => 'required|string',
+            '*.brand' => 'nullable|string',
+            '*.category' => 'required|string',
+            '*.usedornew' => 'required|string',
+        ]);
+
+        if ($packageDataValidator->fails()) {
+            return back()->withErrors($packageDataValidator)->withInput();
+        }
 
         $folderPath = 'user_folders/Package_images/' . Auth::user()->id . '_' . Auth::user()->fullName;
         if (!file_exists(public_path($folderPath))) {

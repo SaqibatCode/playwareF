@@ -21,6 +21,7 @@
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/theme.min.css') }}" rel="stylesheet" type="text/css" />
 
+
 </head>
 
 <body>
@@ -242,7 +243,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('admin.orders') }}" class="waves-effects">
+                            <a href="{{ route('Admin.Orders') }}" class="waves-effects">
                                 <i class="bx bxs-report"></i>
                                 <span>Orders</span>
                             </a>

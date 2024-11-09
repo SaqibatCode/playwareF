@@ -59,18 +59,23 @@
                                 @foreach ($order as $singleOrder)
                                     <div class="flex gap-6 justify-between items-center">
                                         <p class="text-sm">
-                                            @foreach ($singleOrder->all_products as $product)
-                                                {{ $product->productTitle }}
-                                            @endforeach
+                                            @if ($singleOrder->all_products)
+                                                {{-- Check if all_products exists --}}
+                                                {{ $singleOrder->all_products->productTitle }}
+                                            @endif
                                             × {{ $singleOrder->quantity }}
                                         </p>
-                                        <p class="text-skin-inverted text-sm font-bold">Rs.{{ $singleOrder->total_amount }}</p>
+                                        <p class="text-skin-inverted text-sm font-bold">Rs.{{ $singleOrder->total_amount }}
+                                        </p>
                                     </div>
                                 @endforeach
+
+
+
                             </div>
                             <div class="flex gap-6 justify-between items-center border-b py-4">
                                 <p class="font-bold text-skin-inverted">Subtotal:</p>
-                                <p class="font-bold text-skin-inverted">Rs.{{ $total  }}</p>
+                                <p class="font-bold text-skin-inverted">Rs.{{ $total }}</p>
                             </div>
                             {{-- <div class="flex gap-6 justify-between items-center border-b py-4">
                                 <p class="font-bold text-skin-inverted">Shipping:</p>
@@ -79,7 +84,7 @@
                             </div> --}}
                             <div class="flex gap-6 justify-between items-center border-b py-4">
                                 <p class="font-bold text-xl text-skin-inverted">Total:</p>
-                                <p class="font-bold text-xl text-skin-muted">Rs.{{ $total  }}</p>
+                                <p class="font-bold text-xl text-skin-muted">Rs.{{ $total }}</p>
                             </div>
                         </div>
 

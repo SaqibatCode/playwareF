@@ -18,7 +18,8 @@
             <h1 class="text-6xl font-bold">Login</h1>
         </section>
         <section class="px-4 py-4">
-            <form class="" enctype="multipart/form-data">
+            <form class="" action="{{ route('auth.login-user')  }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <label for="email" class="block mt-2 text-xs font-semibold text-gray-600 uppercase">email</label>
                 <input id="email" type="email" name="email" placeholder="Bashir@gmail.com"
                     class="block w-full p-3 mt-2 text-gray-700 bg-gray-200 appearance-none focus:outline-none focus:bg-gray-300 focus:shadow-inner rounded-md"

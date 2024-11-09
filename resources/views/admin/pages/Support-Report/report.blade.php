@@ -1,4 +1,4 @@
-@extends('admin.Layout.layout')
+@extends('admin.layout.layout')
 @php
     $title = 'Ticket Details';
 @endphp

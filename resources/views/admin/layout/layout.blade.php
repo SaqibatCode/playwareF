@@ -19,6 +19,35 @@
 
     @yield('additionsStyles')
 
+    <style>
+        .skeleton {
+            position: relative;
+        }
+
+        .skeleton::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: linear-gradient(90deg, #eee, #f9f9f9, #eee);
+            background-size: 200%;
+            animation: skeleton 1s infinite reverse;
+        }
+
+        @keyframes skeleton {
+            0% {
+                background-position: -100% 0;
+            }
+
+            100% {
+                background-position: 100% 0;
+            }
+        }
+    </style>
+
 
 </head>
 
@@ -311,15 +340,15 @@
                         </li>
 
 
-                        <li>
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-badge"></i><span>Badge</span></a>
                             <ul class="sub-menu" aria-expanded="false">
                                 <li><a href="{{ route('admin.HomePageEdit') }}">All Badges</a></li>
                                 <li><a href="{{ route('admin.HomePageEdit') }}">Manage Seller Badges</a></li>
                             </ul>
-                        </li>
-                        <li>
+                        </li> --}}
+                        {{-- <li>
                             <a href="javascript: void(0);" class="has-arrow waves-effect"><i
                                     class="bx bx-file"></i><span>Pages</span></a>
                             <ul class="sub-menu" aria-expanded="false">
@@ -334,10 +363,10 @@
                             <a href="{{ route('admin.supportTicket') }}" class="waves-effect"><i
                                     class='bx bx-support'></i><span>Support Ticket</span></a>
 
-                        </li>
+                        </li> --}}
 
                         <li>
-                            <a href="{{ route('admin.orders') }}" class="waves-effects">
+                            <a href="{{ route('Admin.Orders') }}" class="waves-effects">
                                 <i class="bx bxs-report"></i>
                                 <span>Orders</span>
                             </a>
